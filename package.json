@@ -1,7 +1,7 @@
 {
   "name": "swingby-js-sdk",
   "version": "1.0.0",
-  "description": "Swingby developmer tools for JavaScript",
+  "description": "Swingby developer tools for JavaScript",
   "main": "index.js",
   "scripts": {
     "lint": "standard \"src/**/*.js\"",
@@ -11,19 +11,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SwingbyProtocol/swingby-js-sdk.git"
+    "url": "git+https://github.com/SwingbyProtocol/js-sdk.git"
   },
   "keywords": [
     "Crypto",
     "Bitcoin",
-    "Swingby"
+    "Javascript",
+    "NodeJS",
+    "Swingby",
+    "ECDSA",
+    "Trustless"
   ],
   "author": "jacob@swingby.network",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/SwingbyProtocol/swingby-js-sdk/issues"
+    "url": "https://github.com/SwingbyProtocol/js-sdk/issues"
   },
-  "homepage": "https://github.com/SwingbyProtocol/swingby-js-sdk#readme",
+  "homepage": "https://github.com/SwingbyProtocol/js-sdk#readme",
   "devDependencies": {
     "browserify": "^16.5.0",
     "jsdoc-to-markdown": "^5.0.3",

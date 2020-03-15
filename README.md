@@ -33,9 +33,30 @@ const newSwap = {
     currencyTo: "BTC.B"
 }
 client.swap(newSwap)
+  .then(console.log)
 ```
+
+Query the last 5 completed swaps:
+
+```js
+const query = {
+  page_size: 5,
+  status: 'COMPLETED'
+}
+client.querySwaps(query)
+  .then(console.log)
+```
+
+for more examples on how to retrieve data from a node and interact with the Swingby network, please head to the [examples `examples/`](/examples) folder.
 
 ## Docs
 
-[See `docs/node_http_client.md`](/docs/node_http_client.md)
+For in depth documentation on our js SDK, please [see `docs/node_http_client.md`](/docs/node_http_client.md).
+For documentation on our node API, please visit [estnet-node.swingby.network/docs](https://testnet-node.swingby.network/).
+
+## Useful links
+
+* [Website](https://swingby.network)
+* [Swingby explorer](https://bridge-testnet.swingby.network/explorer)
+* [Swingby network dashboard](https://testnet-node.swingby.network/)
 
