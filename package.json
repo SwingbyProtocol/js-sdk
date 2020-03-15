@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "standard \"src/**/*.js\"",
     "browserify": "browserify index.js -o dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "node-http-docs": "node_modules/jsdoc-to-markdown/bin/cli.js src/node_http_client.js > docs/node_http_client.md"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
   "homepage": "https://github.com/SwingbyProtocol/swingby-js-sdk#readme",
   "devDependencies": {
     "browserify": "^16.5.0",
+    "jsdoc-to-markdown": "^5.0.3",
     "standard": "^14.3.2"
   },
   "dependencies": {
