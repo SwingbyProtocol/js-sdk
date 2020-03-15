@@ -1,0 +1,12 @@
+# 1.0.0
+    - Initial release: Add NodeHttpClinet with funcs:
+    - Adds func NodeHttpClinet.getTssAddresses
+    - Adds func NodeHttpClinet.getPeers
+    - Adds func NodeHttpClinet.getStakes
+    - Adds func NodeHttpClinet.getStatus
+    - Adds func NodeHttpClinet.calculateSwap
+    - Adds func NodeHttpClinet.createSwap
+    - Adds func NodeHttpClinet.swap
+    - Adds func NodeHttpClinet.getSwapFees
+    - Adds func NodeHttpClinet.querySwaps
+    - Adds func NodeHttpClinet.getSwapStats
