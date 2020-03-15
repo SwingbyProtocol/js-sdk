@@ -26,5 +26,9 @@
   "devDependencies": {
     "browserify": "^16.5.0",
     "standard": "^14.3.2"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "debug": "^4.1.1"
   }
 }
