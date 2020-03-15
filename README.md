@@ -37,5 +37,5 @@ client.swap(newSwap)
 
 ## Docs
 
-[See `docs/node_http_client.md`](/docs/node_http_client.md) for usage info
+[See `docs/node_http_client.md`](/docs/node_http_client.md)
 
