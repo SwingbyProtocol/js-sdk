@@ -30,7 +30,6 @@ function sendGetRequest (endpoint) {
 }
 
 function sendPostRequest (endpoint, payload) {
-  console.log(payload)
   return axios({
     method: 'POST',
     url: endpoint,
@@ -303,7 +302,7 @@ class NodeHttpClient {
      * @param {string} args.status Status of swap (pending | active | expired)
      * @param {integer} args.page_size Max number of items per page
      * @param {integer} args.page Page number
-     * @param {integer} args.sort if sort = 1 then results are old - new
+     * @param {integer} args.sort If sort = 1 then results are old - new
      * @param {string} args.orInHash Hash of the inbound transaction (OR match)
      * @param {string} args.orOutHash Hash of the outbound transaction (OR match)
      * @param {string} args.orHash Hash of the outbound transaction (OR match)
