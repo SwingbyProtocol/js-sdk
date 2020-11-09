@@ -1,18 +1,28 @@
 {
-  "name": "swingby-js-sdk",
-  "version": "1.0.0",
-  "description": "Swingby developer tools for JavaScript",
-  "main": "index.js",
-  "scripts": {
-    "lint": "standard \"src/**/*.js\"",
-    "browserify": "browserify index.js -o dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "node-http-docs": "node_modules/jsdoc-to-markdown/bin/cli.js src/node_http_client.js > docs/node_http_client.md"
+  "name": "@swingby-protocol/sdk",
+  "version": "0.0.0-development",
+  "module": "dist/sdk.esm.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "license": "Apache-2.0",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=10"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SwingbyProtocol/js-sdk.git"
   },
+  "bugs": {
+    "url": "https://github.com/SwingbyProtocol/js-sdk/issues"
+  },
+  "homepage": "https://github.com/SwingbyProtocol/js-sdk#readme",
   "keywords": [
     "Crypto",
     "Bitcoin",
@@ -22,19 +32,42 @@
     "ECDSA",
     "Trustless"
   ],
-  "author": "jacob@swingby.network",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/SwingbyProtocol/js-sdk/issues"
+  "scripts": {
+    "dev": "start-storybook -p 6006",
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "eslint .",
+    "format": "prettier --write '**/*.{js,jsx,ts,tsx,css,json,md,mdx,html}'"
   },
-  "homepage": "https://github.com/SwingbyProtocol/js-sdk#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
+  },
   "devDependencies": {
-    "browserify": "^16.5.0",
-    "jsdoc-to-markdown": "^5.0.3",
-    "standard": "^14.3.2"
+    "@babel/core": "^7.12.3",
+    "@size-limit/preset-small-lib": "^4.7.0",
+    "@swingby-protocol/eslint-config": "^1.2.0",
+    "@swingby-protocol/prettier-config": "^1.0.2",
+    "@types/debug": "^4.1.5",
+    "babel-loader": "^8.1.0",
+    "husky": "^4.3.0",
+    "jest": "^26.6.3",
+    "prettier": "^2.1.2",
+    "semantic-release": "^17.2.2",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.0.3",
+    "typescript": "^4.0.5"
   },
   "dependencies": {
-    "axios": "^0.19.2",
-    "debug": "^4.1.1"
+    "bignumber.js": "^9.0.1",
+    "debug": "^4.2.0",
+    "hex-to-binary": "^1.0.1",
+    "isomorphic-unfetch": "^3.1.0",
+    "isomorphic-webcrypto": "^2.3.6"
+  },
+  "resolutions": {
+    "**/@typescript-eslint/eslint-plugin": "4.6.1"
   }
 }

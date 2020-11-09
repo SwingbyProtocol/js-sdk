@@ -1,13 +1,14 @@
-const sdk = require('../')
+const sdk = require('../');
 
-const client = new sdk.NodeHttpClient({ url: 'https://testnet-node.swingby.network' })
+const client = new sdk.NodeHttpClient({ url: 'https://testnet-node.swingby.network' });
 
-client.getPeers()
+client
+  .getPeers()
   .then((peers) => {
-    console.log('Current node peers: \n')
+    console.log('Current node peers: \n');
     peers.forEach((peer) => {
-      console.log(` - ${peer.moniker}: ${peer.id} (${peer.version})`)
-    })
-    console.log()
+      console.log(` - ${peer.moniker}: ${peer.id} (${peer.version})`);
+    });
+    console.log();
   })
-  .catch(console.error)
+  .catch(console.error);
