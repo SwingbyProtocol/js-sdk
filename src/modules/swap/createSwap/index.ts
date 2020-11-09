@@ -1,3 +1,4 @@
+import { Coin } from '../../coins';
 import { fetch } from '../../fetch';
 import { getNodeUrl, WithServer } from '../../nodes';
 
@@ -5,8 +6,8 @@ export const createSwap = async (
   params: WithServer & {
     addressTo: string;
     amount: string;
-    currencyFrom: string;
-    currencyTo: string;
+    currencyFrom: Coin;
+    currencyTo: Coin;
     nonce: number;
   },
 ) => {
@@ -15,8 +16,8 @@ export const createSwap = async (
     addressIn: string;
     addressOut: string;
     amountIn: string;
-    currencyIn: string;
-    currencyOut: string;
+    currencyIn: Coin;
+    currencyOut: Coin;
     timestamp: number;
   }>(`${node}/api/v1/swaps/create`, {
     method: 'post',

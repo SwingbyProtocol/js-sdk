@@ -2,22 +2,27 @@ import { BigNumber } from 'bignumber.js';
 import hexToBinary from 'hex-to-binary';
 import crypto from 'isomorphic-webcrypto';
 
+import { getEthBlock } from '../getEthBlock';
+import { Coin } from '../../coins';
+
 const difficultyZeroBits = 10;
 
 export const calculateSwap = async ({
   destAddr,
   currencyFrom,
+  currencyTo,
   amount,
 }: {
   destAddr: string;
-  currencyFrom: string;
+  currencyTo: Coin;
+  currencyFrom: Coin;
   amount: BigNumber.Value;
 }): Promise<{ sendAmount: string; nonce: number }> => {
   let startSecs = new Date().getSeconds();
 
   let nonce = 0;
   let hash: any;
-  let latestRound = getRound();
+  let latestRound = await getRound({ currencyFrom, currencyTo });
   let strHashArg = '';
   const flooredAmount = floorAmount(amount);
 
@@ -41,7 +46,7 @@ export const calculateSwap = async ({
     if (startSecs > finishSecs) {
       nonce = 0;
       startSecs = new Date().getSeconds();
-      latestRound = getRound();
+      latestRound = await getRound({ currencyTo, currencyFrom });
     }
   } while (!verifyHashPrefix(hash));
 
@@ -54,10 +59,21 @@ export const calculateSwap = async ({
   return { sendAmount, nonce };
 };
 
-export const getRound = (): string => {
-  const timestamp = Math.floor(Date.now() / 1000);
-  const round = Math.floor(timestamp / 60);
-
+export const getRound = async ({
+  currencyTo,
+  currencyFrom,
+}: {
+  currencyFrom: Coin;
+  currencyTo: Coin;
+}): Promise<string> => {
+  let round: number;
+  if (currencyFrom === 'BTCE' || currencyTo === 'BTCE') {
+    const blockHeight = await getEthBlock();
+    round = Math.floor(blockHeight / 3);
+  } else {
+    const timestamp = Math.floor(Date.now() / 1000);
+    round = Math.floor(timestamp / 60);
+  }
   return String(round + 1);
 };
 

@@ -4,7 +4,7 @@ import { logger } from '../logger';
 
 export const fetch = async <SuccessResponse extends unknown>(
   url: Parameters<typeof originalFetch>[0],
-  optionsParam: Parameters<typeof originalFetch>[1],
+  optionsParam?: Parameters<typeof originalFetch>[1],
 ): Promise<
   | { ok: true; status: number; response: SuccessResponse }
   | { ok: false; status: number; response: string }
