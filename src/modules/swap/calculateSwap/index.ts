@@ -8,16 +8,16 @@ import { Coin } from '../../coins';
 const difficultyZeroBits = 10;
 
 export const calculateSwap = async ({
-  destAddr,
+  addressTo: destAddr,
   currencyFrom,
   currencyTo,
   amount,
 }: {
-  destAddr: string;
+  addressTo: string;
   currencyTo: Coin;
   currencyFrom: Coin;
   amount: BigNumber.Value;
-}): Promise<{ sendAmount: string; nonce: number }> => {
+}): Promise<{ amount: string; nonce: number }> => {
   let startSecs = new Date().getSeconds();
 
   let nonce = 0;
@@ -56,7 +56,7 @@ export const calculateSwap = async ({
   const numSendAmount = toBTC(toSendBI.toString());
   const sendAmount = numSendAmount.toFixed();
 
-  return { sendAmount, nonce };
+  return { amount: sendAmount, nonce };
 };
 
 export const getRound = async ({

@@ -26,6 +26,7 @@ export const createSwap = async (
       amount: params.amount,
       currency_from: params.currencyFrom,
       currency_to: params.currencyTo,
+      nonce: params.nonce,
     }),
   });
 };

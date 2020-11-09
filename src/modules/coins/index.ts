@@ -1,1 +1,1 @@
-export type Coin = 'BTC' | 'BTCE' | 'WBTC';
+export type Coin = 'BTC' | 'BTCE' | 'WBTC' | 'BTC.B';
