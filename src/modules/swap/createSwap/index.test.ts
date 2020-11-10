@@ -2,7 +2,9 @@ import { calculateSwap } from '../calculateSwap';
 
 import { createSwap } from './';
 
-it('', async () => {
+it('gets back swap info after calling "/swaps/create"', async () => {
+  jest.setTimeout(120000);
+
   expect.assertions(1);
 
   const addressTo = 'tbnb16ke3clwqmduvzv6awlprjw3ecw7g52qw7c6hdm';
