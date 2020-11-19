@@ -25,7 +25,7 @@ export const createSwap = async <M extends Mode>(params: Params<M>): Promise<Res
     'servers' | 'addressIn' | 'addressOut' | 'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce'
   > & { timestamp: number };
 
-  const result = await fetch<ApiResponse>(`${params.servers.ethereum.swap}/api/v1/swaps/create`, {
+  const result = await fetch<ApiResponse>(`${params.servers.binance.swap}/api/v1/swaps/create`, {
     method: 'post',
     body: JSON.stringify({
       address_to: params.addressOut,
