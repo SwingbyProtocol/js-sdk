@@ -5,7 +5,7 @@ An implementation of the Swingby standard development kit for NodeJS and JavaScr
 ## Getting started
 
 ```bash
-yarn add @swingby-protocol/sdk
+yarn add @swingby-protocol/sdk@alpha
 ```
 
 ```tsx
