@@ -1,5 +1,5 @@
 import { Coin, Mode } from '../coins';
-import { ServersConfig } from '../endpoints';
+import { ServersConfig } from '../context';
 
 export type CommonSwapParams<M extends Mode> = {
   servers: ServersConfig<M>;

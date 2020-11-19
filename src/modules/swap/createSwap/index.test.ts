@@ -1,9 +1,9 @@
-import { calculateServers } from '../../endpoints';
+import { calculateServers } from '../../context';
 import { calculateSwap } from '../calculateSwap';
 
 import { createSwap } from './';
 
-jest.mock('../../endpoints');
+jest.mock('../../context');
 
 it('gets back swap info after calling "/swaps/create"', async () => {
   jest.setTimeout(120000);
