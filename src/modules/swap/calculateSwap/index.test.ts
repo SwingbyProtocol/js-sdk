@@ -4,7 +4,7 @@ import { calculateSwap } from './';
 
 const RealDate = Date.now;
 
-jest.mock('../../context');
+jest.mock('../../context/buildContext');
 
 it.each([
   ['2020-08-25T10:20:00Z', { nonce: 409, amountIn: '0.99999968' }],

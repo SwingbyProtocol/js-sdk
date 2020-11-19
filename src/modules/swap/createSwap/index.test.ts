@@ -3,7 +3,7 @@ import { calculateSwap } from '../calculateSwap';
 
 import { createSwap } from './';
 
-jest.mock('../../context');
+jest.mock('../../context/buildContext');
 
 it('gets back swap info after calling "/swaps/create"', async () => {
   jest.setTimeout(120000);
