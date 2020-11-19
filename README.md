@@ -9,29 +9,31 @@ yarn add @swingby-protocol/sdk
 ```
 
 ```tsx
-import { calculateSwap, createSwap } from '@swingby-protocol/sdk';
+import { buildContext, calculateSwap, createSwap } from '@swingby-protocol/sdk';
 
-const addressTo = 'tbnb16ke3clwqmduvzv6awlprjw3ecw7g52qw7c6hdm';
-const currencyFrom = 'BTC';
-const currencyTo = 'BTC.B';
+const addressOut = 'tbnb16ke3clwqmduvzv6awlprjw3ecw7g52qw7c6hdm';
+const currencyIn = 'BTC';
+const currencyOut = 'BTC.B';
 
-const { nonce, amount } = await calculateSwap({
-  amount: '1',
-  addressTo,
-  currencyFrom,
-  currencyTo,
+const context = await buildContext({ mode: 'test' });
+
+const { nonce, amountIn } = await calculateSwap({
+  context,
+  amountIn: '1',
+  addressOut,
+  currencyIn,
+  currencyOut,
 });
 
-const swap = createSwap({
-  amount,
+const swap = await createSwap({
+  context,
+  amountIn,
   nonce,
-  network: 'test',
-  addressTo,
-  currencyFrom,
-  currencyTo,
+  addressOut,
+  currencyIn,
+  currencyOut,
 });
 
 console.log('Swap record:\n');
 console.log(`Send ${swap.amountIn} (${swap.currencyIn}) to ${swap.addressIn}`);
-console.log(`Receive ${swap.calc.receive_amount} (${swap.currencyOut}) to ${swap.addressOut}`);
 ```
