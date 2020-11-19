@@ -1,8 +1,8 @@
 import { Coin, Mode } from '../coins';
-import { ServersConfig } from '../context';
+import { SwingbyContext } from '../context';
 
 export type CommonSwapParams<M extends Mode> = {
-  servers: ServersConfig<M>;
+  context: SwingbyContext<M>;
   addressIn: string;
   addressOut: string;
   amountIn: string;

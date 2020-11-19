@@ -3,10 +3,10 @@ import { fetch } from '../../fetch';
 import { CommonSwapParams } from '../common-param-types';
 
 export const getEthBlock = async <M extends Mode>(
-  params: Pick<CommonSwapParams<M>, 'servers'>,
+  params: Pick<CommonSwapParams<M>, 'context'>,
 ): Promise<number> => {
   const result = await fetch<{ blockbook: { inSync: boolean; bestHeight: number } }>(
-    params.servers.ethereum.explorer,
+    params.context.ethereum.explorer,
   );
 
   if (result.ok && result.response.blockbook.inSync) {

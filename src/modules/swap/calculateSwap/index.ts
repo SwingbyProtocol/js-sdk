@@ -10,13 +10,13 @@ const difficultyZeroBits = 10;
 
 type Params<M extends Mode = 'test'> = Pick<
   CommonSwapParams<M>,
-  'servers' | 'addressOut' | 'currencyIn' | 'currencyOut' | 'amountIn'
+  'context' | 'addressOut' | 'currencyIn' | 'currencyOut' | 'amountIn'
 >;
 
 type Result<M extends Mode = 'test'> = Pick<CommonSwapParams<M>, 'amountIn' | 'nonce'>;
 
 export const calculateSwap = async <M extends Mode = 'test'>({
-  servers,
+  context,
   addressOut,
   currencyIn,
   currencyOut,
@@ -26,7 +26,7 @@ export const calculateSwap = async <M extends Mode = 'test'>({
 
   let nonce = 0;
   let hash: any;
-  let latestRound = await getRound({ servers, currencyIn, currencyOut });
+  let latestRound = await getRound({ context, currencyIn, currencyOut });
   let strHashArg = '';
   const flooredAmount = floorAmount(amountIn);
 
@@ -50,7 +50,7 @@ export const calculateSwap = async <M extends Mode = 'test'>({
     if (startSecs > finishSecs) {
       nonce = 0;
       startSecs = new Date().getSeconds();
-      latestRound = await getRound({ servers, currencyOut, currencyIn });
+      latestRound = await getRound({ context, currencyOut, currencyIn });
     }
   } while (!verifyHashPrefix(hash));
 
@@ -64,13 +64,13 @@ export const calculateSwap = async <M extends Mode = 'test'>({
 };
 
 export const getRound = async <M extends Mode>({
-  servers,
+  context,
   currencyOut,
   currencyIn,
-}: Pick<CommonSwapParams<M>, 'servers' | 'currencyIn' | 'currencyOut'>): Promise<string> => {
+}: Pick<CommonSwapParams<M>, 'context' | 'currencyIn' | 'currencyOut'>): Promise<string> => {
   let round: number;
   if (currencyIn === 'BTCE' || currencyOut === 'BTCE') {
-    const blockHeight = await getEthBlock({ servers });
+    const blockHeight = await getEthBlock({ context });
     round = Math.floor(blockHeight / 3);
   } else {
     const timestamp = Math.floor(Date.now() / 1000);

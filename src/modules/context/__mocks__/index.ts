@@ -1,6 +1,6 @@
-import { ServersConfig } from '..';
+import { SwingbyContext } from '..';
 
-export const buildContext = (): ServersConfig<'test'> => {
+export const buildContext = (): SwingbyContext<'test'> => {
   return {
     mode: 'test',
     ethereum: { swap: '', explorer: 'https://indexer-goerli.swingby.network/api/v2' },

@@ -4,28 +4,21 @@ import { CommonSwapParams } from '../common-param-types';
 
 type Params<M extends Mode> = Pick<
   CommonSwapParams<M>,
-  'servers' | 'addressOut' | 'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce'
+  'context' | 'addressOut' | 'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce'
 >;
 
 type Result<M extends Mode> = Pick<
   CommonSwapParams<M>,
-  | 'servers'
-  | 'addressIn'
-  | 'addressOut'
-  | 'amountIn'
-  | 'currencyIn'
-  | 'currencyOut'
-  | 'nonce'
-  | 'timestamp'
+  'addressIn' | 'addressOut' | 'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce' | 'timestamp'
 >;
 
 export const createSwap = async <M extends Mode>(params: Params<M>): Promise<Result<M>> => {
   type ApiResponse = Pick<
     CommonSwapParams<M>,
-    'servers' | 'addressIn' | 'addressOut' | 'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce'
+    'addressIn' | 'addressOut' | 'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce'
   > & { timestamp: number };
 
-  const result = await fetch<ApiResponse>(`${params.servers.binance.swap}/api/v1/swaps/create`, {
+  const result = await fetch<ApiResponse>(`${params.context.binance.swap}/api/v1/swaps/create`, {
     method: 'post',
     body: JSON.stringify({
       address_to: params.addressOut,

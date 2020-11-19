@@ -16,9 +16,9 @@ it.each([
   try {
     global.Date.now = jest.fn(() => new Date(date).getTime());
 
-    const servers = await buildContext({ mode: 'test' });
+    const context = await buildContext({ mode: 'test' });
     const result = await calculateSwap({
-      servers,
+      context,
       amountIn: '1',
       currencyIn: 'BTC',
       currencyOut: 'BTC.B',

@@ -14,9 +14,9 @@ it('gets back swap info after calling "/swaps/create"', async () => {
   const currencyIn = 'BTC';
   const currencyOut = 'BTC.B';
 
-  const servers = await buildContext({ mode: 'test' });
+  const context = await buildContext({ mode: 'test' });
   const { nonce, amountIn } = await calculateSwap({
-    servers,
+    context,
     amountIn: '1',
     addressOut,
     currencyIn,
@@ -25,7 +25,7 @@ it('gets back swap info after calling "/swaps/create"', async () => {
 
   return expect(
     createSwap({
-      servers,
+      context,
       amountIn,
       nonce,
       addressOut,
