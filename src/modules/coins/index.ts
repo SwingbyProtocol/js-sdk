@@ -1,6 +1,6 @@
 import { Mode } from '../modes';
 
-export const COINS_TEST = ['BTC.B', 'BTC', 'BTCE'] as const;
+export const COINS_TEST = ['BTCB-1DE', 'BTC', 'BTCE'] as const;
 export const COINS_PRODUCTION = ['BTC', 'WBTC'] as const;
 
 type TestnetCoin = typeof COINS_TEST[number];
