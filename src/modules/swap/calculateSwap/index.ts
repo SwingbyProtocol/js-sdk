@@ -3,28 +3,32 @@ import hexToBinary from 'hex-to-binary';
 import crypto from 'isomorphic-webcrypto';
 
 import { getEthBlock } from '../getEthBlock';
-import { Coin } from '../../coins';
+import { Mode } from '../../coins';
+import { CommonSwapParams } from '../common-param-types';
 
 const difficultyZeroBits = 10;
 
-export const calculateSwap = async ({
-  addressTo: destAddr,
-  currencyFrom,
-  currencyTo,
-  amount,
-}: {
-  addressTo: string;
-  currencyTo: Coin;
-  currencyFrom: Coin;
-  amount: BigNumber.Value;
-}): Promise<{ amount: string; nonce: number }> => {
+type Params<M extends Mode = 'test'> = Pick<
+  CommonSwapParams<M>,
+  'servers' | 'addressOut' | 'currencyIn' | 'currencyOut' | 'amountIn'
+>;
+
+type Result<M extends Mode = 'test'> = Pick<CommonSwapParams<M>, 'amountIn' | 'nonce'>;
+
+export const calculateSwap = async <M extends Mode = 'test'>({
+  servers,
+  addressOut,
+  currencyIn,
+  currencyOut,
+  amountIn,
+}: Params<M>): Promise<Result<M>> => {
   let startSecs = new Date().getSeconds();
 
   let nonce = 0;
   let hash: any;
-  let latestRound = await getRound({ currencyFrom, currencyTo });
+  let latestRound = await getRound({ servers, currencyIn, currencyOut });
   let strHashArg = '';
-  const flooredAmount = floorAmount(amount);
+  const flooredAmount = floorAmount(amountIn);
 
   do {
     nonce += 1;
@@ -34,9 +38,9 @@ export const calculateSwap = async ({
       ';' +
       latestRound +
       ';' +
-      destAddr.toLowerCase() +
+      addressOut.toLowerCase() +
       ';' +
-      currencyFrom +
+      currencyIn +
       ';' +
       flooredAmount +
       ';';
@@ -46,7 +50,7 @@ export const calculateSwap = async ({
     if (startSecs > finishSecs) {
       nonce = 0;
       startSecs = new Date().getSeconds();
-      latestRound = await getRound({ currencyTo, currencyFrom });
+      latestRound = await getRound({ servers, currencyOut, currencyIn });
     }
   } while (!verifyHashPrefix(hash));
 
@@ -56,19 +60,17 @@ export const calculateSwap = async ({
   const numSendAmount = toBTC(toSendBI.toString());
   const sendAmount = numSendAmount.toFixed();
 
-  return { amount: sendAmount, nonce };
+  return { amountIn: sendAmount, nonce };
 };
 
-export const getRound = async ({
-  currencyTo,
-  currencyFrom,
-}: {
-  currencyFrom: Coin;
-  currencyTo: Coin;
-}): Promise<string> => {
+export const getRound = async <M extends Mode>({
+  servers,
+  currencyOut,
+  currencyIn,
+}: Pick<CommonSwapParams<M>, 'servers' | 'currencyIn' | 'currencyOut'>): Promise<string> => {
   let round: number;
-  if (currencyFrom === 'BTCE' || currencyTo === 'BTCE') {
-    const blockHeight = await getEthBlock();
+  if (currencyIn === 'BTCE' || currencyOut === 'BTCE') {
+    const blockHeight = await getEthBlock({ servers });
     round = Math.floor(blockHeight / 3);
   } else {
     const timestamp = Math.floor(Date.now() / 1000);

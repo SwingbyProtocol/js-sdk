@@ -1,32 +1,44 @@
-import { Coin } from '../../coins';
+import { Mode } from '../../coins';
 import { fetch } from '../../fetch';
-import { getNodeUrl, WithServer } from '../../nodes';
+import { CommonSwapParams } from '../common-param-types';
 
-export const createSwap = async (
-  params: WithServer & {
-    addressTo: string;
-    amount: string;
-    currencyFrom: Coin;
-    currencyTo: Coin;
-    nonce: number;
-  },
-) => {
-  const node = getNodeUrl(params);
-  return await fetch<{
-    addressIn: string;
-    addressOut: string;
-    amountIn: string;
-    currencyIn: Coin;
-    currencyOut: Coin;
-    timestamp: number;
-  }>(`${node}/api/v1/swaps/create`, {
+type Params<M extends Mode> = Pick<
+  CommonSwapParams<M>,
+  'servers' | 'addressOut' | 'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce'
+>;
+
+type Result<M extends Mode> = Pick<
+  CommonSwapParams<M>,
+  | 'servers'
+  | 'addressIn'
+  | 'addressOut'
+  | 'amountIn'
+  | 'currencyIn'
+  | 'currencyOut'
+  | 'nonce'
+  | 'timestamp'
+>;
+
+export const createSwap = async <M extends Mode>(params: Params<M>): Promise<Result<M>> => {
+  type ApiResponse = Pick<
+    CommonSwapParams<M>,
+    'servers' | 'addressIn' | 'addressOut' | 'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce'
+  > & { timestamp: number };
+
+  const result = await fetch<ApiResponse>(`${params.servers.ethereum.swap}/api/v1/swaps/create`, {
     method: 'post',
     body: JSON.stringify({
-      address_to: params.addressTo,
-      amount: params.amount,
-      currency_from: params.currencyFrom,
-      currency_to: params.currencyTo,
+      address_to: params.addressOut,
+      amount: params.amountIn,
+      currency_from: params.currencyIn,
+      currency_to: params.currencyOut,
       nonce: params.nonce,
     }),
   });
+
+  if (!result.ok) {
+    throw new Error(`${result.status}: ${result.response}`);
+  }
+
+  return { ...result.response, timestamp: new Date(result.response.timestamp * 1000) };
 };
