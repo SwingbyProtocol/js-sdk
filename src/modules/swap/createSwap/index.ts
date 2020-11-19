@@ -1,6 +1,7 @@
+import { getNetwork } from '../../context';
 import { fetch } from '../../fetch';
 import { Mode } from '../../modes';
-import { CommonSwapParams } from '../common-param-types';
+import { CommonSwapParams } from '../../swap-params';
 
 type Params<M extends Mode> = Pick<
   CommonSwapParams<M>,
@@ -12,20 +13,28 @@ type Result<M extends Mode> = Pick<
   'addressIn' | 'addressOut' | 'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce' | 'timestamp'
 >;
 
-export const createSwap = async <M extends Mode>(params: Params<M>): Promise<Result<M>> => {
+export const createSwap = async <M extends Mode>({
+  context,
+  currencyOut,
+  currencyIn,
+  addressOut,
+  amountIn,
+  nonce,
+}: Params<M>): Promise<Result<M>> => {
   type ApiResponse = Pick<
     CommonSwapParams<M>,
     'addressIn' | 'addressOut' | 'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce'
   > & { timestamp: number };
 
-  const result = await fetch<ApiResponse>(`${params.context.binance.swap}/api/v1/swaps/create`, {
+  const network = getNetwork({ currencyIn, currencyOut });
+  const result = await fetch<ApiResponse>(`${context.servers[network].swap}/api/v1/swaps/create`, {
     method: 'post',
     body: JSON.stringify({
-      address_to: params.addressOut,
-      amount: params.amountIn,
-      currency_from: params.currencyIn,
-      currency_to: params.currencyOut,
-      nonce: params.nonce,
+      address_to: addressOut,
+      amount: amountIn,
+      currency_from: currencyIn,
+      currency_to: currencyOut,
+      nonce,
     }),
   });
 

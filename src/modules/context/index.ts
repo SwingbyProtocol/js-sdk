@@ -1,13 +1,24 @@
+import { logger } from '../logger';
 import { Mode } from '../modes';
+import { Network } from '../networks';
+import { CommonSwapParams } from '../swap-params';
 
-const NETWORKS = ['ethereum', 'binance'] as const;
-export type Network = typeof NETWORKS[number];
-
-export type SwingbyContext<M extends Mode> = { readonly mode: M } & {
-  readonly [N in Network]: {
-    swap: string;
-    explorer: string;
+export type SwingbyContext<M extends Mode> = {
+  readonly mode: M;
+  servers: {
+    readonly [N in Network]: {
+      swap: string;
+      explorer: string;
+    };
   };
+};
+
+export const getNetwork = <M extends Mode>({
+  currencyIn,
+  currencyOut,
+}: Pick<CommonSwapParams<M>, 'currencyIn' | 'currencyOut'>): Network => {
+  logger('getNetwork() for %s->%s', currencyIn, currencyOut);
+  return 'binance';
 };
 
 export const buildContext = async <M extends Mode>({
@@ -15,5 +26,8 @@ export const buildContext = async <M extends Mode>({
 }: {
   mode: M;
 }): Promise<SwingbyContext<M>> => {
-  return { mode, ethereum: { swap: '', explorer: '' }, binance: { swap: '', explorer: '' } };
+  return {
+    mode,
+    servers: { ethereum: { swap: '', explorer: '' }, binance: { swap: '', explorer: '' } },
+  };
 };

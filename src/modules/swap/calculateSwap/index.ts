@@ -3,7 +3,7 @@ import hexToBinary from 'hex-to-binary';
 import crypto from 'isomorphic-webcrypto';
 
 import { getEthBlock } from '../getEthBlock';
-import { CommonSwapParams } from '../common-param-types';
+import { CommonSwapParams } from '../../swap-params';
 import { Mode } from '../../modes';
 
 const difficultyZeroBits = 10;
