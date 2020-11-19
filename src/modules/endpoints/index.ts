@@ -10,6 +10,10 @@ export type ServersConfig<M extends Mode> = { readonly mode: M } & {
   };
 };
 
-export const calculateServers = <M extends Mode>({ mode }: { mode: M }): ServersConfig<M> => {
+export const calculateServers = async <M extends Mode>({
+  mode,
+}: {
+  mode: M;
+}): Promise<ServersConfig<M>> => {
   return { mode, ethereum: { swap: '', explorer: '' }, binance: { swap: '', explorer: '' } };
 };
