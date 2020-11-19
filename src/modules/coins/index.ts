@@ -1,5 +1,4 @@
-export const MODES = ['test', 'production'] as const;
-export type Mode = typeof MODES[number];
+import { Mode } from '../modes';
 
 export const COINS_TEST = ['BTC.B', 'BTC', 'BTCE'] as const;
 export const COINS_PRODUCTION = ['BTC', 'WBTC'] as const;

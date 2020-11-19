@@ -1,5 +1,5 @@
-import { Mode } from '../../coins';
 import { fetch } from '../../fetch';
+import { Mode } from '../../modes';
 import { CommonSwapParams } from '../common-param-types';
 
 type Params<M extends Mode> = Pick<

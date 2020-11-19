@@ -1,5 +1,6 @@
-import { Coin, Mode } from '../coins';
+import { Coin } from '../coins';
 import { SwingbyContext } from '../context';
+import { Mode } from '../modes';
 
 export type CommonSwapParams<M extends Mode> = {
   context: SwingbyContext<M>;

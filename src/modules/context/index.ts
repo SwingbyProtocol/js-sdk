@@ -1,4 +1,4 @@
-import { Mode } from '../coins';
+import { Mode } from '../modes';
 
 const NETWORKS = ['ethereum', 'binance'] as const;
 export type Network = typeof NETWORKS[number];

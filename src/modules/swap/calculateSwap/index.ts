@@ -3,8 +3,8 @@ import hexToBinary from 'hex-to-binary';
 import crypto from 'isomorphic-webcrypto';
 
 import { getEthBlock } from '../getEthBlock';
-import { Mode } from '../../coins';
 import { CommonSwapParams } from '../common-param-types';
+import { Mode } from '../../modes';
 
 const difficultyZeroBits = 10;
 
