@@ -1,4 +1,4 @@
-import { calculateServers } from '../../context';
+import { buildContext } from '../../context';
 
 import { calculateSwap } from './';
 
@@ -16,7 +16,7 @@ it.each([
   try {
     global.Date.now = jest.fn(() => new Date(date).getTime());
 
-    const servers = await calculateServers({ mode: 'test' });
+    const servers = await buildContext({ mode: 'test' });
     const result = await calculateSwap({
       servers,
       amountIn: '1',

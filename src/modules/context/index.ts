@@ -10,7 +10,7 @@ export type ServersConfig<M extends Mode> = { readonly mode: M } & {
   };
 };
 
-export const calculateServers = async <M extends Mode>({
+export const buildContext = async <M extends Mode>({
   mode,
 }: {
   mode: M;

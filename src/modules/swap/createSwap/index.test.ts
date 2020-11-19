@@ -1,4 +1,4 @@
-import { calculateServers } from '../../context';
+import { buildContext } from '../../context';
 import { calculateSwap } from '../calculateSwap';
 
 import { createSwap } from './';
@@ -14,7 +14,7 @@ it('gets back swap info after calling "/swaps/create"', async () => {
   const currencyIn = 'BTC';
   const currencyOut = 'BTC.B';
 
-  const servers = await calculateServers({ mode: 'test' });
+  const servers = await buildContext({ mode: 'test' });
   const { nonce, amountIn } = await calculateSwap({
     servers,
     amountIn: '1',

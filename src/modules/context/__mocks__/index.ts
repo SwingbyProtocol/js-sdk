@@ -1,6 +1,6 @@
 import { ServersConfig } from '..';
 
-export const calculateServers = (): ServersConfig<'test'> => {
+export const buildContext = (): ServersConfig<'test'> => {
   return {
     mode: 'test',
     ethereum: { swap: '', explorer: 'https://indexer-goerli.swingby.network/api/v2' },
