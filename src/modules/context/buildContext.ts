@@ -9,6 +9,9 @@ export const buildContext = async <M extends Mode>({
 }): Promise<SwingbyContext<M>> => {
   return {
     mode,
-    servers: { ethereum: { swap: '', explorer: '' }, binance: { swap: '', explorer: '' } },
+    servers: {
+      ethereum: { swap: '', explorer: '' },
+      binance: { swap: '', explorer: '' },
+    },
   };
 };
