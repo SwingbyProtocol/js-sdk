@@ -13,7 +13,7 @@ export const calculateFees = async <M extends Mode>({
   bridgeFeePercent: string;
   minerFeeInt: string;
   minerFee: string;
-  minerFeeCurrency: 'BTC' | 'BNB' | 'ETH';
+  minerFeeCurrency: typeof currencyOut;
 }> => {
   const network = getNetwork({ currencyIn, currencyOut });
   const result = await fetch<
@@ -29,28 +29,10 @@ export const calculateFees = async <M extends Mode>({
     throw new Error(`500: Could not find fee info for "${currencyOut}"`);
   }
 
-  const minerFeeCurrency = (() => {
-    if (currencyOut === 'BTC') {
-      return 'BTC';
-    }
-
-    if (currencyOut === 'BTCB-1DE') {
-      return 'BNB';
-    }
-
-    return 'ETH';
-  })();
-
   return {
     bridgeFeePercent: fees.bridgeFeePercent,
     minerFeeInt: fees.minerFee,
-    minerFee: (() => {
-      if (minerFeeCurrency === 'BTC' || minerFeeCurrency === 'BNB') {
-        return new BigNumber(fees.minerFee).div('1e8').toFixed();
-      }
-
-      return new BigNumber(fees.minerFee).div('1e18').toFixed();
-    })(),
-    minerFeeCurrency,
+    minerFee: new BigNumber(fees.minerFee).div('1e8').toFixed(),
+    minerFeeCurrency: currencyOut,
   };
 };
