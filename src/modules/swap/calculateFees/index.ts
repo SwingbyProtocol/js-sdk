@@ -1,4 +1,5 @@
 import { Big } from 'big.js';
+
 import { getNetwork } from '../../context';
 import { fetch } from '../../fetch';
 import { Mode } from '../../modes';
@@ -10,7 +11,7 @@ export const calculateFees = async <M extends Mode>({
   currencyIn,
   currencyOut,
 }: Pick<CommonSwapParams<M>, 'context' | 'currencyIn' | 'currencyOut'>): Promise<
-  Pick<CommonSwapParams<M>, 'bridgeFeePercent' | 'minerFee' | 'feeCurrency'>
+  Pick<CommonSwapParams<M>, 'feeBridgePercent' | 'feeMiner' | 'feeCurrency'>
 > => {
   const network = getNetwork({ currencyIn, currencyOut });
   const result = await fetch<
@@ -27,8 +28,8 @@ export const calculateFees = async <M extends Mode>({
   }
 
   return {
-    bridgeFeePercent: new Big(fees.bridgeFeePercent).div('100').toFixed(),
-    minerFee: new Big(fees.minerFee).div('1e8').toFixed(),
+    feeBridgePercent: new Big(fees.bridgeFeePercent).div('100').toFixed(),
+    feeMiner: new Big(fees.minerFee).div('1e8').toFixed(),
     feeCurrency: currencyOut,
   };
 };

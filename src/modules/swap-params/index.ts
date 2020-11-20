@@ -16,10 +16,10 @@ export type CommonSwapParams<M extends Mode> = {
   nonce: number;
   timestamp: Date;
   /** e.g. `0.1` means `10%`. */
-  bridgeFeePercent: string;
+  feeBridgePercent: string;
   /** In the units specified by `feeCurrency`. */
-  minerFee: string;
+  feeMiner: string;
   feeCurrency: Coin<M>;
   /** In the units specified by `feeCurrency`. */
-  totalFee: string;
+  feeTotal: string;
 };
