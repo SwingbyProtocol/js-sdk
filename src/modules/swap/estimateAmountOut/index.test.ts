@@ -5,38 +5,41 @@ import { estimateAmountOut } from './';
 
 jest.mock('../../context/buildContext');
 
-it.each<[{ amountIn: string; currencyIn: Coin<'test'>; currencyOut: Coin<'test'> }, any]>([
+it.each<[{ amountUser: string; currencyIn: Coin<'test'>; currencyOut: Coin<'test'> }, any]>([
   [
-    { amountIn: '1', currencyIn: 'BTC', currencyOut: 'BTCB' },
+    { amountUser: '1', currencyIn: 'BTC', currencyOut: 'BTCB' },
     {
       amountOut: '0.998995',
       bridgeFeePercent: '0.001',
       minerFee: '0.000005',
       minerFeeCurrency: 'BTCB',
       minerFeeInt: '500',
+      totalFee: '0.001005',
     },
   ],
   [
-    { amountIn: '3', currencyIn: 'BTC', currencyOut: 'BTCE' },
+    { amountUser: '3', currencyIn: 'BTC', currencyOut: 'BTCE' },
     {
       amountOut: '2.997',
       bridgeFeePercent: '0.001',
       minerFee: '0',
       minerFeeCurrency: 'BTCE',
       minerFeeInt: '0',
+      totalFee: '0.003',
     },
   ],
   [
-    { amountIn: '156', currencyIn: 'BTCE', currencyOut: 'BTCB' },
+    { amountUser: '156', currencyIn: 'BTCE', currencyOut: 'BTCB' },
     {
       amountOut: '155.843995',
       bridgeFeePercent: '0.001',
       minerFee: '0.000005',
       minerFeeCurrency: 'BTCB',
       minerFeeInt: '500',
+      totalFee: '0.156005',
     },
   ],
-])('works for %O', async ({ amountIn, currencyIn, currencyOut }, expected) => {
+])('works for %O', async ({ amountUser, currencyIn, currencyOut }, expected) => {
   expect.assertions(1);
 
   const context = await buildContext({ mode: 'test' });
@@ -44,7 +47,7 @@ it.each<[{ amountIn: string; currencyIn: Coin<'test'>; currencyOut: Coin<'test'>
     context,
     currencyIn,
     currencyOut,
-    amountIn,
+    amountUser,
   });
 
   expect(result).toMatchObject(expected);

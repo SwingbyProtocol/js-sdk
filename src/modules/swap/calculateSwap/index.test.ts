@@ -19,9 +19,9 @@ it.each([
     const context = await buildContext({ mode: 'test' });
     const result = await calculateSwap({
       context,
-      amountIn: '1',
+      amountUser: '1',
       currencyIn: 'BTC',
-      currencyOut: 'BTC.B',
+      currencyOut: 'BTCB',
       addressOut: '0x0807cd4fb2cc82f8d45182a1d7d44446aee088b3',
     });
 

@@ -10,7 +10,7 @@ const difficultyZeroBits = 10;
 
 type Params<M extends Mode = 'test'> = Pick<
   CommonSwapParams<M>,
-  'context' | 'addressOut' | 'currencyIn' | 'currencyOut' | 'amountIn'
+  'context' | 'addressOut' | 'currencyIn' | 'currencyOut' | 'amountUser'
 >;
 
 type Result<M extends Mode = 'test'> = Pick<CommonSwapParams<M>, 'amountIn' | 'nonce'>;
@@ -20,7 +20,7 @@ export const calculateSwap = async <M extends Mode = 'test'>({
   addressOut,
   currencyIn,
   currencyOut,
-  amountIn,
+  amountUser,
 }: Params<M>): Promise<Result<M>> => {
   let startSecs = new Date().getSeconds();
 
@@ -28,7 +28,7 @@ export const calculateSwap = async <M extends Mode = 'test'>({
   let hash: any;
   let latestRound = await getRound({ context, currencyIn, currencyOut });
   let strHashArg = '';
-  const flooredAmount = floorAmount(amountIn);
+  const flooredAmount = floorAmount(amountUser);
 
   do {
     nonce += 1;

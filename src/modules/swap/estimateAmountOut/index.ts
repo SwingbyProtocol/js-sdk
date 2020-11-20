@@ -7,21 +7,21 @@ export const estimateAmountOut = async <M extends Mode>({
   context,
   currencyIn,
   currencyOut,
-  amountIn,
-}: Pick<CommonSwapParams<M>, 'context' | 'amountIn' | 'currencyIn' | 'currencyOut'>): Promise<{
+  amountUser,
+}: Pick<CommonSwapParams<M>, 'context' | 'amountUser' | 'currencyIn' | 'currencyOut'>): Promise<{
   bridgeFeePercent: string;
   minerFeeInt: string;
   minerFee: string;
   minerFeeCurrency: typeof currencyOut;
   amountOut: string;
+  totalFee: string;
 }> => {
   const fees = await calculateFees({ context, currencyIn, currencyOut });
+  const totalFee = new BigNumber(amountUser).times(fees.bridgeFeePercent).plus(fees.minerFee);
 
   return {
     ...fees,
-    amountOut: new BigNumber(amountIn)
-      .times(new BigNumber(1).minus(fees.bridgeFeePercent))
-      .minus(fees.minerFee)
-      .toFixed(),
+    totalFee: totalFee.toFixed(),
+    amountOut: new BigNumber(amountUser).minus(totalFee).toFixed(),
   };
 };
