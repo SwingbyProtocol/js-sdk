@@ -8,7 +8,7 @@ const currencyOut = 'BTCB';
 (async () => {
   const context = await buildContext({ mode: 'test' });
 
-  const { totalFee, bridgeFeePercent, minerFee } = await estimateAmountOut({
+  const { totalFee, bridgeFeePercent, minerFee, feeCurrency } = await estimateAmountOut({
     context,
     amountUser,
     currencyIn,
@@ -16,9 +16,9 @@ const currencyOut = 'BTCB';
   });
 
   console.log(
-    `Transacion fee: ${totalFee} ${currencyOut} (${
+    `Transacion fee: ${totalFee} ${feeCurrency} (${
       +bridgeFeePercent * 100
-    }% + ${minerFee} ${currencyOut})`,
+    }% + ${minerFee} ${feeCurrency})`,
   );
 
   const { nonce, amountIn } = await calculateSwap({

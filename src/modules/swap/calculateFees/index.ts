@@ -9,12 +9,9 @@ export const calculateFees = async <M extends Mode>({
   context,
   currencyIn,
   currencyOut,
-}: Pick<CommonSwapParams<M>, 'context' | 'currencyIn' | 'currencyOut'>): Promise<{
-  bridgeFeePercent: string;
-  minerFeeInt: string;
-  minerFee: string;
-  minerFeeCurrency: typeof currencyOut;
-}> => {
+}: Pick<CommonSwapParams<M>, 'context' | 'currencyIn' | 'currencyOut'>): Promise<
+  Pick<CommonSwapParams<M>, 'bridgeFeePercent' | 'minerFee' | 'feeCurrency'>
+> => {
   const network = getNetwork({ currencyIn, currencyOut });
   const result = await fetch<
     Array<{ bridgeFeePercent: string; currency: Coin<M>; minerFee: string }>
@@ -31,8 +28,7 @@ export const calculateFees = async <M extends Mode>({
 
   return {
     bridgeFeePercent: new BigNumber(fees.bridgeFeePercent).div('100').toFixed(),
-    minerFeeInt: fees.minerFee,
     minerFee: new BigNumber(fees.minerFee).div('1e8').toFixed(),
-    minerFeeCurrency: currencyOut,
+    feeCurrency: currencyOut,
   };
 };

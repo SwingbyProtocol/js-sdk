@@ -12,12 +12,12 @@ it('gets back swap info after calling "/swaps/create"', async () => {
 
   const addressOut = 'tbnb16ke3clwqmduvzv6awlprjw3ecw7g52qw7c6hdm';
   const currencyIn = 'BTC';
-  const currencyOut = 'BTC.B';
+  const currencyOut = 'BTCB';
 
   const context = await buildContext({ mode: 'test' });
   const { nonce, amountIn } = await calculateSwap({
     context,
-    amountIn: '1',
+    amountUser: '1',
     addressOut,
     currencyIn,
     currencyOut,
@@ -37,7 +37,7 @@ it('gets back swap info after calling "/swaps/create"', async () => {
     addressOut: 'tbnb16ke3clwqmduvzv6awlprjw3ecw7g52qw7c6hdm',
     amountIn: expect.stringContaining('0.99'),
     currencyIn: 'BTC',
-    currencyOut: 'BTC.B',
+    currencyOut: 'BTCB',
     timestamp: expect.any(Date),
   });
 });
