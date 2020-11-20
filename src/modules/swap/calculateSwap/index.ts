@@ -105,7 +105,7 @@ const verifyHashPrefix = (hash: string) => {
   try {
     for (let i = 0; i < difficultyZeroBits; i++) {
       if (reversedBinaryHash[11 + i] !== '0') {
-        throw 'invalid nonce';
+        throw new Error('Invalid nonce');
       }
     }
     return true;
