@@ -8,11 +8,25 @@ jest.mock('../../context/buildContext');
 it.each<[{ currencyIn: Coin<'test'>; currencyOut: Coin<'test'> }, any]>([
   [
     { currencyIn: 'BTC', currencyOut: 'BTCB' },
-    { bridgeFeePercent: '0.1', minerFee: '0.000005', minerFeeCurrency: 'BTCB', minerFeeInt: '500' },
+    {
+      bridgeFeePercent: '0.001',
+      minerFee: '0.000005',
+      minerFeeCurrency: 'BTCB',
+      minerFeeInt: '500',
+    },
   ],
   [
     { currencyIn: 'BTC', currencyOut: 'BTCE' },
-    { bridgeFeePercent: '0.1', minerFee: '0', minerFeeCurrency: 'BTCE', minerFeeInt: '0' },
+    { bridgeFeePercent: '0.001', minerFee: '0', minerFeeCurrency: 'BTCE', minerFeeInt: '0' },
+  ],
+  [
+    { currencyIn: 'BTCE', currencyOut: 'BTCB' },
+    {
+      bridgeFeePercent: '0.001',
+      minerFee: '0.000005',
+      minerFeeCurrency: 'BTCB',
+      minerFeeInt: '500',
+    },
   ],
 ])('works for %O', async ({ currencyIn, currencyOut }, expected) => {
   expect.assertions(1);

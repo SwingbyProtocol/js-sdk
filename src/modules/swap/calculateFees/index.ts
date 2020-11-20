@@ -30,7 +30,7 @@ export const calculateFees = async <M extends Mode>({
   }
 
   return {
-    bridgeFeePercent: fees.bridgeFeePercent,
+    bridgeFeePercent: new BigNumber(fees.bridgeFeePercent).div('100').toFixed(),
     minerFeeInt: fees.minerFee,
     minerFee: new BigNumber(fees.minerFee).div('1e8').toFixed(),
     minerFeeCurrency: currencyOut,
