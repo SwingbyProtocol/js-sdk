@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js';
+import { Big } from 'big.js';
 import { getNetwork } from '../../context';
 import { fetch } from '../../fetch';
 import { Mode } from '../../modes';
@@ -27,8 +27,8 @@ export const calculateFees = async <M extends Mode>({
   }
 
   return {
-    bridgeFeePercent: new BigNumber(fees.bridgeFeePercent).div('100').toFixed(),
-    minerFee: new BigNumber(fees.minerFee).div('1e8').toFixed(),
+    bridgeFeePercent: new Big(fees.bridgeFeePercent).div('100').toFixed(),
+    minerFee: new Big(fees.minerFee).div('1e8').toFixed(),
     feeCurrency: currencyOut,
   };
 };

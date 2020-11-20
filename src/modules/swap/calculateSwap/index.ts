@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import { Big, BigSource } from 'big.js';
 import hexToBinary from 'hex-to-binary';
 import crypto from 'isomorphic-webcrypto';
 
@@ -54,7 +54,7 @@ export const calculateSwap = async <M extends Mode = 'test'>({
     }
   } while (!verifyHashPrefix(hash));
 
-  const rejectionSample = new BigNumber(`0x${hash}`).mod(1024);
+  const rejectionSample = new Big(BigInt(`0x${hash}`).toString()).mod(1024);
   const BigNumberFloorAmount = toSatoshi(flooredAmount);
   const toSendBI = BigNumberFloorAmount.minus(rejectionSample);
   const numSendAmount = toBTC(toSendBI.toString());
@@ -79,7 +79,7 @@ export const getRound = async <M extends Mode>({
   return String(round + 1);
 };
 
-export const floorAmount = (amount: BigNumber.Value): string => {
+export const floorAmount = (amount: BigSource): string => {
   const numAmount = Number(amount);
   const decimals = countDecimals(numAmount);
   if (decimals === 0) {
@@ -114,12 +114,12 @@ const verifyHashPrefix = (hash: string) => {
   }
 };
 
-const toBTC = (satoshiValue: BigNumber.Value): BigNumber => {
-  return new BigNumber(satoshiValue).div(100000000, 10);
+const toBTC = (satoshiValue: BigSource): Big => {
+  return new Big(satoshiValue).div(100000000);
 };
 
-const toSatoshi = (btcValue: BigNumber.Value): BigNumber => {
-  return new BigNumber(btcValue).times(100000000, 10);
+const toSatoshi = (btcValue: BigSource): Big => {
+  return new Big(btcValue).times(100000000);
 };
 
 const generateHash = async (
