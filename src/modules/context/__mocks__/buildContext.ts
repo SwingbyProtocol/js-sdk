@@ -1,8 +1,13 @@
-import { SwingbyContext } from '..';
+import type { SwingbyContext } from '..';
+import type { Mode } from '../../modes';
 
-export const buildContext = (): SwingbyContext<'test'> => {
+export const buildContext = async <M extends Mode>({
+  mode,
+}: {
+  mode: M;
+}): Promise<SwingbyContext<M>> => {
   return {
-    mode: 'test',
+    mode,
     servers: {
       ethereum: {
         swap: 'https://tbtc-goerli-1.swingby.network',
