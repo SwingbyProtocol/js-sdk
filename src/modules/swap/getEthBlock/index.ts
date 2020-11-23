@@ -6,7 +6,7 @@ export const getEthBlock = async <M extends Mode>(
   params: Pick<CommonSwapParams<M>, 'context'>,
 ): Promise<number> => {
   const result = await fetch<{ blockbook: { inSync: boolean; bestHeight: number } }>(
-    params.context.servers.ethereum.explorer,
+    `${params.context.servers.ethereum.explorer}/api/v2`,
   );
 
   if (result.ok && result.response.blockbook.inSync) {
