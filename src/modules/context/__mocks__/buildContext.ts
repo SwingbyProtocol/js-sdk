@@ -11,11 +11,15 @@ export const buildContext = async <M extends Mode>({
     servers: {
       ethereum: {
         swap: 'https://tbtc-goerli-1.swingby.network',
-        explorer: 'https://indexer-goerli.swingby.network/api/v2',
+        explorer: 'https://indexer-goerli.swingby.network',
       },
       binance: {
         swap: 'https://testnet-node.swingby.network',
         explorer: '',
+      },
+      bitcoin: {
+        swap: 'https://indexer-tbtc.swingby.network',
+        explorer: 'https://indexer-goerli.swingby.network',
       },
     },
   };
