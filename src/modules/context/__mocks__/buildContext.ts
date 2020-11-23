@@ -1,11 +1,7 @@
 import type { SwingbyContext } from '..';
 import type { Mode } from '../../modes';
 
-export const buildContext = async <M extends Mode>({
-  mode,
-}: {
-  mode: M;
-}): Promise<SwingbyContext<M>> => {
+export const buildContext = async ({ mode }: { mode: Mode }): Promise<SwingbyContext> => {
   return {
     mode,
     servers: {

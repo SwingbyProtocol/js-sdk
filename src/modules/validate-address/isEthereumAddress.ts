@@ -1,10 +1,9 @@
 import { SwingbyContext } from '../context';
-import { Mode } from '../modes';
 
-export const isEthereumAddress = <M extends Mode>({
+export const isEthereumAddress = ({
   address,
 }: {
-  context: SwingbyContext<M>;
+  context: SwingbyContext;
   address: string;
 }): boolean => {
   return /^0x[a-fA-F0-9]{40}$/.test(address);

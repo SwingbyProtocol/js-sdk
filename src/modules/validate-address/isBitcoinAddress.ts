@@ -1,13 +1,12 @@
 import validate from 'bitcoin-address-validation';
 
 import { SwingbyContext } from '../context';
-import { Mode } from '../modes';
 
-export const isBitcoinAddress = <M extends Mode>({
+export const isBitcoinAddress = ({
   context,
   address,
 }: {
-  context: SwingbyContext<M>;
+  context: SwingbyContext;
   address: string;
 }): boolean => {
   const result = validate(address);

@@ -1,17 +1,16 @@
 import type { SwingbyContext } from '../context';
-import type { Mode } from '../modes';
 import type { Network } from '../networks';
 
 import { isBinanceAddress } from './isBinanceAddress';
 import { isBitcoinAddress } from './isBitcoinAddress';
 import { isEthereumAddress } from './isEthereumAddress';
 
-export const isAddressValid = <M extends Mode>({
+export const isAddressValid = ({
   context,
   address,
   network,
 }: {
-  context: SwingbyContext<M>;
+  context: SwingbyContext;
   address: string;
   network?: Network;
 }): boolean => {

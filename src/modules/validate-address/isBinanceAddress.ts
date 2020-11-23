@@ -2,13 +2,12 @@ import { decode, fromWords } from 'bech32';
 
 import { SwingbyContext } from '../context';
 import { logger } from '../logger';
-import { Mode } from '../modes';
 
-export const isBinanceAddress = <M extends Mode>({
+export const isBinanceAddress = ({
   context,
   address,
 }: {
-  context: SwingbyContext<M>;
+  context: SwingbyContext;
   address: string;
 }): boolean => {
   const prefix = context.mode === 'production' ? 'bnb' : 'tbnb';

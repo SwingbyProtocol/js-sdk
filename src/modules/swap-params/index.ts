@@ -3,7 +3,7 @@ import type { SwingbyContext } from '../context';
 import type { Mode } from '../modes';
 
 export type CommonSwapParams<M extends Mode> = {
-  context: SwingbyContext<M>;
+  context: SwingbyContext;
   addressIn: string;
   addressOut: string;
   /** Amount that users type in the UI. */
