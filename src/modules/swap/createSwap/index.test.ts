@@ -1,5 +1,4 @@
 import { buildContext } from '../../context';
-import { calculateSwap } from '../calculateSwap';
 
 import { createSwap } from './';
 
@@ -10,34 +9,26 @@ it('gets back swap info after calling "/swaps/create"', async () => {
 
   expect.assertions(1);
 
-  const addressOut = 'tbnb16ke3clwqmduvzv6awlprjw3ecw7g52qw7c6hdm';
+  const addressOut = '0xb680c8F33f058163185AB6121F7582BAb57Ef8a7';
   const currencyIn = 'BTC';
-  const currencyOut = 'BTCB';
+  const currencyOut = 'BTCE';
 
   const context = await buildContext({ mode: 'test' });
-  const { nonce, amountIn } = await calculateSwap({
-    context,
-    amountUser: '1',
-    addressOut,
-    currencyIn,
-    currencyOut,
-  });
 
   return expect(
     createSwap({
       context,
-      amountIn,
-      nonce,
       addressOut,
       currencyIn,
       currencyOut,
+      amountUser: '1',
     }),
   ).resolves.toMatchObject({
     addressIn: expect.any(String),
-    addressOut: 'tbnb16ke3clwqmduvzv6awlprjw3ecw7g52qw7c6hdm',
+    addressOut: '0xb680c8F33f058163185AB6121F7582BAb57Ef8a7',
     amountIn: expect.stringContaining('0.99'),
     currencyIn: 'BTC',
-    currencyOut: 'BTCB',
+    currencyOut: 'BTCE',
     timestamp: expect.any(Date),
   });
 });
