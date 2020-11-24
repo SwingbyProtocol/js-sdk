@@ -2,9 +2,9 @@ import { Big, BigSource } from 'big.js';
 import hexToBinary from 'hex-to-binary';
 import crypto from 'isomorphic-webcrypto';
 
-import { CommonSwapParams } from '../../swap-params';
-import { Mode } from '../../modes';
-import { getNetworkForCoin } from '../../coins';
+import { CommonSwapParams } from '../../../swap-params';
+import { Mode } from '../../../modes';
+import { getNetworkForCoin } from '../../../coins';
 
 import { getBlockHeight } from './getBlockHeight';
 

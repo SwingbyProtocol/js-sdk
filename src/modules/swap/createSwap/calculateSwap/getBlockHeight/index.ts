@@ -1,7 +1,7 @@
-import { fetch } from '../../../fetch';
-import { Mode } from '../../../modes';
-import { Network } from '../../../networks';
-import { CommonSwapParams } from '../../../swap-params';
+import { fetch } from '../../../../fetch';
+import { Mode } from '../../../../modes';
+import { Network } from '../../../../networks';
+import { CommonSwapParams } from '../../../../swap-params';
 
 export const getBlockHeight = async <M extends Mode>({
   context,

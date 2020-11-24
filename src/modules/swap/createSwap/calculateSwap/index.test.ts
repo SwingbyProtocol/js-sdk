@@ -1,9 +1,9 @@
-import { buildContext } from '../../context';
-import { CommonSwapParams } from '../../swap-params';
+import { buildContext } from '../../../context';
+import { CommonSwapParams } from '../../../swap-params';
 
 import { calculateSwap } from './';
 
-jest.mock('../../context/buildContext');
+jest.mock('../../../context/buildContext');
 jest.mock('./getBlockHeight', () => ({ getBlockHeight: () => 100 }));
 
 it.each<

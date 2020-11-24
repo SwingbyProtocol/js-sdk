@@ -2,7 +2,8 @@ import { getNetwork } from '../../context';
 import { fetch } from '../../fetch';
 import { Mode } from '../../modes';
 import { CommonSwapParams } from '../../swap-params';
-import { calculateSwap } from '../calculateSwap';
+
+import { calculateSwap } from './calculateSwap';
 
 type Params<M extends Mode> = Pick<
   CommonSwapParams<M>,
