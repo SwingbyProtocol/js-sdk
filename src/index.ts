@@ -1,4 +1,11 @@
-export { COINS_PRODUCTION, COINS_TEST, Coin, isProductionCoin, isTestCoin } from './modules/coins';
+export {
+  COINS_PRODUCTION,
+  COINS_TEST,
+  Coin,
+  isProductionCoin,
+  isTestCoin,
+  getNetworkForCoin,
+} from './modules/coins';
 export type { Mode } from './modules/modes';
 export { createSwap, calculateSwap, estimateAmountOut } from './modules/swap';
 export { buildContext, SwingbyContext } from './modules/context';

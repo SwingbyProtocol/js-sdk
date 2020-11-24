@@ -12,6 +12,10 @@ export const isAddressValid = ({
 }: {
   context: SwingbyContext;
   address: string;
+  /**
+   * If passed, this function will verify whether the address is valid for this partifular network.
+   *
+   * If not passed, this function will verify whether the address is valid for at least one of the supported networks. */
   network?: Network;
 }): boolean => {
   if (typeof network === 'undefined') {
