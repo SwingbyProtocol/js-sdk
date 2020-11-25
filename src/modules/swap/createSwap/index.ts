@@ -16,14 +16,22 @@ type Result<M extends Mode> = Pick<
   'addressIn' | 'addressOut' | 'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce' | 'timestamp'
 >;
 
-export const createSwap = async <M extends Mode>(params: Params<M>): Promise<Result<M>> =>
-  createSwapRec({ ...params, pastExecutions: 0 });
+const INTERVAL = 2000;
+
+export const createSwap = async <M extends Mode>({
+  timeout = 2 * 60 * 1000,
+  ...params
+}: Params<M> & {
+  /** Time in milliseconds that this method will retry in case of error before throwing. Default: `120000` (2 min.). */
+  timeout?: number;
+}): Promise<Result<M>> => createSwapRec({ ...params, startedAt: Date.now(), timeout });
 
 const createSwapRec = async <M extends Mode>({
-  pastExecutions,
+  startedAt,
+  timeout,
   ...params
-}: Params<M> & { pastExecutions: number }): Promise<Result<M>> => {
-  logger('Will execute createSwap(%O). Past executions: "%d".', params, pastExecutions);
+}: Params<M> & { startedAt: number; timeout: number }): Promise<Result<M>> => {
+  logger('Will execute createSwap(%O).', params);
 
   const { amountIn, nonce } = await calculateSwap(params);
 
@@ -47,13 +55,27 @@ const createSwapRec = async <M extends Mode>({
     },
   );
 
-  if (!result.ok) {
-    if (/the send amount does not contain a valid proof of work/.test(result.response)) {
-      return createSwapRec({ ...params, pastExecutions: pastExecutions + 1 });
-    }
+  logger('/swaps/create has replied: %O', result);
 
+  if (result.ok) {
+    return { ...result.response, timestamp: new Date(result.response.timestamp * 1000) };
+  }
+
+  if (!/the send amount does not contain a valid proof of work/.test(result.response)) {
     throw new Error(`${result.status}: ${result.response}`);
   }
 
-  return { ...result.response, timestamp: new Date(result.response.timestamp * 1000) };
+  if (Date.now() - startedAt > timeout) {
+    logger('PoW has been failing for more than %dms. Will throw error.', timeout);
+    throw new Error(`${result.status}: ${result.response}`);
+  }
+
+  logger('PoW failed. Will try again in %dms.', INTERVAL);
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      createSwapRec({ ...params, startedAt, timeout })
+        .then(resolve)
+        .catch(reject);
+    }, INTERVAL);
+  });
 };
