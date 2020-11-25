@@ -2,9 +2,11 @@ import { Big, BigSource } from 'big.js';
 import hexToBinary from 'hex-to-binary';
 import crypto from 'isomorphic-webcrypto';
 
-import { getEthBlock } from '../getEthBlock';
-import { CommonSwapParams } from '../../swap-params';
-import { Mode } from '../../modes';
+import { CommonSwapParams } from '../../../swap-params';
+import { Mode } from '../../../modes';
+import { getNetworkForCoin } from '../../../coins';
+
+import { getBlockHeight } from './getBlockHeight';
 
 const difficultyZeroBits = 10;
 
@@ -22,8 +24,6 @@ export const calculateSwap = async <M extends Mode = 'test'>({
   currencyOut,
   amountUser,
 }: Params<M>): Promise<Result<M>> => {
-  let startSecs = new Date().getSeconds();
-
   let nonce = 0;
   let hash: any;
   let latestRound = await getRound({ context, currencyIn, currencyOut });
@@ -46,12 +46,6 @@ export const calculateSwap = async <M extends Mode = 'test'>({
       ';';
 
     hash = await generateHash(strHashArg);
-    const finishSecs = new Date().getSeconds();
-    if (startSecs > finishSecs) {
-      nonce = 0;
-      startSecs = new Date().getSeconds();
-      latestRound = await getRound({ context, currencyOut, currencyIn });
-    }
   } while (!verifyHashPrefix(hash));
 
   const rejectionSample = new Big(BigInt(`0x${hash}`).toString()).mod(1024);
@@ -68,14 +62,18 @@ export const getRound = async <M extends Mode>({
   currencyOut,
   currencyIn,
 }: Pick<CommonSwapParams<M>, 'context' | 'currencyIn' | 'currencyOut'>): Promise<string> => {
-  let round: number;
-  if (currencyIn === 'BTCE' || currencyOut === 'BTCE') {
-    const blockHeight = await getEthBlock({ context });
-    round = Math.floor(blockHeight / 3);
-  } else {
-    const timestamp = Math.floor(Date.now() / 1000);
-    round = Math.floor(timestamp / 60);
-  }
+  const round: number = await (async () => {
+    if (
+      getNetworkForCoin(currencyOut) === 'ethereum' ||
+      getNetworkForCoin(currencyIn) === 'ethereum'
+    ) {
+      const blockHeight = await getBlockHeight({ context, network: 'ethereum' });
+      return Math.floor(blockHeight / 3);
+    }
+
+    return await getBlockHeight({ context, network: 'bitcoin' });
+  })();
+
   return String(round + 1);
 };
 
