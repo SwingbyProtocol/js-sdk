@@ -15,7 +15,7 @@ export const buildContext = async ({ mode }: { mode: Mode }): Promise<SwingbyCon
         explorer: '',
       },
       bitcoin: {
-        swap: 'https://indexer-tbtc.swingby.network',
+        swap: 'ttps://tbtc-goerli-1.swingby.network',
         explorer: 'https://indexer-tbtc.swingby.network',
       },
     },
