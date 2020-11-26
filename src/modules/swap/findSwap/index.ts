@@ -47,26 +47,26 @@ export const findSwap = async <M extends Mode>({
   })();
 
   if (!transactionInHash) {
-    const result = await fetch<{
-      items: Array<{ txIdIn: string; txIdOut: string; status: StatusFromServer }>;
-    }>(`${context.servers[network].swap}/api/v1/swaps/query?in_hash=${transactionInHash}`);
-
-    if (!result.ok) {
-      throw new Error(`${result.status}: ${result.response}`);
-    }
-
-    if (result.response.items.length <= 0) {
-      return { transacionInHash: null, transactionOutHash: null, status: 'waiting' };
-    }
-
-    return {
-      transacionInHash: result.response.items[0].txIdIn,
-      transactionOutHash: result.response.items[0].txIdOut,
-      status: getStatus(result.response.items[0].status),
-    };
+    return { transacionInHash: null, transactionOutHash: null, status: 'waiting' };
   }
 
-  return { transacionInHash: null, transactionOutHash: null, status: 'waiting' };
+  const result = await fetch<{
+    items: Array<{ txIdIn: string; txIdOut: string; status: StatusFromServer }>;
+  }>(`${context.servers[network].swap}/api/v1/swaps/query?in_hash=${transactionInHash}`);
+
+  if (!result.ok) {
+    throw new Error(`${result.status}: ${result.response}`);
+  }
+
+  if (result.response.items.length <= 0) {
+    return { transacionInHash: null, transactionOutHash: null, status: 'waiting' };
+  }
+
+  return {
+    transacionInHash: result.response.items[0].txIdIn,
+    transactionOutHash: result.response.items[0].txIdOut,
+    status: getStatus(result.response.items[0].status),
+  };
 };
 
 const getStatus = (value: StatusFromServer): Status => {
