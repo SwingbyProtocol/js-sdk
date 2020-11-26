@@ -8,7 +8,7 @@ export const isEthereumCoin = (symbol: Coin) => ['BTCE', 'WBTC'].includes(symbol
 export const isBinanceCoin = (symbol: Coin) => ['BTCB'].includes(symbol);
 export const isBitcoinCoin = (symbol: Coin) => ['BTC'].includes(symbol);
 
-export const getNetworkForCoin = (symbol: Coin): Network | undefined => {
+export const getNetworkForCoin = (symbol: Coin): Network => {
   if (isEthereumCoin(symbol)) {
     return 'ethereum';
   }
@@ -21,7 +21,7 @@ export const getNetworkForCoin = (symbol: Coin): Network | undefined => {
     return 'bitcoin';
   }
 
-  return undefined;
+  throw new Error(`Invalid coin "${symbol}"`);
 };
 
 type TestnetCoin = typeof COINS_TEST[number];
