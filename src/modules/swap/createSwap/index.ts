@@ -13,7 +13,14 @@ type Params<M extends Mode> = Pick<
 
 type Result<M extends Mode> = Pick<
   CommonSwapParams<M>,
-  'addressIn' | 'addressOut' | 'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce' | 'timestamp'
+  | 'addressIn'
+  | 'addressOut'
+  | 'amountIn'
+  | 'currencyIn'
+  | 'currencyOut'
+  | 'nonce'
+  | 'timestamp'
+  | 'hash'
 >;
 
 const INTERVAL = 2000;
@@ -37,7 +44,7 @@ const createSwapRec = async <M extends Mode>({
 
   type ApiResponse = Pick<
     CommonSwapParams<M>,
-    'addressIn' | 'addressOut' | 'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce'
+    'addressIn' | 'addressOut' | 'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
   > & { timestamp: number };
 
   const network = getNetwork(params);

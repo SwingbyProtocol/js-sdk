@@ -4,6 +4,8 @@ import type { Mode } from '../modes';
 
 export type CommonSwapParams<M extends Mode> = {
   context: SwingbyContext;
+  /** Unique identifier for a swap. */
+  hash: string;
   addressIn: string;
   addressOut: string;
   /** Amount that users type in the UI. */
