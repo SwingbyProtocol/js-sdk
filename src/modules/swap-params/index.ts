@@ -18,8 +18,12 @@ export type CommonSwapParams<M extends Mode> = {
   context: SwingbyContext;
   /** Unique identifier for a swap. */
   hash: string;
-  addressIn: string;
-  addressOut: string;
+  /** Address the user has sent funds from. */
+  addressUserOut: string;
+  /** Address where the user will receive their funds after the swap. */
+  addressUserIn: string;
+  /** Address that users have to send funds to to initiate a swap. */
+  addressSwapIn: string;
   /** Amount that users type in the UI. */
   amountUser: string;
   /** Amount that users have to send to Swingby to start the swap. */
@@ -37,6 +41,6 @@ export type CommonSwapParams<M extends Mode> = {
   /** In the units specified by `feeCurrency`. */
   feeTotal: string;
   status: SwapStatus;
-  transactionInId: string | null;
-  transactionOutId: string | null;
+  transactionInId: string;
+  transactionOutId: string;
 };

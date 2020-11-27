@@ -16,20 +16,15 @@ type ServerReturnType<M extends Mode> = {
   items: Array<
     Pick<
       CommonSwapParams<M>,
-      | 'addressIn'
-      | 'addressOut'
-      | 'amountIn'
-      | 'amountOut'
-      | 'currencyIn'
-      | 'currencyOut'
-      | 'feeCurrency'
-      | 'hash'
+      'amountIn' | 'amountOut' | 'currencyIn' | 'currencyOut' | 'feeCurrency' | 'hash'
     > & {
       fee: string;
       status: StatusFromServer;
       txIdIn: string;
       txIdOut: string;
       timestamp: number;
+      addressIn?: string;
+      addressOut: string;
     }
   >;
 };
@@ -40,8 +35,7 @@ export const getSwapDetails = async <M extends Mode>({
 }: Pick<CommonSwapParams<M>, 'context' | 'hash'>): Promise<
   Pick<
     CommonSwapParams<M>,
-    | 'addressIn'
-    | 'addressOut'
+    | 'addressUserIn'
     | 'amountIn'
     | 'amountOut'
     | 'currencyIn'
@@ -51,9 +45,11 @@ export const getSwapDetails = async <M extends Mode>({
     | 'hash'
     | 'status'
     | 'timestamp'
-    | 'transactionInId'
-    | 'transactionOutId'
-  >
+  > & {
+    addressUserOut: CommonSwapParams<M>['addressUserOut'] | null;
+    transactionInId: CommonSwapParams<M>['transactionInId'] | null;
+    transactionOutId: CommonSwapParams<M>['transactionOutId'] | null;
+  }
 > => {
   const result = await (async () => {
     const ethereumFetch = fetch<ServerReturnType<M>>(
@@ -81,8 +77,8 @@ export const getSwapDetails = async <M extends Mode>({
   })();
 
   return {
-    addressIn: result.addressIn,
-    addressOut: result.addressOut,
+    addressUserOut: result.addressIn || null,
+    addressUserIn: result.addressOut,
     amountIn: result.amountIn,
     amountOut: result.amountOut,
     currencyIn: result.currencyIn,

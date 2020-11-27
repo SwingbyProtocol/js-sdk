@@ -8,13 +8,13 @@ import { calculateSwap } from './calculateSwap';
 
 type Params<M extends Mode> = Pick<
   CommonSwapParams<M>,
-  'context' | 'addressOut' | 'currencyIn' | 'currencyOut' | 'amountUser'
+  'context' | 'addressUserIn' | 'currencyIn' | 'currencyOut' | 'amountUser'
 >;
 
 type Result<M extends Mode> = Pick<
   CommonSwapParams<M>,
-  | 'addressIn'
-  | 'addressOut'
+  | 'addressSwapIn'
+  | 'addressUserIn'
   | 'amountIn'
   | 'currencyIn'
   | 'currencyOut'
@@ -44,8 +44,8 @@ const createSwapRec = async <M extends Mode>({
 
   type ApiResponse = Pick<
     CommonSwapParams<M>,
-    'addressIn' | 'addressOut' | 'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
-  > & { timestamp: number };
+    'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
+  > & { timestamp: number; addressIn: string; addressOut: string };
 
   const network = getNetwork(params);
   const result = await fetch<ApiResponse>(
@@ -53,7 +53,7 @@ const createSwapRec = async <M extends Mode>({
     {
       method: 'post',
       body: JSON.stringify({
-        address_to: params.addressOut,
+        address_to: params.addressUserIn,
         amount: amountIn,
         currency_from: params.currencyIn,
         currency_to: params.currencyOut,
@@ -65,7 +65,12 @@ const createSwapRec = async <M extends Mode>({
   logger('/swaps/create has replied: %O', result);
 
   if (result.ok) {
-    return { ...result.response, timestamp: new Date(result.response.timestamp * 1000) };
+    return {
+      ...result.response,
+      addressSwapIn: result.response.addressIn,
+      addressUserIn: result.response.addressOut,
+      timestamp: new Date(result.response.timestamp * 1000),
+    };
   }
 
   if (!/the send amount does not contain a valid proof of work/.test(result.response)) {
