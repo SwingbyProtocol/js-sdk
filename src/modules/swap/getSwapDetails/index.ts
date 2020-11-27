@@ -59,8 +59,8 @@ export const getSwapDetails = async <M extends Mode>({
     const ethereumFetch = fetch<ServerReturnType<M>>(
       `${context.servers.ethereum.swap}/api/v1/swaps/query?hash=${hash}`,
     );
-    const bitcoinFetch = fetch<ServerReturnType<M>>(
-      `${context.servers.bitcoin.swap}/api/v1/swaps/query?hash=${hash}`,
+    const binanceFetch = fetch<ServerReturnType<M>>(
+      `${context.servers.binance.swap}/api/v1/swaps/query?hash=${hash}`,
     );
 
     try {
@@ -71,7 +71,7 @@ export const getSwapDetails = async <M extends Mode>({
     } catch (e) {}
 
     try {
-      const result = await bitcoinFetch;
+      const result = await binanceFetch;
       if (result.ok && result.response.items.length > 0) {
         return result.response.items[0];
       }
