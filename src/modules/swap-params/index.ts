@@ -12,7 +12,7 @@ const STATUSES = [
   'sending-refund',
   'refunded',
 ] as const;
-type Status = typeof STATUSES[number];
+export type SwapStatus = typeof STATUSES[number];
 
 export type CommonSwapParams<M extends Mode> = {
   context: SwingbyContext;
@@ -36,7 +36,7 @@ export type CommonSwapParams<M extends Mode> = {
   feeCurrency: Coin<M>;
   /** In the units specified by `feeCurrency`. */
   feeTotal: string;
-  status: Status;
+  status: SwapStatus;
   transactionInId: string | null;
   transactionOutId: string | null;
 };
