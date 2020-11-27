@@ -2,6 +2,18 @@ import type { Coin } from '../coins';
 import type { SwingbyContext } from '../context';
 import type { Mode } from '../modes';
 
+const STATUSES = [
+  'waiting',
+  'pending',
+  'signing',
+  'sending',
+  'completed',
+  'signing-refund',
+  'sending-refund',
+  'refunded',
+] as const;
+type Status = typeof STATUSES[number];
+
 export type CommonSwapParams<M extends Mode> = {
   context: SwingbyContext;
   /** Unique identifier for a swap. */
@@ -24,4 +36,7 @@ export type CommonSwapParams<M extends Mode> = {
   feeCurrency: Coin<M>;
   /** In the units specified by `feeCurrency`. */
   feeTotal: string;
+  status: Status;
+  transactionInId: string | null;
+  transactionOutId: string | null;
 };
