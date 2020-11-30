@@ -18,6 +18,7 @@ type ServerReturnType<M extends Mode> = {
       CommonSwapParams<M>,
       'amountIn' | 'amountOut' | 'currencyIn' | 'currencyOut' | 'feeCurrency' | 'hash'
     > & {
+      addressDeposit: string;
       fee: string;
       status: StatusFromServer;
       txIdIn: string;
@@ -35,6 +36,7 @@ export const getSwapDetails = async <M extends Mode>({
 }: Pick<CommonSwapParams<M>, 'context' | 'hash'>): Promise<
   Pick<
     CommonSwapParams<M>,
+    | 'addressSwapIn'
     | 'addressUserIn'
     | 'amountIn'
     | 'amountOut'
@@ -79,6 +81,7 @@ export const getSwapDetails = async <M extends Mode>({
   return {
     addressUserOut: result.addressIn || null,
     addressUserIn: result.addressOut,
+    addressSwapIn: result.addressDeposit,
     amountIn: result.amountIn,
     amountOut: result.amountOut,
     currencyIn: result.currencyIn,

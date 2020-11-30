@@ -45,7 +45,7 @@ const createSwapRec = async <M extends Mode>({
   type ApiResponse = Pick<
     CommonSwapParams<M>,
     'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
-  > & { timestamp: number; addressIn: string; addressOut: string };
+  > & { timestamp: number; addressDeposit: string; addressOut: string };
 
   const network = getNetwork(params);
   const result = await fetch<ApiResponse>(
@@ -67,7 +67,7 @@ const createSwapRec = async <M extends Mode>({
   if (result.ok) {
     return {
       ...result.response,
-      addressSwapIn: result.response.addressIn,
+      addressSwapIn: result.response.addressDeposit,
       addressUserIn: result.response.addressOut,
       timestamp: new Date(result.response.timestamp * 1000),
     };
