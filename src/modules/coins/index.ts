@@ -4,11 +4,12 @@ import type { Network } from '../networks';
 export const COINS_TEST = ['BTCB', 'BTC', 'BTCE'] as const;
 export const COINS_PRODUCTION = ['BTC', 'WBTC'] as const;
 
-export const isEthereumCoin = (symbol: Coin) => ['BTCE', 'WBTC'].includes(symbol);
-export const isBinanceCoin = (symbol: Coin) => ['BTCB'].includes(symbol);
-export const isBitcoinCoin = (symbol: Coin) => ['BTC'].includes(symbol);
+export const isEthereumCoin = (symbol: any): symbol is 'BTCE' | 'WBTC' =>
+  ['BTCE', 'WBTC'].includes(symbol);
+export const isBinanceCoin = (symbol: any): symbol is 'BTCB' => ['BTCB'].includes(symbol);
+export const isBitcoinCoin = (symbol: any): symbol is 'BTC' => ['BTC'].includes(symbol);
 
-export const getNetworkForCoin = (symbol: Coin): Network => {
+export const getNetworkForCoin = (symbol: string): Network => {
   if (isEthereumCoin(symbol)) {
     return 'ethereum';
   }
