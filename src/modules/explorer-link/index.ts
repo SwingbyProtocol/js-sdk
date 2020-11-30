@@ -1,6 +1,6 @@
-import { CommonSwapParams } from '../../../dist/modules/swap-params';
 import { Coin, getNetworkForCoin } from '../coins';
 import { Mode } from '../modes';
+import { CommonSwapParams } from '../swap-params';
 
 const explorers = {
   ethereum: {
