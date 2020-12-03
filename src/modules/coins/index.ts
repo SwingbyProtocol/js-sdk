@@ -20,9 +20,9 @@ export const getCoinsFor = <M extends Mode, B extends Bridge>({
   bridge,
 }: Pick<CommonSwapParams<M>, 'context'> & {
   bridge?: B;
-}) => {
+}): Coin<M, B>[] => {
   if (bridge) {
-    return COINS[bridge][mode];
+    return (COINS[bridge][mode] as unknown) as Coin<M, B>[];
   }
 
   const coins: Coin<M>[] = [];
