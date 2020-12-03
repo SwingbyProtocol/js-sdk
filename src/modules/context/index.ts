@@ -1,3 +1,3 @@
 export { SwingbyContext } from './SwingbyContext';
-export { getNetwork } from './getNetwork';
+export { getBridgeFor } from './getBridgeFor';
 export { buildContext } from './buildContext';

@@ -6,11 +6,11 @@ import { buildExplorerLink } from '.';
 
 jest.mock('../context/buildContext');
 
-it.each<[{ mode: Mode; currency: Coin; transactionId: string }, string]>([
+it.each<[{ mode: Mode; coin: Coin; transactionId: string }, string]>([
   [
     {
       mode: 'test',
-      currency: 'BTCB',
+      coin: 'BTCB',
       transactionId: 'my-id',
     },
     'https://testnet-explorer.binance.org/tx/my-id',
@@ -18,7 +18,7 @@ it.each<[{ mode: Mode; currency: Coin; transactionId: string }, string]>([
   [
     {
       mode: 'production',
-      currency: 'BTCB',
+      coin: 'BTCB',
       transactionId: 'my-id',
     },
     'https://explorer.binance.org/tx/my-id',
@@ -26,7 +26,7 @@ it.each<[{ mode: Mode; currency: Coin; transactionId: string }, string]>([
   [
     {
       mode: 'test',
-      currency: 'BTC',
+      coin: 'BTC',
       transactionId: 'my-id',
     },
     'https://www.blockchain.com/btc-testnet/tx/my-id',
@@ -34,7 +34,7 @@ it.each<[{ mode: Mode; currency: Coin; transactionId: string }, string]>([
   [
     {
       mode: 'production',
-      currency: 'BTC',
+      coin: 'BTC',
       transactionId: 'my-id',
     },
     'https://www.blockchain.com/btc/tx/my-id',
@@ -42,7 +42,7 @@ it.each<[{ mode: Mode; currency: Coin; transactionId: string }, string]>([
   [
     {
       mode: 'test',
-      currency: 'WBTC',
+      coin: 'WBTC',
       transactionId: 'my-id',
     },
     'https://goerli.etherscan.io/tx/my-id',
@@ -50,24 +50,19 @@ it.each<[{ mode: Mode; currency: Coin; transactionId: string }, string]>([
   [
     {
       mode: 'production',
-      currency: 'WBTC',
+      coin: 'WBTC',
       transactionId: 'my-id',
     },
     'https://etherscan.io/tx/my-id',
   ],
-])('works for %O', async ({ mode, currency, transactionId }, expected) => {
+])('works for %O', async ({ mode, coin, transactionId }, expected) => {
   expect.assertions(1);
 
   const context = await buildContext({ mode });
-  buildExplorerLink({
-    context,
-    currency,
-    transactionId,
-  });
   return expect(
     buildExplorerLink({
       context,
-      currency,
+      coin,
       transactionId,
     }),
   ).toBe(expected);

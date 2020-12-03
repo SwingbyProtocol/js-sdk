@@ -1,7 +1,7 @@
+import { Bridge } from '../../../../bridges';
 import { fetch } from '../../../../fetch';
 import { logger } from '../../../../logger';
 import { Mode } from '../../../../modes';
-import { Network } from '../../../../networks';
 import { CommonSwapParams } from '../../../../swap-params';
 
 const TIMEOUT = 1 * 60 * 1000;
@@ -9,20 +9,20 @@ const INTERVAL = 2000;
 
 export const getBlockHeight = async <M extends Mode>({
   context,
-  network,
-}: Pick<CommonSwapParams<M>, 'context'> & { network: Network }): Promise<number> => {
-  return getBlockHeightRec({ context, network, startedAt: Date.now() });
+  bridge,
+}: Pick<CommonSwapParams<M>, 'context'> & { bridge: Bridge }): Promise<number> => {
+  return getBlockHeightRec({ context, bridge, startedAt: Date.now() });
 };
 
 const getBlockHeightRec = async <M extends Mode>({
   context,
-  network,
+  bridge,
   startedAt,
-}: Pick<CommonSwapParams<M>, 'context'> & { network: Network; startedAt: number }): Promise<
+}: Pick<CommonSwapParams<M>, 'context'> & { bridge: Bridge; startedAt: number }): Promise<
   number
 > => {
   const result = await fetch<{ blockbook: { inSync: boolean; bestHeight: number } }>(
-    `${context.servers[network].explorer}/api/v2`,
+    `${context.servers.indexer[bridge]}/api/v2`,
   );
 
   if (result.ok && result.response.blockbook.inSync) {
@@ -39,7 +39,7 @@ const getBlockHeightRec = async <M extends Mode>({
   logger('getBlockHeight() has failed. Will try again in %dms.', INTERVAL);
   return new Promise((resolve, reject) =>
     setTimeout(() => {
-      getBlockHeightRec({ context, network, startedAt }).then(resolve).catch(reject);
+      getBlockHeightRec({ context, bridge, startedAt }).then(resolve).catch(reject);
     }, INTERVAL),
   );
 };

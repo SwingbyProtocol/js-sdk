@@ -1,6 +1,6 @@
 import { Big } from 'big.js';
 
-import { getNetwork } from '../../context';
+import { getBridgeFor } from '../../context';
 import { fetch } from '../../fetch';
 import { Mode } from '../../modes';
 import { CommonSwapParams } from '../../swap-params';
@@ -13,10 +13,10 @@ export const calculateFees = async <M extends Mode>({
 }: Pick<CommonSwapParams<M>, 'context' | 'currencyIn' | 'currencyOut'>): Promise<
   Pick<CommonSwapParams<M>, 'feeBridgePercent' | 'feeMiner' | 'feeCurrency'>
 > => {
-  const network = getNetwork({ currencyIn, currencyOut });
+  const bridge = getBridgeFor({ context, currencyIn, currencyOut });
   const result = await fetch<
     Array<{ bridgeFeePercent: string; currency: Coin<M>; minerFee: string }>
-  >(`${context.servers[network].swap}/api/v1/swaps/fees`);
+  >(`${context.servers.swapNode[bridge]}/api/v1/swaps/fees`);
 
   if (!result.ok) {
     throw new Error(`${result.status}: ${result.response}`);

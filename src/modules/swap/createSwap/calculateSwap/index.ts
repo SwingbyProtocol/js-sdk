@@ -4,7 +4,7 @@ import crypto from 'isomorphic-webcrypto';
 
 import { CommonSwapParams } from '../../../swap-params';
 import { Mode } from '../../../modes';
-import { getNetworkForCoin } from '../../../coins';
+import { getBridgeFor } from '../../../context';
 
 import { getBlockHeight } from './getBlockHeight';
 
@@ -63,15 +63,13 @@ export const getRound = async <M extends Mode>({
   currencyIn,
 }: Pick<CommonSwapParams<M>, 'context' | 'currencyIn' | 'currencyOut'>): Promise<string> => {
   const round: number = await (async () => {
-    if (
-      getNetworkForCoin(currencyOut) === 'ethereum' ||
-      getNetworkForCoin(currencyIn) === 'ethereum'
-    ) {
-      const blockHeight = await getBlockHeight({ context, network: 'ethereum' });
+    const bridge = getBridgeFor({ context, currencyIn, currencyOut });
+    if (bridge === 'btc_erc') {
+      const blockHeight = await getBlockHeight({ context, bridge });
       return Math.floor(blockHeight / 3);
     }
 
-    return await getBlockHeight({ context, network: 'bitcoin' });
+    return await getBlockHeight({ context, bridge });
   })();
 
   return String(round + 1);
