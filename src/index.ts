@@ -6,3 +6,4 @@ export type { Bridge } from './modules/bridges';
 export { isAddressValid } from './modules/validate-address';
 export { SwapStatus } from './modules/swap-params';
 export { buildExplorerLink } from './modules/explorer-link';
+export { getChainFor, Chain } from './modules/chains';
