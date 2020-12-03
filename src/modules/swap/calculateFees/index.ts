@@ -16,7 +16,7 @@ export const calculateFees = async <M extends Mode>({
   const bridge = getBridgeFor({ context, currencyIn, currencyOut });
   const result = await fetch<
     Array<{ bridgeFeePercent: string; currency: Coin<M>; minerFee: string }>
-  >(`${context.servers[bridge].swap}/api/v1/swaps/fees`);
+  >(`${context.servers.swapNode[bridge]}/api/v1/swaps/fees`);
 
   if (!result.ok) {
     throw new Error(`${result.status}: ${result.response}`);

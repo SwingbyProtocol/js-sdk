@@ -49,7 +49,7 @@ const createSwapRec = async <M extends Mode>({
 
   const bridge = getBridgeFor(params);
   const result = await fetch<ApiResponse>(
-    `${params.context.servers[bridge].swap}/api/v1/swaps/create`,
+    `${params.context.servers.swapNode[bridge]}/api/v1/swaps/create`,
     {
       method: 'post',
       body: JSON.stringify({

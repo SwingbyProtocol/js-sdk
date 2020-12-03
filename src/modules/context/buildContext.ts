@@ -6,13 +6,13 @@ export const buildContext = async ({ mode }: { mode: Mode }): Promise<SwingbyCon
   return {
     mode,
     servers: {
-      btc_erc: {
-        swap: 'https://tbtc-goerli-1.swingby.network',
-        explorer: 'https://indexer-goerli.swingby.network',
+      swapNode: {
+        btc_erc: 'https://tbtc-goerli-1.swingby.network',
+        btc_bep: 'https://testnet-node.swingby.network',
       },
-      btc_bep: {
-        swap: 'https://testnet-node.swingby.network',
-        explorer: '',
+      indexer: {
+        btc_erc: 'https://indexer-goerli.swingby.network',
+        btc_bep: 'https://indexer-tbtc.swingby.network',
       },
     },
   };

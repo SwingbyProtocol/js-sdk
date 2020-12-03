@@ -22,7 +22,7 @@ const getBlockHeightRec = async <M extends Mode>({
   number
 > => {
   const result = await fetch<{ blockbook: { inSync: boolean; bestHeight: number } }>(
-    `${context.servers[bridge].explorer}/api/v2`,
+    `${context.servers.indexer[bridge]}/api/v2`,
   );
 
   if (result.ok && result.response.blockbook.inSync) {
