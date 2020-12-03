@@ -1,5 +1,6 @@
 import type { Coin } from '../../coins';
 import { buildContext } from '../../context';
+import { Mode } from '../../modes';
 
 import { calculateFees } from './';
 
@@ -15,8 +16,8 @@ it.each<[{ currencyIn: Coin<'test'>; currencyOut: Coin<'test'> }, any]>([
     { feeBridgePercent: '0.001', feeMiner: '0', feeCurrency: 'BTCE' },
   ],
   [
-    { currencyIn: 'BTCE', currencyOut: 'BTCB' },
-    { feeBridgePercent: '0.001', feeMiner: '0.000005', feeCurrency: 'BTCB' },
+    { currencyIn: 'BTCE', currencyOut: 'BTC' },
+    { feeBridgePercent: '0.001', feeMiner: '0.0003', feeCurrency: 'BTC' },
   ],
 ])('works for %O', async ({ currencyIn, currencyOut }, expected) => {
   expect.assertions(1);
@@ -29,4 +30,23 @@ it.each<[{ currencyIn: Coin<'test'>; currencyOut: Coin<'test'> }, any]>([
   });
 
   expect(result).toMatchObject(expected);
+});
+
+it.each<{ currencyIn: Coin; mode: Mode; currencyOut: Coin }>([
+  { currencyIn: 'BTCE', mode: 'test', currencyOut: 'BTCB' },
+  { currencyIn: 'BTC', mode: 'test', currencyOut: 'WBTC' },
+  { currencyIn: 'BTC', mode: 'production', currencyOut: 'BTCE' },
+])('throws for %O', async ({ currencyIn, mode, currencyOut }) => {
+  expect.assertions(1);
+
+  const context = await buildContext({ mode });
+  try {
+    await calculateFees({
+      context,
+      currencyIn,
+      currencyOut,
+    });
+  } catch (e) {
+    expect(e.message).toMatch(/Could not find (test|production) bridge for/);
+  }
 });

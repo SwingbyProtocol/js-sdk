@@ -1,8 +1,9 @@
-import { Coin, getNetworkForCoin } from '../coins';
-import { Mode } from '../modes';
-import { CommonSwapParams } from '../swap-params';
+import { Chain, getChainFor } from '../chains';
+import type { Coin } from '../coins';
+import type { Mode } from '../modes';
+import type { CommonSwapParams } from '../swap-params';
 
-const explorers = {
+const explorers: { [k in Chain]: { [k in Mode]: string } } = {
   ethereum: {
     test: 'https://goerli.etherscan.io/tx/:transactionId',
     production: 'https://etherscan.io/tx/:transactionId',
@@ -20,12 +21,12 @@ const explorers = {
 export const buildExplorerLink = <M extends Mode>({
   context,
   transactionId,
-  currency,
+  coin,
 }: Pick<CommonSwapParams<M>, 'context'> & {
   transactionId: string;
-  currency: Coin;
+  coin: Coin;
 }) => {
-  const network = getNetworkForCoin(currency);
-  const url = explorers[network][context.mode];
+  const chain = getChainFor({ coin });
+  const url = explorers[chain][context.mode];
   return url.replace(':transactionId', transactionId);
 };

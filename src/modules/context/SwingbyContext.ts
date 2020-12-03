@@ -1,10 +1,10 @@
 import type { Mode } from '../modes';
-import type { Network } from '../networks';
+import type { Bridge } from '../bridges';
 
 export type SwingbyContext = {
   readonly mode: Mode;
   servers: {
-    readonly [N in Network]: {
+    readonly [N in Bridge]: {
       swap: string;
       explorer: string;
     };

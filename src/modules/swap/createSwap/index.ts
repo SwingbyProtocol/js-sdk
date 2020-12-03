@@ -1,4 +1,4 @@
-import { getNetwork } from '../../context';
+import { getBridgeFor } from '../../context';
 import { fetch } from '../../fetch';
 import { logger } from '../../logger';
 import { Mode } from '../../modes';
@@ -47,9 +47,9 @@ const createSwapRec = async <M extends Mode>({
     'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
   > & { timestamp: number; addressDeposit: string; addressOut: string };
 
-  const network = getNetwork(params);
+  const bridge = getBridgeFor(params);
   const result = await fetch<ApiResponse>(
-    `${params.context.servers[network].swap}/api/v1/swaps/create`,
+    `${params.context.servers[bridge].swap}/api/v1/swaps/create`,
     {
       method: 'post',
       body: JSON.stringify({

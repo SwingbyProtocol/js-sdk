@@ -1,40 +1,69 @@
-import { Mode } from '../modes';
-import type { Network } from '../networks';
+import type { Mode } from '../modes';
+import type { Bridge } from '../bridges';
+import type { CommonSwapParams } from '../swap-params';
 
-export const COINS_TEST = ['BTCB', 'BTC', 'BTCE'] as const;
-export const COINS_PRODUCTION = ['BTC', 'WBTC'] as const;
+const COINS = {
+  btc_erc: {
+    test: ['BTC', 'BTCE'],
+    production: ['BTC', 'WBTC'],
+  },
+  btc_bep: {
+    test: ['BTC', 'BTCB'],
+    production: [],
+  },
+} as const;
 
-export const isEthereumCoin = (symbol: any): symbol is 'BTCE' | 'WBTC' =>
-  ['BTCE', 'WBTC'].includes(symbol);
-export const isBinanceCoin = (symbol: any): symbol is 'BTCB' => ['BTCB'].includes(symbol);
-export const isBitcoinCoin = (symbol: any): symbol is 'BTC' => ['BTC'].includes(symbol);
+export type Coin<M extends Mode = Mode, B extends Bridge = Bridge> = typeof COINS[B][M][number];
 
-export const getNetworkForCoin = (symbol: string): Network => {
-  if (isEthereumCoin(symbol)) {
-    return 'ethereum';
+export const getCoinsFor = <M extends Mode, B extends Bridge>({
+  context: { mode },
+  bridge,
+}: Pick<CommonSwapParams<M>, 'context'> & {
+  bridge?: B;
+}) => {
+  if (bridge) {
+    return COINS[bridge][mode];
   }
 
-  if (isBinanceCoin(symbol)) {
-    return 'binance';
-  }
+  const coins: Coin<M>[] = [];
 
-  if (isBitcoinCoin(symbol)) {
-    return 'bitcoin';
-  }
+  ((Object.keys(COINS) as unknown) as Array<keyof typeof COINS>).forEach((bridgeId) => {
+    coins.push(...COINS[bridgeId][mode]);
+  });
 
-  throw new Error(`Invalid coin "${symbol}"`);
+  return Array.from(new Set(coins));
 };
 
-type TestnetCoin = typeof COINS_TEST[number];
-type MainnetCoin = typeof COINS_PRODUCTION[number];
+export const getBridgesFor = <M extends Mode>({
+  context: { mode },
+  coin,
+}: Pick<CommonSwapParams<M>, 'context'> & { coin: Coin }): Bridge[] => {
+  const result: Bridge[] = [];
 
-export type Coin<M extends Mode | undefined = undefined> = M extends 'test'
-  ? TestnetCoin
-  : M extends 'production'
-  ? MainnetCoin
-  : TestnetCoin | MainnetCoin;
+  ((Object.keys(COINS) as unknown) as Array<keyof typeof COINS>).forEach((bridgeId) => {
+    if (((COINS[bridgeId][mode] as unknown) as Coin[]).includes(coin)) {
+      result.push(bridgeId);
+    }
+  });
 
-export const isTestCoin = (symbol: any): symbol is Coin<'test'> => COINS_TEST.includes(symbol);
+  return result;
+};
 
-export const isProductionCoin = (symbol: any): symbol is Coin<'production'> =>
-  COINS_PRODUCTION.includes(symbol);
+export const getSwapableWith = <M extends Mode>({
+  context,
+  coin,
+}: Pick<CommonSwapParams<M>, 'context'> & {
+  coin: Coin;
+}): Coin<M>[] => {
+  const result: Coin<M>[] = [];
+  const bridges = getBridgesFor({ context, coin });
+
+  bridges.forEach((bridgeId) => {
+    result.push(...COINS[bridgeId][context.mode]);
+  });
+
+  const set = new Set(result);
+  set.delete(coin);
+
+  return Array.from(set);
+};

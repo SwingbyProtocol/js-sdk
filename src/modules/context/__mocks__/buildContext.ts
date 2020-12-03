@@ -5,16 +5,12 @@ export const buildContext = async ({ mode }: { mode: Mode }): Promise<SwingbyCon
   return {
     mode,
     servers: {
-      ethereum: {
+      btc_erc: {
         swap: 'https://tbtc-goerli-1.swingby.network',
         explorer: 'https://indexer-goerli.swingby.network',
       },
-      binance: {
+      btc_bep: {
         swap: 'https://testnet-node.swingby.network',
-        explorer: '',
-      },
-      bitcoin: {
-        swap: 'https://indexer-tbtc.swingby.network',
         explorer: 'https://indexer-tbtc.swingby.network',
       },
     },
