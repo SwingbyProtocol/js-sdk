@@ -3,14 +3,15 @@ import type { SwingbyContext } from '../context';
 import type { Mode } from '../modes';
 
 const STATUSES = [
-  'waiting',
-  'pending',
-  'signing',
-  'sending',
-  'completed',
-  'signing-refund',
-  'sending-refund',
-  'refunded',
+  'WAITING',
+  'PENDING',
+  'SIGNING',
+  'SENDING',
+  'COMPLETED',
+  'SIGNING_REFUND',
+  'SENDING_REFUND',
+  'REFUNDED',
+  'EXPIRED',
 ] as const;
 export type SwapStatus = typeof STATUSES[number];
 

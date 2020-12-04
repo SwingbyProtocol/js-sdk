@@ -1,16 +1,6 @@
 import { fetch } from '../../fetch';
 import { Mode } from '../../modes';
-import { CommonSwapParams } from '../../swap-params';
-
-type StatusFromServer =
-  | 'WAITING'
-  | 'PENDING'
-  | 'SIGNING'
-  | 'SENDING'
-  | 'COMPLETED'
-  | 'SIGNING_REFUND'
-  | 'SENDING_REFUND'
-  | 'REFUNDED';
+import { CommonSwapParams, SwapStatus } from '../../swap-params';
 
 type ServerReturnType<M extends Mode> = {
   items: Array<
@@ -20,7 +10,7 @@ type ServerReturnType<M extends Mode> = {
     > & {
       addressDeposit: string;
       fee: string;
-      status: StatusFromServer;
+      status: SwapStatus;
       txIdIn: string;
       txIdOut: string;
       timestamp: number;
@@ -89,30 +79,9 @@ export const getSwapDetails = async <M extends Mode>({
     feeTotal: result.fee,
     feeCurrency: result.feeCurrency,
     hash: result.hash,
-    status: getStatus(result.status),
+    status: result.status,
     transactionInId: result.txIdIn || null,
     transactionOutId: result.txIdOut || null,
     timestamp: new Date(result.timestamp * 1000),
   };
-};
-
-const getStatus = (value: StatusFromServer): CommonSwapParams<'test'>['status'] => {
-  switch (value) {
-    case 'COMPLETED':
-      return 'completed';
-    case 'PENDING':
-      return 'pending';
-    case 'REFUNDED':
-      return 'refunded';
-    case 'SENDING':
-      return 'sending';
-    case 'SENDING_REFUND':
-      return 'sending-refund';
-    case 'SIGNING':
-      return 'signing';
-    case 'SIGNING_REFUND':
-      return 'signing-refund';
-    case 'WAITING':
-      return 'waiting';
-  }
 };
