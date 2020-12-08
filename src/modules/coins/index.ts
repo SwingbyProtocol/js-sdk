@@ -4,7 +4,7 @@ import type { CommonSwapParams } from '../swap-params';
 
 const COINS = {
   btc_erc: {
-    test: ['BTC', 'BTCE'],
+    test: ['BTC', 'WBTC'],
     production: ['BTC', 'WBTC'],
   },
   btc_bep: {

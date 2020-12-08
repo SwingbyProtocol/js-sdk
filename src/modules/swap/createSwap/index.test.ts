@@ -12,7 +12,7 @@ it.each<
     amountUser: '1',
     addressUserIn: '0xb680c8F33f058163185AB6121F7582BAb57Ef8a7',
     currencyIn: 'BTC',
-    currencyOut: 'BTCE',
+    currencyOut: 'WBTC',
   },
   {
     amountUser: '1',

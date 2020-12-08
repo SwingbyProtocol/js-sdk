@@ -18,17 +18,17 @@ it.each<[{ amountUser: string; currencyIn: Coin<'test'>; currencyOut: Coin<'test
     },
   ],
   [
-    { amountUser: '3', currencyIn: 'BTC', currencyOut: 'BTCE' },
+    { amountUser: '3', currencyIn: 'BTC', currencyOut: 'WBTC' },
     {
       amountOut: '2.997',
       feeBridgePercent: '0.001',
       feeMiner: '0',
-      feeCurrency: 'BTCE',
+      feeCurrency: 'WBTC',
       feeTotal: '0.003',
     },
   ],
   [
-    { amountUser: '156', currencyIn: 'BTCE', currencyOut: 'BTC' },
+    { amountUser: '156', currencyIn: 'WBTC', currencyOut: 'BTC' },
     {
       amountOut: '155.8437',
       feeBridgePercent: '0.001',
@@ -52,9 +52,9 @@ it.each<[{ amountUser: string; currencyIn: Coin<'test'>; currencyOut: Coin<'test
 });
 
 it.each<{ currencyIn: Coin; mode: Mode; currencyOut: Coin }>([
-  { currencyIn: 'BTCE', mode: 'test', currencyOut: 'BTCB' },
+  { currencyIn: 'WBTC', mode: 'test', currencyOut: 'BTCB' },
   { currencyIn: 'BTC', mode: 'test', currencyOut: 'WBTC' },
-  { currencyIn: 'BTC', mode: 'production', currencyOut: 'BTCE' },
+  { currencyIn: 'BTC', mode: 'production', currencyOut: 'WBTC' },
 ])('throws for %O', async ({ currencyIn, mode, currencyOut }) => {
   expect.assertions(1);
 
