@@ -34,8 +34,8 @@ it.each<[{ currencyIn: Coin<'test'>; currencyOut: Coin<'test'> }, any]>([
 
 it.each<{ currencyIn: Coin; mode: Mode; currencyOut: Coin }>([
   { currencyIn: 'WBTC', mode: 'test', currencyOut: 'BTCB' },
-  { currencyIn: 'BTC', mode: 'test', currencyOut: 'WBTC' },
-  { currencyIn: 'BTC', mode: 'production', currencyOut: 'WBTC' },
+  { currencyIn: 'BTCB', mode: 'test', currencyOut: 'WBTC' },
+  { currencyIn: 'BTC', mode: 'production', currencyOut: 'BTCB' },
 ])('throws for %O', async ({ currencyIn, mode, currencyOut }) => {
   expect.assertions(1);
 
