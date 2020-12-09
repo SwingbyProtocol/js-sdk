@@ -29,8 +29,6 @@ describe('getBridgesFor()', () => {
     { mode: 'test', coin: 'BTCB', expected: ['btc_bep'] },
     { mode: 'production', coin: 'BTCB', expected: [] },
     { mode: 'test', coin: 'WBTC', expected: ['btc_erc'] },
-    { mode: 'production', coin: 'WBTC', expected: [] },
-    { mode: 'test', coin: 'WBTC', expected: [] },
     { mode: 'production', coin: 'WBTC', expected: ['btc_erc'] },
   ])('works for %O', async ({ mode, coin, expected }) => {
     expect.assertions(1);
@@ -47,8 +45,6 @@ describe('getSwapableWith()', () => {
     { mode: 'test', coin: 'BTCB', expected: ['BTC'] },
     { mode: 'production', coin: 'BTCB', expected: [] },
     { mode: 'test', coin: 'WBTC', expected: ['BTC'] },
-    { mode: 'production', coin: 'WBTC', expected: [] },
-    { mode: 'test', coin: 'WBTC', expected: [] },
     { mode: 'production', coin: 'WBTC', expected: ['BTC'] },
   ])('works for %O', async ({ mode, coin, expected }) => {
     expect.assertions(1);
