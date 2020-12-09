@@ -39,6 +39,7 @@ it.each<
         addressSwapIn: expect.any(String),
         addressUserIn,
         amountIn: expect.stringContaining('0.99'),
+        amountOut: expect.stringContaining('0.99'),
         currencyIn,
         currencyOut,
         timestamp: expect.any(Date),

@@ -16,6 +16,7 @@ type Result<M extends Mode> = Pick<
   | 'addressSwapIn'
   | 'addressUserIn'
   | 'amountIn'
+  | 'amountOut'
   | 'currencyIn'
   | 'currencyOut'
   | 'nonce'
@@ -44,7 +45,7 @@ const createSwapRec = async <M extends Mode>({
 
   type ApiResponse = Pick<
     CommonSwapParams<M>,
-    'amountIn' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
+    'amountIn' | 'amountOut' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
   > & { timestamp: number; addressDeposit: string; addressOut: string };
 
   const bridge = getBridgeFor(params);
