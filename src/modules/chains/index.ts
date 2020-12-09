@@ -9,7 +9,6 @@ export const getChainFor = ({ coin }: { coin: Coin }): Chain => {
       return 'binance';
     case 'BTC':
       return 'bitcoin';
-    case 'BTCE':
     case 'WBTC':
       return 'ethereum';
   }

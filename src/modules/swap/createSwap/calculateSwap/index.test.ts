@@ -25,7 +25,7 @@ it.each<
     {
       amountUser: '1',
       currencyIn: 'BTC',
-      currencyOut: 'BTCE',
+      currencyOut: 'WBTC',
       addressUserIn: '0x3ff3ada69b19a6fdfe4ed96c9dc49aab1763bdf3',
     },
     { amountIn: '0.99999573', nonce: 312 },
@@ -33,11 +33,11 @@ it.each<
   [
     {
       amountUser: '1',
-      currencyIn: 'BTCE',
+      currencyIn: 'WBTC',
       currencyOut: 'BTC',
       addressUserIn: 'tb1q0fzppaflhcju7emf9sh5n5st3c47mwuczwxmt7',
     },
-    { amountIn: '0.99999715', nonce: 610 },
+    { amountIn: '0.9999927', nonce: 257 },
   ],
 ])('works for %s', async (params, expected) => {
   expect.assertions(1);
