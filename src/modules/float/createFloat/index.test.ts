@@ -8,12 +8,12 @@ jest.mock('../../context/buildContext');
 it.each<Pick<CommonFloatParams<'test'>, 'addressUserIn' | 'currencyIn' | 'amountUser'>>([
   {
     amountUser: '1',
-    addressUserIn: '0xb680c8F33f058163185AB6121F7582BAb57Ef8a7',
+    addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     currencyIn: 'BTC',
   },
   {
     amountUser: '1',
-    addressUserIn: '0xb680c8F33f058163185AB6121F7582BAb57Ef8a7',
+    addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     currencyIn: 'BTC',
   },
 ])('"/swaps/create" succeeds with %O', async ({ addressUserIn, currencyIn, amountUser }) => {

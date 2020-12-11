@@ -26,9 +26,9 @@ it.each<
       amountUser: '1',
       currencyIn: 'BTC',
       currencyOut: 'WBTC',
-      addressUserIn: '0x3ff3ada69b19a6fdfe4ed96c9dc49aab1763bdf3',
+      addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     },
-    { amountIn: '0.99999573', nonce: 312 },
+    { amountIn: '0.99999948', nonce: 743 },
   ],
   [
     {
@@ -44,9 +44,9 @@ it.each<
       amountUser: '1',
       currencyIn: 'WBTC',
       currencyOut: 'sbBTC',
-      addressUserIn: '0x3ff3ada69b19a6fdfe4ed96c9dc49aab1763bdf3',
+      addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     },
-    { amountIn: '0.99999742', nonce: 39 },
+    { amountIn: '0.9999961', nonce: 1722 },
   ],
 ])('works for %s', async (params, expected) => {
   expect.assertions(1);

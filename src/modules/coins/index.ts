@@ -56,7 +56,7 @@ export const getSwapableWith = <M extends Mode>({
   context,
   coin,
 }: Pick<CommonSwapParams<M>, 'context'> & {
-  coin: Coin;
+  coin: Coin<M>;
 }): Coin<M>[] => {
   const result: Coin<M>[] = [];
   const bridges = getSwapBridgesFor({ context, coin });
