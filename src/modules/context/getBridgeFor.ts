@@ -1,13 +1,13 @@
 import { Bridge } from '../bridges';
 import type { Mode } from '../modes';
-import type { CommonSwapParams } from '../common-params';
+import type { CommonAnyParams } from '../common-params';
 import { getBridgesFor } from '../coins';
 
 export const getBridgeFor = <M extends Mode>({
   context,
   currencyIn,
   currencyOut,
-}: Pick<CommonSwapParams<M>, 'context' | 'currencyIn' | 'currencyOut'>): Bridge => {
+}: Pick<CommonAnyParams<M>, 'context' | 'currencyIn' | 'currencyOut'>): Bridge => {
   const inBridges = getBridgesFor({ context, coin: currencyIn });
   const outBridges = getBridgesFor({ context, coin: currencyOut });
 

@@ -3,8 +3,7 @@ import { fetch } from '../../fetch';
 import { logger } from '../../logger';
 import { Mode } from '../../modes';
 import { CommonSwapParams } from '../../common-params';
-
-import { calculateSwap } from './calculateSwap';
+import { runProofOfWork } from '../../pow';
 
 type Params<M extends Mode> = Pick<
   CommonSwapParams<M>,
@@ -41,7 +40,7 @@ const createSwapRec = async <M extends Mode>({
 }: Params<M> & { startedAt: number; timeout: number }): Promise<Result<M>> => {
   logger('Will execute createSwap(%O).', params);
 
-  const { amountIn, nonce } = await calculateSwap(params);
+  const { amountIn, nonce } = await runProofOfWork(params);
 
   type ApiResponse = Pick<
     CommonSwapParams<M>,

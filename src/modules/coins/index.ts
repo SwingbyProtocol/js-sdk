@@ -1,6 +1,6 @@
 import type { Mode } from '../modes';
 import type { Bridge } from '../bridges';
-import type { CommonSwapParams } from '../common-params';
+import type { CommonAnyParams, CommonSwapParams } from '../common-params';
 
 const COINS = {
   btc_erc: {
@@ -37,7 +37,11 @@ export const getCoinsFor = <M extends Mode, B extends Bridge>({
 export const getBridgesFor = <M extends Mode>({
   context: { mode },
   coin,
-}: Pick<CommonSwapParams<M>, 'context'> & { coin: Coin }): Bridge[] => {
+}: Pick<CommonAnyParams<M>, 'context'> & { coin: Coin | 'sbBTC' }): Bridge[] => {
+  if (coin === 'sbBTC') {
+    return ['btc_erc'];
+  }
+
   const result: Bridge[] = [];
 
   ((Object.keys(COINS) as unknown) as Array<keyof typeof COINS>).forEach((bridgeId) => {
