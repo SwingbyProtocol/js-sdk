@@ -1,15 +1,19 @@
 import { Bridge } from '../bridges';
 import type { Mode } from '../modes';
 import type { CommonAnyParams } from '../common-params';
-import { getBridgesFor } from '../coins';
+import { getSwapBridgesFor } from '../coins';
 
 export const getBridgeFor = <M extends Mode>({
   context,
   currencyIn,
   currencyOut,
 }: Pick<CommonAnyParams<M>, 'context' | 'currencyIn' | 'currencyOut'>): Bridge => {
-  const inBridges = getBridgesFor({ context, coin: currencyIn });
-  const outBridges = getBridgesFor({ context, coin: currencyOut });
+  if (currencyOut === 'sbBTC') {
+    return 'btc_erc';
+  }
+
+  const inBridges = getSwapBridgesFor({ context, coin: currencyIn });
+  const outBridges = getSwapBridgesFor({ context, coin: currencyOut });
 
   const result = inBridges.find((it) => outBridges.includes(it));
   if (result) {
