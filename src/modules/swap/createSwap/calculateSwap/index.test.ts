@@ -1,5 +1,5 @@
 import { buildContext } from '../../../context';
-import { CommonSwapParams } from '../../../swap-params';
+import { CommonSwapParams } from '../../../common-params';
 
 import { calculateSwap } from './';
 

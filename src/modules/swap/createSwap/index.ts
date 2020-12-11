@@ -2,7 +2,7 @@ import { getBridgeFor } from '../../context';
 import { fetch } from '../../fetch';
 import { logger } from '../../logger';
 import { Mode } from '../../modes';
-import { CommonSwapParams } from '../../swap-params';
+import { CommonSwapParams } from '../../common-params';
 
 import { calculateSwap } from './calculateSwap';
 

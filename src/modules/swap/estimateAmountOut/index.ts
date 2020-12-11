@@ -1,7 +1,7 @@
 import { Big } from 'big.js';
 
 import { Mode } from '../../modes';
-import { CommonSwapParams } from '../../swap-params';
+import { CommonSwapParams } from '../../common-params';
 import { calculateFees } from '../calculateFees';
 
 export const estimateAmountOut = async <M extends Mode>({

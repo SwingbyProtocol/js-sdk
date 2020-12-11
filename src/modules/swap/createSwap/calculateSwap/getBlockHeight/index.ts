@@ -2,7 +2,7 @@ import { Bridge } from '../../../../bridges';
 import { fetch } from '../../../../fetch';
 import { logger } from '../../../../logger';
 import { Mode } from '../../../../modes';
-import { CommonSwapParams } from '../../../../swap-params';
+import { CommonSwapParams } from '../../../../common-params';
 
 const TIMEOUT = 1 * 60 * 1000;
 const INTERVAL = 2000;

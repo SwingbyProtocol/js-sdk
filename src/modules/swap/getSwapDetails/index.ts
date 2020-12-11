@@ -1,6 +1,6 @@
 import { fetch } from '../../fetch';
 import { Mode } from '../../modes';
-import { CommonSwapParams, SwapStatus } from '../../swap-params';
+import { CommonSwapParams, SwapStatus } from '../../common-params';
 
 type ServerReturnType<M extends Mode> = {
   items: Array<

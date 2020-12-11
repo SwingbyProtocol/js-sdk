@@ -1,6 +1,6 @@
 import type { Mode } from '../modes';
 import type { Bridge } from '../bridges';
-import type { CommonSwapParams } from '../swap-params';
+import type { CommonSwapParams } from '../common-params';
 
 const COINS = {
   btc_erc: {

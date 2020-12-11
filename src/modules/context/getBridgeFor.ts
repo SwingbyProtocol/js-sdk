@@ -1,6 +1,6 @@
 import { Bridge } from '../bridges';
 import type { Mode } from '../modes';
-import type { CommonSwapParams } from '../swap-params';
+import type { CommonSwapParams } from '../common-params';
 import { getBridgesFor } from '../coins';
 
 export const getBridgeFor = <M extends Mode>({
