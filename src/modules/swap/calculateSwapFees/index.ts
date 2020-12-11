@@ -6,7 +6,7 @@ import { Mode } from '../../modes';
 import { CommonSwapParams } from '../../common-params';
 import { Coin } from '../../coins';
 
-export const calculateFees = async <M extends Mode>({
+export const calculateSwapFees = async <M extends Mode>({
   context,
   currencyIn,
   currencyOut,

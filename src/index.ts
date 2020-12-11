@@ -1,6 +1,6 @@
 export { Coin, getCoinsFor, getSwapableWith } from './modules/coins';
 export type { Mode } from './modules/modes';
-export { createSwap, estimateAmountOut, getSwapDetails } from './modules/swap';
+export { createSwap, estimateSwapAmountOut, getSwapDetails } from './modules/swap';
 export { buildContext, SwingbyContext } from './modules/context';
 export type { Bridge } from './modules/bridges';
 export { isAddressValid } from './modules/validate-address';
