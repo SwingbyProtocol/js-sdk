@@ -28,19 +28,19 @@ it.each<TestData>([
     mode: 'test',
   },
   {
-    address: '0xb680c8F33f058163185AB6121F7582BAb57Ef8a7',
+    address: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     chain: undefined,
     expected: true,
     mode: 'test',
   },
   {
-    address: '0xb680c8F33f058163185AB6121F7582BAb57Ef8a7',
+    address: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     chain: 'ethereum',
     expected: true,
     mode: 'test',
   },
   {
-    address: '0xb680c8F33f058163185AB6121F7582BAb57Ef8a7',
+    address: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     chain: 'bitcoin',
     expected: false,
     mode: 'test',

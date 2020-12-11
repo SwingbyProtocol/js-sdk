@@ -3,10 +3,10 @@ import { Big } from 'big.js';
 import { getBridgeFor } from '../../context';
 import { fetch } from '../../fetch';
 import { Mode } from '../../modes';
-import { CommonSwapParams } from '../../swap-params';
+import { CommonSwapParams } from '../../common-params';
 import { Coin } from '../../coins';
 
-export const calculateFees = async <M extends Mode>({
+export const calculateSwapFees = async <M extends Mode>({
   context,
   currencyIn,
   currencyOut,

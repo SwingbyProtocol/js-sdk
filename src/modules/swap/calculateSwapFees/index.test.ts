@@ -2,7 +2,7 @@ import type { Coin } from '../../coins';
 import { buildContext } from '../../context';
 import { Mode } from '../../modes';
 
-import { calculateFees } from './';
+import { calculateSwapFees } from './';
 
 jest.mock('../../context/buildContext');
 
@@ -23,7 +23,7 @@ it.each<[{ currencyIn: Coin<'test'>; currencyOut: Coin<'test'> }, any]>([
   expect.assertions(1);
 
   const context = await buildContext({ mode: 'test' });
-  const result = await calculateFees({
+  const result = await calculateSwapFees({
     context,
     currencyIn,
     currencyOut,
@@ -41,7 +41,7 @@ it.each<{ currencyIn: Coin; mode: Mode; currencyOut: Coin }>([
 
   const context = await buildContext({ mode });
   try {
-    await calculateFees({
+    await calculateSwapFees({
       context,
       currencyIn,
       currencyOut,

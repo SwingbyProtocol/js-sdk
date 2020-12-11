@@ -1,8 +1,8 @@
 import type { Mode } from '../modes';
 import type { Bridge } from '../bridges';
-import type { CommonSwapParams } from '../swap-params';
+import type { CommonSwapParams } from '../common-params';
 
-const COINS = {
+const SWAP_COINS = {
   btc_erc: {
     test: ['BTC', 'WBTC'],
     production: ['BTC', 'WBTC'],
@@ -13,7 +13,10 @@ const COINS = {
   },
 } as const;
 
-export type Coin<M extends Mode = Mode, B extends Bridge = Bridge> = typeof COINS[B][M][number];
+export type Coin<
+  M extends Mode = Mode,
+  B extends Bridge = Bridge
+> = typeof SWAP_COINS[B][M][number];
 
 export const getCoinsFor = <M extends Mode, B extends Bridge>({
   context: { mode },
@@ -22,26 +25,26 @@ export const getCoinsFor = <M extends Mode, B extends Bridge>({
   bridge?: B;
 }): Coin<M, B>[] => {
   if (bridge) {
-    return (COINS[bridge][mode] as unknown) as Coin<M, B>[];
+    return (SWAP_COINS[bridge][mode] as unknown) as Coin<M, B>[];
   }
 
   const coins: Coin<M>[] = [];
 
-  ((Object.keys(COINS) as unknown) as Array<keyof typeof COINS>).forEach((bridgeId) => {
-    coins.push(...COINS[bridgeId][mode]);
+  ((Object.keys(SWAP_COINS) as unknown) as Array<keyof typeof SWAP_COINS>).forEach((bridgeId) => {
+    coins.push(...SWAP_COINS[bridgeId][mode]);
   });
 
   return Array.from(new Set(coins));
 };
 
-export const getBridgesFor = <M extends Mode>({
+export const getSwapBridgesFor = <M extends Mode>({
   context: { mode },
   coin,
-}: Pick<CommonSwapParams<M>, 'context'> & { coin: Coin }): Bridge[] => {
+}: Pick<CommonSwapParams<M>, 'context'> & { coin: Coin<M> }): Bridge[] => {
   const result: Bridge[] = [];
 
-  ((Object.keys(COINS) as unknown) as Array<keyof typeof COINS>).forEach((bridgeId) => {
-    if (((COINS[bridgeId][mode] as unknown) as Coin[]).includes(coin)) {
+  ((Object.keys(SWAP_COINS) as unknown) as Array<keyof typeof SWAP_COINS>).forEach((bridgeId) => {
+    if (((SWAP_COINS[bridgeId][mode] as unknown) as Coin[]).includes(coin)) {
       result.push(bridgeId);
     }
   });
@@ -53,13 +56,13 @@ export const getSwapableWith = <M extends Mode>({
   context,
   coin,
 }: Pick<CommonSwapParams<M>, 'context'> & {
-  coin: Coin;
+  coin: Coin<M>;
 }): Coin<M>[] => {
   const result: Coin<M>[] = [];
-  const bridges = getBridgesFor({ context, coin });
+  const bridges = getSwapBridgesFor({ context, coin });
 
   bridges.forEach((bridgeId) => {
-    result.push(...COINS[bridgeId][context.mode]);
+    result.push(...SWAP_COINS[bridgeId][context.mode]);
   });
 
   const set = new Set(result);

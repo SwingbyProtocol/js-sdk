@@ -45,3 +45,10 @@ export type CommonSwapParams<M extends Mode> = {
   transactionInId: string;
   transactionOutId: string;
 };
+
+export type CommonFloatParams<M extends Mode> = Omit<
+  CommonSwapParams<M>,
+  'currencyIn' | 'currencyOut'
+> & { currencyIn: 'BTC' | 'WBTC'; currencyOut: 'sbBTC' };
+
+export type CommonAnyParams<M extends Mode> = CommonFloatParams<M> | CommonSwapParams<M>;

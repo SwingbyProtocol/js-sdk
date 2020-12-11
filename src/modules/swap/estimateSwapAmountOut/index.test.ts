@@ -2,7 +2,7 @@ import type { Coin } from '../../coins';
 import { buildContext } from '../../context';
 import { Mode } from '../../modes';
 
-import { estimateAmountOut } from './';
+import { estimateSwapAmountOut } from './';
 
 jest.mock('../../context/buildContext');
 
@@ -41,7 +41,7 @@ it.each<[{ amountUser: string; currencyIn: Coin<'test'>; currencyOut: Coin<'test
   expect.assertions(1);
 
   const context = await buildContext({ mode: 'test' });
-  const result = await estimateAmountOut({
+  const result = await estimateSwapAmountOut({
     context,
     currencyIn,
     currencyOut,
@@ -60,7 +60,7 @@ it.each<{ currencyIn: Coin; mode: Mode; currencyOut: Coin }>([
 
   const context = await buildContext({ mode });
   try {
-    await estimateAmountOut({
+    await estimateSwapAmountOut({
       context,
       currencyIn,
       currencyOut,

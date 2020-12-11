@@ -1,8 +1,8 @@
-import { Bridge } from '../../../../bridges';
-import { fetch } from '../../../../fetch';
-import { logger } from '../../../../logger';
-import { Mode } from '../../../../modes';
-import { CommonSwapParams } from '../../../../swap-params';
+import { Bridge } from '../../bridges';
+import { fetch } from '../../fetch';
+import { logger } from '../../logger';
+import { Mode } from '../../modes';
+import { CommonAnyParams } from '../../common-params';
 
 const TIMEOUT = 1 * 60 * 1000;
 const INTERVAL = 2000;
@@ -10,7 +10,7 @@ const INTERVAL = 2000;
 export const getBlockHeight = async <M extends Mode>({
   context,
   bridge,
-}: Pick<CommonSwapParams<M>, 'context'> & { bridge: Bridge }): Promise<number> => {
+}: Pick<CommonAnyParams<M>, 'context'> & { bridge: Bridge }): Promise<number> => {
   return getBlockHeightRec({ context, bridge, startedAt: Date.now() });
 };
 
@@ -18,7 +18,7 @@ const getBlockHeightRec = async <M extends Mode>({
   context,
   bridge,
   startedAt,
-}: Pick<CommonSwapParams<M>, 'context'> & { bridge: Bridge; startedAt: number }): Promise<
+}: Pick<CommonAnyParams<M>, 'context'> & { bridge: Bridge; startedAt: number }): Promise<
   number
 > => {
   const result = await fetch<{ blockbook: { inSync: boolean; bestHeight: number } }>(

@@ -1,7 +1,7 @@
 import { Chain, getChainFor } from '../chains';
 import type { Coin } from '../coins';
 import type { Mode } from '../modes';
-import type { CommonSwapParams } from '../swap-params';
+import type { CommonSwapParams } from '../common-params';
 
 const explorers: { [k in Chain]: { [k in Mode]: string } } = {
   ethereum: {

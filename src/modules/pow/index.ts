@@ -2,22 +2,22 @@ import { Big, BigSource } from 'big.js';
 import hexToBinary from 'hex-to-binary';
 import crypto from 'isomorphic-webcrypto';
 
-import { CommonSwapParams } from '../../../swap-params';
-import { Mode } from '../../../modes';
-import { getBridgeFor } from '../../../context';
+import { CommonAnyParams } from '../common-params';
+import { Mode } from '../modes';
+import { getBridgeFor } from '../context';
 
 import { getBlockHeight } from './getBlockHeight';
 
 const difficultyZeroBits = 10;
 
-type Params<M extends Mode = 'test'> = Pick<
-  CommonSwapParams<M>,
+type Params<M extends Mode> = Pick<
+  CommonAnyParams<M>,
   'context' | 'addressUserIn' | 'currencyIn' | 'currencyOut' | 'amountUser'
 >;
 
-type Result<M extends Mode = 'test'> = Pick<CommonSwapParams<M>, 'amountIn' | 'nonce'>;
+type Result<M extends Mode> = Pick<CommonAnyParams<M>, 'amountIn' | 'nonce'>;
 
-export const calculateSwap = async <M extends Mode = 'test'>({
+export const runProofOfWork = async <M extends Mode>({
   context,
   addressUserIn,
   currencyIn,
@@ -61,7 +61,7 @@ export const getRound = async <M extends Mode>({
   context,
   currencyOut,
   currencyIn,
-}: Pick<CommonSwapParams<M>, 'context' | 'currencyIn' | 'currencyOut'>): Promise<string> => {
+}: Pick<CommonAnyParams<M>, 'context' | 'currencyIn' | 'currencyOut'>): Promise<string> => {
   const round: number = await (async () => {
     const bridge = getBridgeFor({ context, currencyIn, currencyOut });
     if (bridge === 'btc_erc') {

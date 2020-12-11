@@ -2,7 +2,7 @@ import type { Bridge } from '../bridges';
 import { buildContext } from '../context';
 import type { Mode } from '../modes';
 
-import { Coin, getBridgesFor, getCoinsFor, getSwapableWith } from './';
+import { Coin, getSwapBridgesFor, getCoinsFor, getSwapableWith } from './';
 
 jest.mock('../context/buildContext');
 
@@ -34,7 +34,7 @@ describe('getBridgesFor()', () => {
     expect.assertions(1);
 
     const context = await buildContext({ mode });
-    expect(getBridgesFor({ context, coin })).toEqual(expected);
+    expect(getSwapBridgesFor({ context, coin })).toEqual(expected);
   });
 });
 

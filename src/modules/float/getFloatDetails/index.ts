@@ -1,11 +1,11 @@
 import { fetch } from '../../fetch';
 import { Mode } from '../../modes';
-import { CommonSwapParams, SwapStatus } from '../../common-params';
+import { CommonFloatParams, SwapStatus } from '../../common-params';
 
 type ServerReturnType<M extends Mode> = {
   items: Array<
     Pick<
-      CommonSwapParams<M>,
+      CommonFloatParams<M>,
       'amountIn' | 'amountOut' | 'currencyIn' | 'currencyOut' | 'feeCurrency' | 'hash'
     > & {
       addressDeposit: string;
@@ -20,12 +20,12 @@ type ServerReturnType<M extends Mode> = {
   >;
 };
 
-export const getSwapDetails = async <M extends Mode>({
+export const getFloatDetails = async <M extends Mode>({
   context,
   hash,
-}: Pick<CommonSwapParams<M>, 'context' | 'hash'>): Promise<
+}: Pick<CommonFloatParams<M>, 'context' | 'hash'>): Promise<
   Pick<
-    CommonSwapParams<M>,
+    CommonFloatParams<M>,
     | 'addressSwapIn'
     | 'addressUserIn'
     | 'amountIn'
@@ -38,28 +38,18 @@ export const getSwapDetails = async <M extends Mode>({
     | 'status'
     | 'timestamp'
   > & {
-    addressUserOut: CommonSwapParams<M>['addressUserOut'] | null;
-    transactionInId: CommonSwapParams<M>['transactionInId'] | null;
-    transactionOutId: CommonSwapParams<M>['transactionOutId'] | null;
+    addressUserOut: CommonFloatParams<M>['addressUserOut'] | null;
+    transactionInId: CommonFloatParams<M>['transactionInId'] | null;
+    transactionOutId: CommonFloatParams<M>['transactionOutId'] | null;
   }
 > => {
   const result = await (async () => {
     const ethereumFetch = fetch<ServerReturnType<M>>(
-      `${context.servers.swapNode.btc_bep}/api/v1/swaps/query?hash=${hash}`,
-    );
-    const binanceFetch = fetch<ServerReturnType<M>>(
-      `${context.servers.swapNode.btc_erc}/api/v1/swaps/query?hash=${hash}`,
+      `${context.servers.swapNode.btc_bep}/api/v1/floats/query?hash=${hash}`,
     );
 
     try {
       const result = await ethereumFetch;
-      if (result.ok && result.response.items.length > 0) {
-        return result.response.items[0];
-      }
-    } catch (e) {}
-
-    try {
-      const result = await binanceFetch;
       if (result.ok && result.response.items.length > 0) {
         return result.response.items[0];
       }
@@ -74,11 +64,10 @@ export const getSwapDetails = async <M extends Mode>({
     addressSwapIn: result.addressDeposit,
     amountIn: result.amountIn,
     amountOut: result.amountOut,
-    // Temporarily fixes API bug where it retuns `BTCE` instead of `WBTC`
-    currencyIn: (result.currencyIn as any) === 'BTCE' ? 'WBTC' : result.currencyIn,
-    currencyOut: (result.currencyOut as any) === 'BTCE' ? 'WBTC' : result.currencyOut,
-    feeCurrency: (result.feeCurrency as any) === 'BTCE' ? 'WBTC' : result.feeCurrency,
+    currencyIn: result.currencyIn,
+    currencyOut: result.currencyOut,
     feeTotal: result.fee,
+    feeCurrency: result.feeCurrency,
     hash: result.hash,
     status: result.status,
     transactionInId: result.txIdIn || null,

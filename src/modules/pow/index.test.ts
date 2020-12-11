@@ -1,15 +1,15 @@
-import { buildContext } from '../../../context';
-import { CommonSwapParams } from '../../../swap-params';
+import { buildContext } from '../context';
+import { CommonAnyParams } from '../common-params';
 
-import { calculateSwap } from './';
+import { runProofOfWork } from './';
 
-jest.mock('../../../context/buildContext');
+jest.mock('../context/buildContext');
 jest.mock('./getBlockHeight', () => ({ getBlockHeight: () => 100 }));
 
 it.each<
   [
-    Pick<CommonSwapParams<'test'>, 'currencyIn' | 'currencyOut' | 'amountUser' | 'addressUserIn'>,
-    Pick<CommonSwapParams<'test'>, 'nonce' | 'amountIn'>,
+    Pick<CommonAnyParams<'test'>, 'currencyIn' | 'currencyOut' | 'amountUser' | 'addressUserIn'>,
+    Pick<CommonAnyParams<'test'>, 'nonce' | 'amountIn'>,
   ]
 >([
   [
@@ -26,9 +26,9 @@ it.each<
       amountUser: '1',
       currencyIn: 'BTC',
       currencyOut: 'WBTC',
-      addressUserIn: '0x3ff3ada69b19a6fdfe4ed96c9dc49aab1763bdf3',
+      addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     },
-    { amountIn: '0.99999573', nonce: 312 },
+    { amountIn: '0.99999948', nonce: 743 },
   ],
   [
     {
@@ -39,11 +39,20 @@ it.each<
     },
     { amountIn: '0.9999927', nonce: 257 },
   ],
+  [
+    {
+      amountUser: '1',
+      currencyIn: 'WBTC',
+      currencyOut: 'sbBTC',
+      addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    },
+    { amountIn: '0.9999961', nonce: 1722 },
+  ],
 ])('works for %s', async (params, expected) => {
   expect.assertions(1);
 
   const context = await buildContext({ mode: 'test' });
-  const result = await calculateSwap({ ...params, context });
+  const result = await runProofOfWork({ ...params, context });
 
   expect(result).toMatchObject(expected);
 });

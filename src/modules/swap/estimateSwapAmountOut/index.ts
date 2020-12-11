@@ -1,10 +1,10 @@
 import { Big } from 'big.js';
 
 import { Mode } from '../../modes';
-import { CommonSwapParams } from '../../swap-params';
-import { calculateFees } from '../calculateFees';
+import { CommonSwapParams } from '../../common-params';
+import { calculateSwapFees } from '../calculateSwapFees';
 
-export const estimateAmountOut = async <M extends Mode>({
+export const estimateSwapAmountOut = async <M extends Mode>({
   context,
   currencyIn,
   currencyOut,
@@ -15,7 +15,7 @@ export const estimateAmountOut = async <M extends Mode>({
     'feeBridgePercent' | 'feeMiner' | 'feeCurrency' | 'amountOut' | 'feeTotal'
   >
 > => {
-  const fees = await calculateFees({ context, currencyIn, currencyOut });
+  const fees = await calculateSwapFees({ context, currencyIn, currencyOut });
   const totalFee = new Big(amountUser).times(fees.feeBridgePercent).plus(fees.feeMiner);
 
   return {

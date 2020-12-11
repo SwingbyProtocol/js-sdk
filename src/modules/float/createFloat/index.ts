@@ -2,20 +2,19 @@ import { getBridgeFor } from '../../context';
 import { fetch } from '../../fetch';
 import { logger } from '../../logger';
 import { Mode } from '../../modes';
-import { CommonSwapParams } from '../../common-params';
+import { CommonFloatParams } from '../../common-params';
 import { runProofOfWork } from '../../pow';
 
 type Params<M extends Mode> = Pick<
-  CommonSwapParams<M>,
-  'context' | 'addressUserIn' | 'currencyIn' | 'currencyOut' | 'amountUser'
+  CommonFloatParams<M>,
+  'context' | 'addressUserIn' | 'currencyIn' | 'amountUser'
 >;
 
 type Result<M extends Mode> = Pick<
-  CommonSwapParams<M>,
+  CommonFloatParams<M>,
   | 'addressSwapIn'
   | 'addressUserIn'
   | 'amountIn'
-  | 'amountOut'
   | 'currencyIn'
   | 'currencyOut'
   | 'nonce'
@@ -25,7 +24,7 @@ type Result<M extends Mode> = Pick<
 
 const INTERVAL = 2000;
 
-export const createSwap = async <M extends Mode>({
+export const createFloat = async <M extends Mode>({
   timeout = 2 * 60 * 1000,
   ...params
 }: Params<M> & {
@@ -40,23 +39,22 @@ const createSwapRec = async <M extends Mode>({
 }: Params<M> & { startedAt: number; timeout: number }): Promise<Result<M>> => {
   logger('Will execute createSwap(%O).', params);
 
-  const { amountIn, nonce } = await runProofOfWork(params);
+  const { amountIn, nonce } = await runProofOfWork({ ...params, currencyOut: 'sbBTC' });
 
   type ApiResponse = Pick<
-    CommonSwapParams<M>,
+    CommonFloatParams<M>,
     'amountIn' | 'amountOut' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
   > & { timestamp: number; addressDeposit: string; addressOut: string };
 
-  const bridge = getBridgeFor(params);
+  const bridge = getBridgeFor({ ...params, currencyOut: 'sbBTC' });
   const result = await fetch<ApiResponse>(
-    `${params.context.servers.swapNode[bridge]}/api/v1/swaps/create`,
+    `${params.context.servers.swapNode[bridge]}/api/v1/floats/create`,
     {
       method: 'post',
       body: JSON.stringify({
         address_to: params.addressUserIn,
         amount: amountIn,
         currency_from: params.currencyIn,
-        currency_to: params.currencyOut,
         nonce,
       }),
     },
@@ -65,6 +63,7 @@ const createSwapRec = async <M extends Mode>({
   logger('/swaps/create has replied: %O', result);
 
   if (result.ok) {
+    console.log('heyyy', result.response);
     return {
       ...result.response,
       addressSwapIn: result.response.addressDeposit,
