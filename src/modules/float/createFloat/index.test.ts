@@ -1,0 +1,42 @@
+import { buildContext } from '../../context';
+import { CommonFloatParams } from '../../common-params';
+
+import { createFloat } from './';
+
+jest.mock('../../context/buildContext');
+
+it.each<Pick<CommonFloatParams<'test'>, 'addressUserIn' | 'currencyIn' | 'amountUser'>>([
+  {
+    amountUser: '1',
+    addressUserIn: '0xb680c8F33f058163185AB6121F7582BAb57Ef8a7',
+    currencyIn: 'BTC',
+  },
+  {
+    amountUser: '1',
+    addressUserIn: '0xb680c8F33f058163185AB6121F7582BAb57Ef8a7',
+    currencyIn: 'BTC',
+  },
+])('"/swaps/create" succeeds with %O', async ({ addressUserIn, currencyIn, amountUser }) => {
+  jest.setTimeout(180000);
+  expect.assertions(1);
+
+  try {
+    const context = await buildContext({ mode: 'test' });
+    const result = await createFloat({
+      context,
+      addressUserIn,
+      currencyIn,
+      amountUser,
+    });
+    return expect(result).toMatchObject({
+      addressSwapIn: expect.any(String),
+      addressUserIn,
+      amountIn: expect.stringContaining('0.99'),
+      currencyIn,
+      currencyOut: 'sbBTC',
+      timestamp: expect.any(Date),
+    });
+  } catch (e) {
+    expect(e.message).toMatch(/The KVStore key \d+ already exists in epoch bucket \d+/);
+  }
+});
