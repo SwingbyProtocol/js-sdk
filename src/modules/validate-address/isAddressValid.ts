@@ -1,5 +1,5 @@
-import type { SwingbyContext } from '../context';
-import type { Chain } from '../chains';
+import type { SkybridgeContext } from '../context';
+import type { SkybridgeChain } from '../chains';
 
 import { isBinanceAddress } from './isBinanceAddress';
 import { isBitcoinAddress } from './isBitcoinAddress';
@@ -10,13 +10,13 @@ export const isAddressValid = ({
   address,
   chain,
 }: {
-  context: SwingbyContext;
+  context: SkybridgeContext;
   address: string;
   /**
    * If passed, this function will verify whether the address is valid for this partifular chain.
    *
    * If not passed, this function will verify whether the address is valid for at least one of the supported chains. */
-  chain?: Chain;
+  chain?: SkybridgeChain;
 }): boolean => {
   if (typeof chain === 'undefined') {
     return (

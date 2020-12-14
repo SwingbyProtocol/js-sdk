@@ -1,12 +1,12 @@
 import validate from 'bitcoin-address-validation';
 
-import { SwingbyContext } from '../context';
+import type { SkybridgeContext } from '../context';
 
 export const isBitcoinAddress = ({
   context,
   address,
 }: {
-  context: SwingbyContext;
+  context: SkybridgeContext;
   address: string;
 }): boolean => {
   const result = validate(address);

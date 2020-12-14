@@ -1,6 +1,6 @@
 import type { SkybridgeAction } from '../actions';
 import type { SkybridgeCoin } from '../coins';
-import type { SwingbyContext } from '../context';
+import type { SkybridgeContext } from '../context';
 import type { SkybridgeMode } from '../modes';
 
 const STATUSES = [
@@ -14,13 +14,13 @@ const STATUSES = [
   'REFUNDED',
   'EXPIRED',
 ] as const;
-export type SwapStatus = typeof STATUSES[number];
+export type SkydrigeStatus = typeof STATUSES[number];
 
 export type SkybridgeParams<
   A extends SkybridgeAction = SkybridgeAction,
   M extends SkybridgeMode = SkybridgeMode
 > = {
-  context: SwingbyContext<M>;
+  context: SkybridgeContext<M>;
   /** Unique identifier for a swap. */
   hash: string;
   /** Address the user has sent funds from. */
@@ -31,7 +31,7 @@ export type SkybridgeParams<
   addressSwapIn: string;
   /** Amount that users type in the UI. */
   amountUser: string;
-  /** Amount that users have to send to Swingby to start the swap. */
+  /** Amount that users have to send to Skybridge to start the swap. */
   amountIn: string;
   amountOut: string;
   currencyIn: SkybridgeCoin<A, M, 'in'>;
@@ -45,7 +45,7 @@ export type SkybridgeParams<
   feeCurrency: SkybridgeCoin<A, M, 'out'>;
   /** In the units specified by `feeCurrency`. */
   feeTotal: string;
-  status: SwapStatus;
+  status: SkydrigeStatus;
   transactionInId: string;
   transactionOutId: string;
 };

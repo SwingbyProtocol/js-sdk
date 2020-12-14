@@ -1,10 +1,10 @@
-import { Chain, getChainFor } from '../chains';
+import { SkybridgeChain, getChainFor } from '../chains';
 import type { SkybridgeCoin } from '../coins';
 import type { SkybridgeMode } from '../modes';
 import type { SkybridgeParams } from '../common-params';
-import { SkybridgeAction } from '../actions';
+import type { SkybridgeAction } from '../actions';
 
-const explorers: { [k in Chain]: { [k in SkybridgeMode]: string } } = {
+const explorers: { [k in SkybridgeChain]: { [k in SkybridgeMode]: string } } = {
   ethereum: {
     test: 'https://goerli.etherscan.io/tx/:transactionId',
     production: 'https://etherscan.io/tx/:transactionId',

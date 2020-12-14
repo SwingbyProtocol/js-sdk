@@ -2,13 +2,13 @@ import type { SkybridgeBridge } from '../bridges';
 import { fetch } from '../fetch';
 import type { SkybridgeMode } from '../modes';
 
-import type { SwingbyContext } from './SwingbyContext';
+import type { SkybridgeContext } from './SkybridgeContext';
 
 export const buildContext = async <M extends SkybridgeMode>({
   mode,
 }: {
   mode: M;
-}): Promise<SwingbyContext<M>> => {
+}): Promise<SkybridgeContext<M>> => {
   const result = await fetch<
     {
       [k in SkybridgeMode]: {

@@ -1,6 +1,6 @@
 import { fetch } from '../../fetch';
 import type { SkybridgeMode } from '../../modes';
-import type { SkybridgeParams, SwapStatus } from '../../common-params';
+import type { SkybridgeParams, SkydrigeStatus } from '../../common-params';
 
 type ServerReturnType<M extends SkybridgeMode> = {
   items: Array<
@@ -10,7 +10,7 @@ type ServerReturnType<M extends SkybridgeMode> = {
     > & {
       addressDeposit: string;
       fee: string;
-      status: SwapStatus;
+      status: SkydrigeStatus;
       txIdIn: string;
       txIdOut: string;
       timestamp: number;
