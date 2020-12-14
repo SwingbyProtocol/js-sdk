@@ -1,3 +1,4 @@
+import type { SkybridgeAction } from '../actions';
 import type { SkybridgeCoin } from '../coins';
 import type { SwingbyContext } from '../context';
 import type { SkybridgeMode } from '../modes';
@@ -15,8 +16,11 @@ const STATUSES = [
 ] as const;
 export type SwapStatus = typeof STATUSES[number];
 
-export type CommonSwapParams<M extends SkybridgeMode> = {
-  context: SwingbyContext;
+export type SkybridgeParams<
+  A extends SkybridgeAction = SkybridgeAction,
+  M extends SkybridgeMode = SkybridgeMode
+> = {
+  context: SwingbyContext<M>;
   /** Unique identifier for a swap. */
   hash: string;
   /** Address the user has sent funds from. */
@@ -30,25 +34,18 @@ export type CommonSwapParams<M extends SkybridgeMode> = {
   /** Amount that users have to send to Swingby to start the swap. */
   amountIn: string;
   amountOut: string;
-  currencyIn: SkybridgeCoin<M>;
-  currencyOut: SkybridgeCoin<M>;
+  currencyIn: SkybridgeCoin<A, M, 'in'>;
+  currencyOut: SkybridgeCoin<A, M, 'out'>;
   nonce: number;
   timestamp: Date;
   /** e.g. `0.1` means `10%`. */
   feeBridgePercent: string;
   /** In the units specified by `feeCurrency`. */
   feeMiner: string;
-  feeCurrency: SkybridgeCoin<M>;
+  feeCurrency: SkybridgeCoin<A, M, 'out'>;
   /** In the units specified by `feeCurrency`. */
   feeTotal: string;
   status: SwapStatus;
   transactionInId: string;
   transactionOutId: string;
 };
-
-export type CommonFloatParams<M extends SkybridgeMode> = Omit<
-  CommonSwapParams<M>,
-  'currencyIn' | 'currencyOut'
-> & { currencyIn: 'BTC' | 'WBTC'; currencyOut: 'sbBTC' };
-
-export type CommonAnyParams<M extends SkybridgeMode> = CommonFloatParams<M> | CommonSwapParams<M>;

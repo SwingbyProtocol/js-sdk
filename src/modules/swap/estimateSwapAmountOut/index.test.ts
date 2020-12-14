@@ -8,7 +8,7 @@ jest.mock('../../context/buildContext');
 
 it.each<
   [
-    { amountUser: string; currencyIn: SkybridgeCoin<'test'>; currencyOut: SkybridgeCoin<'test'> },
+    { amountUser: string; currencyIn: SkybridgeCoin<'swap'>; currencyOut: SkybridgeCoin<'swap'> },
     any,
   ]
 >([
@@ -56,7 +56,7 @@ it.each<
   expect(result).toMatchObject(expected);
 });
 
-it.each<{ currencyIn: SkybridgeCoin; mode: SkybridgeMode; currencyOut: SkybridgeCoin }>([
+it.each<{ currencyIn: any; mode: SkybridgeMode; currencyOut: any }>([
   { currencyIn: 'WBTC', mode: 'test', currencyOut: 'BTCB' },
   { currencyIn: 'BTCB', mode: 'test', currencyOut: 'WBTC' },
   { currencyIn: 'BTC', mode: 'production', currencyOut: 'BTCB' },

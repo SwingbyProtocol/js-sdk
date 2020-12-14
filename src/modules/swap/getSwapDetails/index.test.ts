@@ -1,11 +1,11 @@
 import { buildContext } from '../../context';
-import { CommonFloatParams } from '../../common-params';
+import type { SkybridgeParams } from '../../common-params';
 
 import { getSwapDetails } from './';
 
 jest.mock('../../context/buildContext');
 
-it.each<Pick<CommonFloatParams<'test'>, 'hash'>>([
+it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
   { hash: 'HSGoe4kiMme5lmKrYmvPqkn5Rj1TZ0-saiFTEOvOzAE=' },
 ])('gets swaps details for %O', async ({ hash }) => {
   expect.assertions(1);

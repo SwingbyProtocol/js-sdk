@@ -6,7 +6,7 @@ import { calculateSwapFees } from './';
 
 jest.mock('../../context/buildContext');
 
-it.each<[{ currencyIn: SkybridgeCoin<'test'>; currencyOut: SkybridgeCoin<'test'> }, any]>([
+it.each<[{ currencyIn: SkybridgeCoin<'swap'>; currencyOut: SkybridgeCoin<'swap'> }, any]>([
   [
     { currencyIn: 'BTC', currencyOut: 'BTCB' },
     { feeBridgePercent: '0.001', feeMiner: '0.000005', feeCurrency: 'BTCB' },
@@ -32,7 +32,7 @@ it.each<[{ currencyIn: SkybridgeCoin<'test'>; currencyOut: SkybridgeCoin<'test'>
   expect(result).toMatchObject(expected);
 });
 
-it.each<{ currencyIn: SkybridgeCoin; mode: SkybridgeMode; currencyOut: SkybridgeCoin }>([
+it.each<{ currencyIn: any; mode: SkybridgeMode; currencyOut: any }>([
   { currencyIn: 'WBTC', mode: 'test', currencyOut: 'BTCB' },
   { currencyIn: 'BTCB', mode: 'test', currencyOut: 'WBTC' },
   { currencyIn: 'BTC', mode: 'production', currencyOut: 'BTCB' },

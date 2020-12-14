@@ -3,19 +3,19 @@ import { Big } from 'big.js';
 import { getBridgeFor } from '../../context';
 import { fetch } from '../../fetch';
 import type { SkybridgeMode } from '../../modes';
-import type { CommonSwapParams } from '../../common-params';
+import type { SkybridgeParams } from '../../common-params';
 import type { SkybridgeCoin } from '../../coins';
 
 export const calculateSwapFees = async <M extends SkybridgeMode>({
   context,
   currencyIn,
   currencyOut,
-}: Pick<CommonSwapParams<M>, 'context' | 'currencyIn' | 'currencyOut'>): Promise<
-  Pick<CommonSwapParams<M>, 'feeBridgePercent' | 'feeMiner' | 'feeCurrency'>
+}: Pick<SkybridgeParams<'swap', M>, 'context' | 'currencyIn' | 'currencyOut'>): Promise<
+  Pick<SkybridgeParams<'swap', M>, 'feeBridgePercent' | 'feeMiner' | 'feeCurrency'>
 > => {
   const bridge = getBridgeFor({ context, currencyIn, currencyOut });
   const result = await fetch<
-    Array<{ bridgeFeePercent: string; currency: SkybridgeCoin<M>; minerFee: string }>
+    Array<{ bridgeFeePercent: string; currency: SkybridgeCoin<'swap', M>; minerFee: string }>
   >(`${context.servers.swapNode[bridge]}/api/v1/swaps/fees`);
 
   if (!result.ok) {

@@ -2,16 +2,16 @@ import { getBridgeFor } from '../../context';
 import { fetch } from '../../fetch';
 import { logger } from '../../logger';
 import { SkybridgeMode } from '../../modes';
-import { CommonSwapParams } from '../../common-params';
+import { SkybridgeParams } from '../../common-params';
 import { runProofOfWork } from '../../pow';
 
 type Params<M extends SkybridgeMode> = Pick<
-  CommonSwapParams<M>,
+  SkybridgeParams<'swap', M>,
   'context' | 'addressUserIn' | 'currencyIn' | 'currencyOut' | 'amountUser'
 >;
 
 type Result<M extends SkybridgeMode> = Pick<
-  CommonSwapParams<M>,
+  SkybridgeParams<'swap', M>,
   | 'addressSwapIn'
   | 'addressUserIn'
   | 'amountIn'
@@ -43,7 +43,7 @@ const createSwapRec = async <M extends SkybridgeMode>({
   const { amountIn, nonce } = await runProofOfWork(params);
 
   type ApiResponse = Pick<
-    CommonSwapParams<M>,
+    SkybridgeParams<'swap', M>,
     'amountIn' | 'amountOut' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
   > & { timestamp: number; addressDeposit: string; addressOut: string };
 
