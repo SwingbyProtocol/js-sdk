@@ -1,9 +1,9 @@
-import type { Coin } from '../coins';
+import type { SkybridgeCoin } from '../coins';
 
 const CHAINS = ['bitcoin', 'ethereum', 'binance'] as const;
 export type Chain = typeof CHAINS[number];
 
-export const getChainFor = ({ coin }: { coin: Coin | 'sbBTC' }): Chain => {
+export const getChainFor = ({ coin }: { coin: SkybridgeCoin | 'sbBTC' }): Chain => {
   switch (coin) {
     case 'BTCB':
       return 'binance';

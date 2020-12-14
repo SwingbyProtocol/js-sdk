@@ -1,7 +1,7 @@
 import type { SwingbyContext } from '..';
-import type { Mode } from '../../modes';
+import type { SkybridgeMode } from '../../modes';
 
-export const buildContext = async <M extends Mode>({
+export const buildContext = async <M extends SkybridgeMode>({
   mode,
 }: {
   mode: M;

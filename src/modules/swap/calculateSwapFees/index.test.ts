@@ -1,12 +1,12 @@
-import type { Coin } from '../../coins';
+import type { SkybridgeCoin } from '../../coins';
 import { buildContext } from '../../context';
-import { Mode } from '../../modes';
+import type { SkybridgeMode } from '../../modes';
 
 import { calculateSwapFees } from './';
 
 jest.mock('../../context/buildContext');
 
-it.each<[{ currencyIn: Coin<'test'>; currencyOut: Coin<'test'> }, any]>([
+it.each<[{ currencyIn: SkybridgeCoin<'test'>; currencyOut: SkybridgeCoin<'test'> }, any]>([
   [
     { currencyIn: 'BTC', currencyOut: 'BTCB' },
     { feeBridgePercent: '0.001', feeMiner: '0.000005', feeCurrency: 'BTCB' },
@@ -32,7 +32,7 @@ it.each<[{ currencyIn: Coin<'test'>; currencyOut: Coin<'test'> }, any]>([
   expect(result).toMatchObject(expected);
 });
 
-it.each<{ currencyIn: Coin; mode: Mode; currencyOut: Coin }>([
+it.each<{ currencyIn: SkybridgeCoin; mode: SkybridgeMode; currencyOut: SkybridgeCoin }>([
   { currencyIn: 'WBTC', mode: 'test', currencyOut: 'BTCB' },
   { currencyIn: 'BTCB', mode: 'test', currencyOut: 'WBTC' },
   { currencyIn: 'BTC', mode: 'production', currencyOut: 'BTCB' },

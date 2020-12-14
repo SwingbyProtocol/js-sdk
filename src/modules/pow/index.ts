@@ -3,21 +3,21 @@ import hexToBinary from 'hex-to-binary';
 import crypto from 'isomorphic-webcrypto';
 
 import { CommonAnyParams } from '../common-params';
-import { Mode } from '../modes';
+import { SkybridgeMode } from '../modes';
 import { getBridgeFor } from '../context';
 
 import { getBlockHeight } from './getBlockHeight';
 
 const difficultyZeroBits = 10;
 
-type Params<M extends Mode> = Pick<
+type Params<M extends SkybridgeMode> = Pick<
   CommonAnyParams<M>,
   'context' | 'addressUserIn' | 'currencyIn' | 'currencyOut' | 'amountUser'
 >;
 
-type Result<M extends Mode> = Pick<CommonAnyParams<M>, 'amountIn' | 'nonce'>;
+type Result<M extends SkybridgeMode> = Pick<CommonAnyParams<M>, 'amountIn' | 'nonce'>;
 
-export const runProofOfWork = async <M extends Mode>({
+export const runProofOfWork = async <M extends SkybridgeMode>({
   context,
   addressUserIn,
   currencyIn,
@@ -57,7 +57,7 @@ export const runProofOfWork = async <M extends Mode>({
   return { amountIn: sendAmount, nonce };
 };
 
-export const getRound = async <M extends Mode>({
+export const getRound = async <M extends SkybridgeMode>({
   context,
   currencyOut,
   currencyIn,

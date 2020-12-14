@@ -1,16 +1,16 @@
 import { getBridgeFor } from '../../context';
 import { fetch } from '../../fetch';
 import { logger } from '../../logger';
-import { Mode } from '../../modes';
+import { SkybridgeMode } from '../../modes';
 import { CommonFloatParams } from '../../common-params';
 import { runProofOfWork } from '../../pow';
 
-type Params<M extends Mode> = Pick<
+type Params<M extends SkybridgeMode> = Pick<
   CommonFloatParams<M>,
   'context' | 'addressUserIn' | 'currencyIn' | 'amountUser'
 >;
 
-type Result<M extends Mode> = Pick<
+type Result<M extends SkybridgeMode> = Pick<
   CommonFloatParams<M>,
   | 'addressSwapIn'
   | 'addressUserIn'
@@ -24,7 +24,7 @@ type Result<M extends Mode> = Pick<
 
 const INTERVAL = 2000;
 
-export const createFloat = async <M extends Mode>({
+export const createFloat = async <M extends SkybridgeMode>({
   timeout = 2 * 60 * 1000,
   ...params
 }: Params<M> & {
@@ -32,7 +32,7 @@ export const createFloat = async <M extends Mode>({
   timeout?: number;
 }): Promise<Result<M>> => createSwapRec({ ...params, startedAt: Date.now(), timeout });
 
-const createSwapRec = async <M extends Mode>({
+const createSwapRec = async <M extends SkybridgeMode>({
   startedAt,
   timeout,
   ...params

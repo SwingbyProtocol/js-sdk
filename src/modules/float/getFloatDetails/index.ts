@@ -1,8 +1,8 @@
 import { fetch } from '../../fetch';
-import { Mode } from '../../modes';
+import { SkybridgeMode } from '../../modes';
 import { CommonFloatParams, SwapStatus } from '../../common-params';
 
-type ServerReturnType<M extends Mode> = {
+type ServerReturnType<M extends SkybridgeMode> = {
   items: Array<
     Pick<
       CommonFloatParams<M>,
@@ -20,7 +20,7 @@ type ServerReturnType<M extends Mode> = {
   >;
 };
 
-export const getFloatDetails = async <M extends Mode>({
+export const getFloatDetails = async <M extends SkybridgeMode>({
   context,
   hash,
 }: Pick<CommonFloatParams<M>, 'context' | 'hash'>): Promise<
