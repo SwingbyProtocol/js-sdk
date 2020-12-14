@@ -2,7 +2,7 @@ export type { SkybridgeMode } from './modules/modes';
 export type { SkybridgeBridge } from './modules/bridges';
 export type { SkybridgeAction } from './modules/actions';
 export type { SkybridgeDirection } from './modules/directions';
-export type { SkydrigeStatus } from './modules/common-params';
+export type { SkybridgeStatus } from './modules/common-params';
 export type { SkybridgeContext } from './modules/context';
 export type { SkybridgeCoin } from './modules/coins';
 export type { SkybridgeChain } from './modules/chains';

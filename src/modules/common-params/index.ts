@@ -14,7 +14,7 @@ const STATUSES = [
   'REFUNDED',
   'EXPIRED',
 ] as const;
-export type SkydrigeStatus = typeof STATUSES[number];
+export type SkybridgeStatus = typeof STATUSES[number];
 
 export type SkybridgeParams<
   A extends SkybridgeAction = SkybridgeAction,
@@ -45,7 +45,7 @@ export type SkybridgeParams<
   feeCurrency: SkybridgeCoin<A, M, 'out'>;
   /** In the units specified by `feeCurrency`. */
   feeTotal: string;
-  status: SkydrigeStatus;
+  status: SkybridgeStatus;
   transactionInId: string;
   transactionOutId: string;
 };
