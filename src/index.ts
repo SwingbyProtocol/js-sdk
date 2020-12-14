@@ -13,3 +13,4 @@ export { buildContext } from './modules/context';
 export { isAddressValid } from './modules/validate-address';
 export { buildExplorerLink } from './modules/explorer-link';
 export { getChainFor } from './modules/chains';
+export { createFloat } from './modules/float';
