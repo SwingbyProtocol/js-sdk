@@ -1,12 +1,12 @@
-import { Coin } from '../coins';
+import type { SkybridgeCoin } from '../coins';
 import { buildContext } from '../context';
-import { Mode } from '../modes';
+import type { SkybridgeMode } from '../modes';
 
 import { buildExplorerLink } from '.';
 
 jest.mock('../context/buildContext');
 
-it.each<[{ mode: Mode; coin: Coin; transactionId: string }, string]>([
+it.each<[{ mode: SkybridgeMode; coin: SkybridgeCoin; transactionId: string }, string]>([
   [
     {
       mode: 'test',

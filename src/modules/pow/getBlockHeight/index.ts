@@ -1,26 +1,30 @@
-import { Bridge } from '../../bridges';
+import type { SkybridgeBridge } from '../../bridges';
 import { fetch } from '../../fetch';
 import { logger } from '../../logger';
-import { Mode } from '../../modes';
-import { CommonAnyParams } from '../../common-params';
+import type { SkybridgeMode } from '../../modes';
+import type { SkybridgeParams } from '../../common-params';
+import type { SkybridgeAction } from '../../actions';
 
 const TIMEOUT = 1 * 60 * 1000;
 const INTERVAL = 2000;
 
-export const getBlockHeight = async <M extends Mode>({
+export const getBlockHeight = async <M extends SkybridgeMode>({
   context,
   bridge,
-}: Pick<CommonAnyParams<M>, 'context'> & { bridge: Bridge }): Promise<number> => {
+}: Pick<SkybridgeParams<SkybridgeAction, M>, 'context'> & { bridge: SkybridgeBridge }): Promise<
+  number
+> => {
   return getBlockHeightRec({ context, bridge, startedAt: Date.now() });
 };
 
-const getBlockHeightRec = async <M extends Mode>({
+const getBlockHeightRec = async <M extends SkybridgeMode>({
   context,
   bridge,
   startedAt,
-}: Pick<CommonAnyParams<M>, 'context'> & { bridge: Bridge; startedAt: number }): Promise<
-  number
-> => {
+}: Pick<SkybridgeParams<SkybridgeAction, M>, 'context'> & {
+  bridge: SkybridgeBridge;
+  startedAt: number;
+}): Promise<number> => {
   const result = await fetch<{ blockbook: { inSync: boolean; bestHeight: number } }>(
     `${context.servers.indexer[bridge]}/api/v2`,
   );

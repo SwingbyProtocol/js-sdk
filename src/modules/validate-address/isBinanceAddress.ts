@@ -1,13 +1,13 @@
 import { decode, fromWords } from 'bech32';
 
-import { SwingbyContext } from '../context';
+import type { SkybridgeContext } from '../context';
 import { logger } from '../logger';
 
 export const isBinanceAddress = ({
   context,
   address,
 }: {
-  context: SwingbyContext;
+  context: SkybridgeContext;
   address: string;
 }): boolean => {
   const prefix = context.mode === 'production' ? 'bnb' : 'tbnb';

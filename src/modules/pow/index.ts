@@ -2,22 +2,26 @@ import { Big, BigSource } from 'big.js';
 import hexToBinary from 'hex-to-binary';
 import crypto from 'isomorphic-webcrypto';
 
-import { CommonAnyParams } from '../common-params';
-import { Mode } from '../modes';
+import type { SkybridgeParams } from '../common-params';
+import type { SkybridgeMode } from '../modes';
+import type { SkybridgeAction } from '../actions';
 import { getBridgeFor } from '../context';
 
 import { getBlockHeight } from './getBlockHeight';
 
 const difficultyZeroBits = 10;
 
-type Params<M extends Mode> = Pick<
-  CommonAnyParams<M>,
+type Params<M extends SkybridgeMode> = Pick<
+  SkybridgeParams<SkybridgeAction, M>,
   'context' | 'addressUserIn' | 'currencyIn' | 'currencyOut' | 'amountUser'
 >;
 
-type Result<M extends Mode> = Pick<CommonAnyParams<M>, 'amountIn' | 'nonce'>;
+type Result<M extends SkybridgeMode> = Pick<
+  SkybridgeParams<SkybridgeAction, M>,
+  'amountIn' | 'nonce'
+>;
 
-export const runProofOfWork = async <M extends Mode>({
+export const runProofOfWork = async <M extends SkybridgeMode>({
   context,
   addressUserIn,
   currencyIn,
@@ -57,11 +61,13 @@ export const runProofOfWork = async <M extends Mode>({
   return { amountIn: sendAmount, nonce };
 };
 
-export const getRound = async <M extends Mode>({
+export const getRound = async <M extends SkybridgeMode>({
   context,
   currencyOut,
   currencyIn,
-}: Pick<CommonAnyParams<M>, 'context' | 'currencyIn' | 'currencyOut'>): Promise<string> => {
+}: Pick<SkybridgeParams<SkybridgeAction, M>, 'context' | 'currencyIn' | 'currencyOut'>): Promise<
+  string
+> => {
   const round: number = await (async () => {
     const bridge = getBridgeFor({ context, currencyIn, currencyOut });
     if (bridge === 'btc_erc') {

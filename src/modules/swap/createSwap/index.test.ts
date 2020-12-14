@@ -1,12 +1,15 @@
 import { buildContext } from '../../context';
-import { CommonSwapParams } from '../../common-params';
+import type { SkybridgeParams } from '../../common-params';
 
 import { createSwap } from './';
 
 jest.mock('../../context/buildContext');
 
 it.each<
-  Pick<CommonSwapParams<'test'>, 'addressUserIn' | 'currencyIn' | 'currencyOut' | 'amountUser'>
+  Pick<
+    SkybridgeParams<'swap', 'test'>,
+    'addressUserIn' | 'currencyIn' | 'currencyOut' | 'amountUser'
+  >
 >([
   {
     amountUser: '1',

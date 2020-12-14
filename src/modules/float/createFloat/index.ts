@@ -1,17 +1,17 @@
 import { getBridgeFor } from '../../context';
 import { fetch } from '../../fetch';
 import { logger } from '../../logger';
-import { Mode } from '../../modes';
-import { CommonFloatParams } from '../../common-params';
+import type { SkybridgeMode } from '../../modes';
+import type { SkybridgeParams } from '../../common-params';
 import { runProofOfWork } from '../../pow';
 
-type Params<M extends Mode> = Pick<
-  CommonFloatParams<M>,
+type Params<M extends SkybridgeMode> = Pick<
+  SkybridgeParams<'float', M>,
   'context' | 'addressUserIn' | 'currencyIn' | 'amountUser'
 >;
 
-type Result<M extends Mode> = Pick<
-  CommonFloatParams<M>,
+type Result<M extends SkybridgeMode> = Pick<
+  SkybridgeParams<'float', M>,
   | 'addressSwapIn'
   | 'addressUserIn'
   | 'amountIn'
@@ -24,7 +24,7 @@ type Result<M extends Mode> = Pick<
 
 const INTERVAL = 2000;
 
-export const createFloat = async <M extends Mode>({
+export const createFloat = async <M extends SkybridgeMode>({
   timeout = 2 * 60 * 1000,
   ...params
 }: Params<M> & {
@@ -32,7 +32,7 @@ export const createFloat = async <M extends Mode>({
   timeout?: number;
 }): Promise<Result<M>> => createSwapRec({ ...params, startedAt: Date.now(), timeout });
 
-const createSwapRec = async <M extends Mode>({
+const createSwapRec = async <M extends SkybridgeMode>({
   startedAt,
   timeout,
   ...params
@@ -42,7 +42,7 @@ const createSwapRec = async <M extends Mode>({
   const { amountIn, nonce } = await runProofOfWork({ ...params, currencyOut: 'sbBTC' });
 
   type ApiResponse = Pick<
-    CommonFloatParams<M>,
+    SkybridgeParams<'float', M>,
     'amountIn' | 'amountOut' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
   > & { timestamp: number; addressDeposit: string; addressOut: string };
 

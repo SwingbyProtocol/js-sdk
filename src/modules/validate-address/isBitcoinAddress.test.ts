@@ -1,11 +1,11 @@
 import { buildContext } from '../context';
-import { Mode } from '../modes';
+import { SkybridgeMode } from '../modes';
 
 import { isBitcoinAddress } from './isBitcoinAddress';
 
 jest.mock('../context/buildContext');
 
-type TestData = { address: string; expected: boolean; mode: Mode };
+type TestData = { address: string; expected: boolean; mode: SkybridgeMode };
 
 it.each<TestData>([
   { address: 'tb1q0fzppaflhcju7emf9sh5n5st3c47mwuczwxmt7', expected: true, mode: 'test' },

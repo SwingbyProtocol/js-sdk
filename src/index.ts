@@ -1,9 +1,15 @@
-export { Coin, getCoinsFor, getSwapableWith } from './modules/coins';
-export type { Mode } from './modules/modes';
+export type { SkybridgeMode } from './modules/modes';
+export type { SkybridgeBridge } from './modules/bridges';
+export type { SkybridgeAction } from './modules/actions';
+export type { SkybridgeDirection } from './modules/directions';
+export type { SkydrigeStatus } from './modules/common-params';
+export type { SkybridgeContext } from './modules/context';
+export type { SkybridgeCoin } from './modules/coins';
+export type { SkybridgeChain } from './modules/chains';
+
+export { getCoinsFor, getSwapableWith } from './modules/coins';
 export { createSwap, estimateSwapAmountOut, getSwapDetails } from './modules/swap';
-export { buildContext, SwingbyContext } from './modules/context';
-export type { Bridge } from './modules/bridges';
+export { buildContext } from './modules/context';
 export { isAddressValid } from './modules/validate-address';
-export { SwapStatus } from './modules/common-params';
 export { buildExplorerLink } from './modules/explorer-link';
-export { getChainFor, Chain } from './modules/chains';
+export { getChainFor } from './modules/chains';

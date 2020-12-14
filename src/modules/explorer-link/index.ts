@@ -1,9 +1,10 @@
-import { Chain, getChainFor } from '../chains';
-import type { Coin } from '../coins';
-import type { Mode } from '../modes';
-import type { CommonSwapParams } from '../common-params';
+import { SkybridgeChain, getChainFor } from '../chains';
+import type { SkybridgeCoin } from '../coins';
+import type { SkybridgeMode } from '../modes';
+import type { SkybridgeParams } from '../common-params';
+import type { SkybridgeAction } from '../actions';
 
-const explorers: { [k in Chain]: { [k in Mode]: string } } = {
+const explorers: { [k in SkybridgeChain]: { [k in SkybridgeMode]: string } } = {
   ethereum: {
     test: 'https://goerli.etherscan.io/tx/:transactionId',
     production: 'https://etherscan.io/tx/:transactionId',
@@ -18,13 +19,13 @@ const explorers: { [k in Chain]: { [k in Mode]: string } } = {
   },
 };
 
-export const buildExplorerLink = <M extends Mode>({
+export const buildExplorerLink = <M extends SkybridgeMode>({
   context,
   transactionId,
   coin,
-}: Pick<CommonSwapParams<M>, 'context'> & {
+}: Pick<SkybridgeParams<SkybridgeAction, M>, 'context'> & {
   transactionId: string;
-  coin: Coin;
+  coin: SkybridgeCoin;
 }) => {
   const chain = getChainFor({ coin });
   const url = explorers[chain][context.mode];

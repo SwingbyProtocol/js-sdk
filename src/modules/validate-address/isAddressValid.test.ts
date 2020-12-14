@@ -1,12 +1,12 @@
 import { buildContext } from '../context';
-import type { Mode } from '../modes';
-import type { Chain } from '../chains';
+import type { SkybridgeMode } from '../modes';
+import type { SkybridgeChain } from '../chains';
 
 import { isAddressValid } from './isAddressValid';
 
 jest.mock('../context/buildContext');
 
-type TestData = { address: string; expected: boolean; mode: Mode; chain?: Chain };
+type TestData = { address: string; expected: boolean; mode: SkybridgeMode; chain?: SkybridgeChain };
 
 it.each<TestData>([
   {

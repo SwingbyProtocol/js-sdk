@@ -1,17 +1,20 @@
 import { Big } from 'big.js';
 
-import { Mode } from '../../modes';
-import { CommonSwapParams } from '../../common-params';
+import type { SkybridgeMode } from '../../modes';
+import type { SkybridgeParams } from '../../common-params';
 import { calculateSwapFees } from '../calculateSwapFees';
 
-export const estimateSwapAmountOut = async <M extends Mode>({
+export const estimateSwapAmountOut = async <M extends SkybridgeMode>({
   context,
   currencyIn,
   currencyOut,
   amountUser,
-}: Pick<CommonSwapParams<M>, 'context' | 'amountUser' | 'currencyIn' | 'currencyOut'>): Promise<
+}: Pick<
+  SkybridgeParams<'swap', M>,
+  'context' | 'amountUser' | 'currencyIn' | 'currencyOut'
+>): Promise<
   Pick<
-    CommonSwapParams<M>,
+    SkybridgeParams<'swap', M>,
     'feeBridgePercent' | 'feeMiner' | 'feeCurrency' | 'amountOut' | 'feeTotal'
   >
 > => {

@@ -1,5 +1,6 @@
 import { buildContext } from '../context';
-import { CommonAnyParams } from '../common-params';
+import type { SkybridgeParams } from '../common-params';
+import type { SkybridgeAction } from '../actions';
 
 import { runProofOfWork } from './';
 
@@ -8,8 +9,11 @@ jest.mock('./getBlockHeight', () => ({ getBlockHeight: () => 100 }));
 
 it.each<
   [
-    Pick<CommonAnyParams<'test'>, 'currencyIn' | 'currencyOut' | 'amountUser' | 'addressUserIn'>,
-    Pick<CommonAnyParams<'test'>, 'nonce' | 'amountIn'>,
+    Pick<
+      SkybridgeParams<SkybridgeAction, 'test'>,
+      'currencyIn' | 'currencyOut' | 'amountUser' | 'addressUserIn'
+    >,
+    Pick<SkybridgeParams<SkybridgeAction, 'test'>, 'nonce' | 'amountIn'>,
   ]
 >([
   [
