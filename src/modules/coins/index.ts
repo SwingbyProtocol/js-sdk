@@ -119,25 +119,32 @@ export const getBridgesForCoin = <
   return Array.from(result);
 };
 
-export const getSwapableWith = <M extends SkybridgeMode, B extends SkybridgeBridge>({
-  context: { mode } = {},
+export const getSwapableWith = <
+  A extends SkybridgeAction,
+  M extends SkybridgeMode,
+  B extends SkybridgeBridge
+>({
+  context: { mode },
   coin,
   bridge,
+  action,
 }: {
-  context?: { mode?: M };
+  context: { mode: M };
   coin: SkybridgeCoin;
   bridge?: B;
-}): SkybridgeCoin<'swap', M, 'out', B>[] => {
-  const result: SkybridgeCoin<'swap', M, 'out', B>[] = [];
+  action: A;
+}): SkybridgeCoin<A, M, 'out', B>[] => {
+  const result: SkybridgeCoin<A, M, 'out', B>[] = [];
 
   typedKeys(COINS).forEach((actionIt) => {
     typedKeys(COINS[actionIt]).forEach((bridgeIt) => {
       typedKeys(COINS[actionIt][bridgeIt]).forEach((modeIt) => {
+        if (action && action !== actionIt) return;
         if (bridge && bridge !== bridgeIt) return;
         if (mode && mode !== modeIt) return;
 
-        if (((COINS.swap[bridgeIt][modeIt].in as unknown) as string[]).includes(coin)) {
-          result.push(...COINS.swap[bridgeIt][modeIt].out);
+        if (((COINS[actionIt][bridgeIt][modeIt].in as unknown) as string[]).includes(coin)) {
+          result.push(...COINS[actionIt][bridgeIt][modeIt].out);
         }
       });
     });

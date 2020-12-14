@@ -75,22 +75,30 @@ describe('getBridgesForCoin()', () => {
 });
 
 describe('getSwapableWith()', () => {
-  it.each<{ mode?: SkybridgeMode; bridge?: SkybridgeBridge; coin: SkybridgeCoin; expected: any }>([
-    { mode: 'test', coin: 'BTC', expected: ['WBTC', 'BTCB'] },
-    { mode: 'production', coin: 'BTC', expected: ['WBTC'] },
-    { mode: 'test', coin: 'BTCB', expected: ['BTC'] },
-    { mode: 'production', coin: 'BTCB', expected: [] },
-    { mode: 'test', coin: 'WBTC', expected: ['BTC'] },
-    { mode: 'production', coin: 'WBTC', expected: ['BTC'] },
-    { mode: 'production', coin: 'WBTC', expected: ['BTC'] },
-    { coin: 'WBTC', expected: ['BTC'] },
-    { coin: 'BTC', expected: ['WBTC', 'BTCB'] },
-    { coin: 'BTC', bridge: 'btc_erc', expected: ['WBTC'] },
-  ])('works for %O', async ({ mode, bridge, coin, expected }) => {
+  it.each<{
+    mode: SkybridgeMode;
+    bridge?: SkybridgeBridge;
+    coin: SkybridgeCoin;
+    action: SkybridgeAction;
+    expected: any;
+  }>([
+    { mode: 'test', action: 'swap', coin: 'BTC', expected: ['WBTC', 'BTCB'] },
+    { mode: 'production', action: 'swap', coin: 'BTC', expected: ['WBTC'] },
+    { mode: 'test', action: 'swap', coin: 'BTCB', expected: ['BTC'] },
+    { mode: 'production', action: 'swap', coin: 'BTCB', expected: [] },
+    { mode: 'test', action: 'swap', coin: 'WBTC', expected: ['BTC'] },
+    { mode: 'production', action: 'swap', coin: 'WBTC', expected: ['BTC'] },
+    { mode: 'production', action: 'swap', coin: 'WBTC', expected: ['BTC'] },
+    { mode: 'test', action: 'swap', coin: 'WBTC', expected: ['BTC'] },
+    { mode: 'test', action: 'swap', coin: 'BTC', expected: ['WBTC', 'BTCB'] },
+    { mode: 'test', action: 'swap', coin: 'BTC', bridge: 'btc_erc', expected: ['WBTC'] },
+    { mode: 'test', action: 'float', coin: 'WBTC', expected: ['sbBTC'] },
+    { mode: 'test', action: 'withdraw', coin: 'WBTC', expected: [] },
+    { mode: 'test', action: 'withdraw', coin: 'sbBTC', expected: ['BTC', 'WBTC'] },
+  ])('works for %O', async ({ mode, bridge, coin, action, expected }) => {
     expect.assertions(1);
 
-    expect(
-      getSwapableWith({ context: mode ? await buildContext({ mode }) : undefined, bridge, coin }),
-    ).toEqual(expected);
+    const context = await buildContext({ mode });
+    expect(getSwapableWith({ context, bridge, coin, action })).toEqual(expected);
   });
 });
