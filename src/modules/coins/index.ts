@@ -54,25 +54,25 @@ export const getCoinsFor = <
   context: { mode } = {},
   bridge,
   direction,
-  action,
+  resource,
 }: {
   context?: { mode?: M };
   bridge?: B;
   direction?: D;
-  action?: A;
+  resource?: A;
 } = {}): SkybridgeCoin<A, M, D, B>[] => {
   const result: SkybridgeCoin<A, M, D, B>[] = [];
 
-  typedKeys(COINS).forEach((actionIt) => {
-    typedKeys(COINS[actionIt]).forEach((bridgeIt) => {
-      typedKeys(COINS[actionIt][bridgeIt]).forEach((modeIt) => {
-        typedKeys(COINS[actionIt][bridgeIt][modeIt]).forEach((directionIt) => {
-          if (action && action !== actionIt) return;
+  typedKeys(COINS).forEach((resourceIt) => {
+    typedKeys(COINS[resourceIt]).forEach((bridgeIt) => {
+      typedKeys(COINS[resourceIt][bridgeIt]).forEach((modeIt) => {
+        typedKeys(COINS[resourceIt][bridgeIt][modeIt]).forEach((directionIt) => {
+          if (resource && resource !== resourceIt) return;
           if (bridge && bridge !== bridgeIt) return;
           if (mode && mode !== modeIt) return;
           if (direction && direction !== directionIt) return;
 
-          result.push(...COINS[actionIt][bridgeIt][modeIt][directionIt]);
+          result.push(...COINS[resourceIt][bridgeIt][modeIt][directionIt]);
         });
       });
     });
@@ -89,25 +89,27 @@ export const getBridgesForCoin = <
   context: { mode } = {},
   coin,
   direction,
-  action,
+  resource,
 }: {
   context?: { mode?: M };
   coin: SkybridgeCoin;
   direction?: D;
-  action?: A;
+  resource?: A;
 }): SkybridgeBridge[] => {
   const result = new Set<SkybridgeBridge>();
 
-  typedKeys(COINS).forEach((actionIt) => {
-    typedKeys(COINS[actionIt]).forEach((bridgeIt) => {
-      typedKeys(COINS[actionIt][bridgeIt]).forEach((modeIt) => {
-        typedKeys(COINS[actionIt][bridgeIt][modeIt]).forEach((directionIt) => {
-          if (action && action !== actionIt) return;
+  typedKeys(COINS).forEach((resourceIt) => {
+    typedKeys(COINS[resourceIt]).forEach((bridgeIt) => {
+      typedKeys(COINS[resourceIt][bridgeIt]).forEach((modeIt) => {
+        typedKeys(COINS[resourceIt][bridgeIt][modeIt]).forEach((directionIt) => {
+          if (resource && resource !== resourceIt) return;
           if (mode && mode !== modeIt) return;
           if (direction && direction !== directionIt) return;
 
           if (
-            ((COINS[actionIt][bridgeIt][modeIt][directionIt] as unknown) as string[]).includes(coin)
+            ((COINS[resourceIt][bridgeIt][modeIt][directionIt] as unknown) as string[]).includes(
+              coin,
+            )
           ) {
             result.add(bridgeIt);
           }
@@ -127,24 +129,24 @@ export const getSwapableWith = <
   context: { mode },
   coin,
   bridge,
-  action,
+  resource,
 }: {
   context: { mode: M };
   coin: SkybridgeCoin;
   bridge?: B;
-  action: A;
+  resource: A;
 }): SkybridgeCoin<A, M, 'out', B>[] => {
   const result: SkybridgeCoin<A, M, 'out', B>[] = [];
 
-  typedKeys(COINS).forEach((actionIt) => {
-    typedKeys(COINS[actionIt]).forEach((bridgeIt) => {
-      typedKeys(COINS[actionIt][bridgeIt]).forEach((modeIt) => {
-        if (action && action !== actionIt) return;
+  typedKeys(COINS).forEach((resourceIt) => {
+    typedKeys(COINS[resourceIt]).forEach((bridgeIt) => {
+      typedKeys(COINS[resourceIt][bridgeIt]).forEach((modeIt) => {
+        if (resource && resource !== resourceIt) return;
         if (bridge && bridge !== bridgeIt) return;
         if (mode && mode !== modeIt) return;
 
-        if (((COINS[actionIt][bridgeIt][modeIt].in as unknown) as string[]).includes(coin)) {
-          result.push(...COINS[actionIt][bridgeIt][modeIt].out);
+        if (((COINS[resourceIt][bridgeIt][modeIt].in as unknown) as string[]).includes(coin)) {
+          result.push(...COINS[resourceIt][bridgeIt][modeIt].out);
         }
       });
     });
