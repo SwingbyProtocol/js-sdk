@@ -5,7 +5,7 @@ import { createFloat } from './';
 
 jest.mock('../../context/buildContext');
 
-it.each<Pick<SkybridgeParams<'float', 'test'>, 'addressUserIn' | 'currencyIn' | 'amountUser'>>([
+it.each<Pick<SkybridgeParams<'pool', 'test'>, 'addressUserIn' | 'currencyIn' | 'amountUser'>>([
   {
     amountUser: '1',
     addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',

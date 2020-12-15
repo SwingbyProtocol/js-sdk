@@ -1,4 +1,4 @@
-import type { SkybridgeAction } from '../actions';
+import type { SkybridgeResource } from '../resources';
 import type { SkybridgeCoin } from '../coins';
 import type { SkybridgeContext } from '../context';
 import type { SkybridgeMode } from '../modes';
@@ -17,7 +17,7 @@ const STATUSES = [
 export type SkybridgeStatus = typeof STATUSES[number];
 
 export type SkybridgeParams<
-  A extends SkybridgeAction = SkybridgeAction,
+  A extends SkybridgeResource = SkybridgeResource,
   M extends SkybridgeMode = SkybridgeMode
 > = {
   context: SkybridgeContext<M>;

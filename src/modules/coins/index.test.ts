@@ -1,4 +1,4 @@
-import type { SkybridgeAction } from '../actions';
+import type { SkybridgeResource } from '../resources';
 import type { SkybridgeBridge } from '../bridges';
 import { buildContext } from '../context';
 import type { SkybridgeDirection } from '../directions';
@@ -12,7 +12,7 @@ describe('getCoinsFor()', () => {
   it.each<{
     mode?: SkybridgeMode;
     bridge?: SkybridgeBridge;
-    action?: SkybridgeAction;
+    action?: SkybridgeResource;
     direction?: SkybridgeDirection;
     expected: SkybridgeCoin[];
   }>([
@@ -24,12 +24,12 @@ describe('getCoinsFor()', () => {
     { mode: 'test', bridge: 'btc_erc', expected: ['BTC', 'WBTC', 'sbBTC'] },
     { mode: 'production', bridge: 'btc_erc', expected: ['BTC', 'WBTC', 'sbBTC'] },
     { action: 'swap', expected: ['BTC', 'WBTC', 'BTCB'] },
-    { action: 'float', expected: ['BTC', 'WBTC', 'sbBTC'] },
-    { action: 'withdraw', expected: ['sbBTC', 'BTC', 'WBTC'] },
-    { action: 'float', direction: 'in', expected: ['BTC', 'WBTC'] },
-    { action: 'float', direction: 'out', expected: ['sbBTC'] },
-    { action: 'withdraw', direction: 'in', expected: ['sbBTC'] },
-    { action: 'withdraw', direction: 'out', expected: ['BTC', 'WBTC'] },
+    { action: 'pool', expected: ['BTC', 'WBTC', 'sbBTC'] },
+    { action: 'withdrawal', expected: ['sbBTC', 'BTC', 'WBTC'] },
+    { action: 'pool', direction: 'in', expected: ['BTC', 'WBTC'] },
+    { action: 'pool', direction: 'out', expected: ['sbBTC'] },
+    { action: 'withdrawal', direction: 'in', expected: ['sbBTC'] },
+    { action: 'withdrawal', direction: 'out', expected: ['BTC', 'WBTC'] },
   ])('works for %O', async ({ mode, bridge, action, direction, expected }) => {
     expect.assertions(1);
 
@@ -47,7 +47,7 @@ describe('getCoinsFor()', () => {
 describe('getBridgesForCoin()', () => {
   it.each<{
     mode?: SkybridgeMode;
-    action?: SkybridgeAction;
+    action?: SkybridgeResource;
     direction?: SkybridgeDirection;
     coin: SkybridgeCoin;
     expected: any;
@@ -58,8 +58,8 @@ describe('getBridgesForCoin()', () => {
     { mode: 'production', coin: 'BTCB', expected: [] },
     { mode: 'test', coin: 'WBTC', expected: ['btc_erc'] },
     { mode: 'production', coin: 'WBTC', expected: ['btc_erc'] },
-    { mode: 'production', action: 'float', coin: 'sbBTC', expected: ['btc_erc'] },
-    { mode: 'production', action: 'float', coin: 'BTCB', expected: [] },
+    { mode: 'production', action: 'pool', coin: 'sbBTC', expected: ['btc_erc'] },
+    { mode: 'production', action: 'pool', coin: 'BTCB', expected: [] },
   ])('works for %O', async ({ mode, coin, direction, action, expected }) => {
     expect.assertions(1);
 
@@ -79,7 +79,7 @@ describe('getSwapableWith()', () => {
     mode: SkybridgeMode;
     bridge?: SkybridgeBridge;
     coin: SkybridgeCoin;
-    action: SkybridgeAction;
+    action: SkybridgeResource;
     expected: any;
   }>([
     { mode: 'test', action: 'swap', coin: 'BTC', expected: ['WBTC', 'BTCB'] },
@@ -92,9 +92,9 @@ describe('getSwapableWith()', () => {
     { mode: 'test', action: 'swap', coin: 'WBTC', expected: ['BTC'] },
     { mode: 'test', action: 'swap', coin: 'BTC', expected: ['WBTC', 'BTCB'] },
     { mode: 'test', action: 'swap', coin: 'BTC', bridge: 'btc_erc', expected: ['WBTC'] },
-    { mode: 'test', action: 'float', coin: 'WBTC', expected: ['sbBTC'] },
-    { mode: 'test', action: 'withdraw', coin: 'WBTC', expected: [] },
-    { mode: 'test', action: 'withdraw', coin: 'sbBTC', expected: ['BTC', 'WBTC'] },
+    { mode: 'test', action: 'pool', coin: 'WBTC', expected: ['sbBTC'] },
+    { mode: 'test', action: 'withdrawal', coin: 'WBTC', expected: [] },
+    { mode: 'test', action: 'withdrawal', coin: 'sbBTC', expected: ['BTC', 'WBTC'] },
   ])('works for %O', async ({ mode, bridge, coin, action, expected }) => {
     expect.assertions(1);
 

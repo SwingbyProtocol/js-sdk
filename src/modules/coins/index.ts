@@ -1,6 +1,6 @@
 import type { SkybridgeMode } from '../modes';
 import type { SkybridgeBridge } from '../bridges';
-import type { SkybridgeAction } from '../actions';
+import type { SkybridgeResource } from '../resources';
 import type { SkybridgeDirection } from '../directions';
 
 const COINS = {
@@ -14,7 +14,7 @@ const COINS = {
       production: { in: [], out: [] },
     },
   },
-  float: {
+  pool: {
     btc_erc: {
       test: { in: ['BTC', 'WBTC'], out: ['sbBTC'] },
       production: { in: ['BTC', 'WBTC'], out: ['sbBTC'] },
@@ -24,7 +24,7 @@ const COINS = {
       production: { in: [], out: [] },
     },
   },
-  withdraw: {
+  withdrawal: {
     btc_erc: {
       test: { in: ['sbBTC'], out: ['BTC', 'WBTC'] },
       production: { in: ['sbBTC'], out: ['BTC', 'WBTC'] },
@@ -37,7 +37,7 @@ const COINS = {
 } as const;
 
 export type SkybridgeCoin<
-  A extends SkybridgeAction = SkybridgeAction,
+  A extends SkybridgeResource = SkybridgeResource,
   M extends SkybridgeMode = SkybridgeMode,
   D extends SkybridgeDirection = SkybridgeDirection,
   B extends SkybridgeBridge = SkybridgeBridge
@@ -46,7 +46,7 @@ export type SkybridgeCoin<
 const typedKeys = <T>(obj: T): Array<keyof T> => Object.keys(obj) as Array<keyof T>;
 
 export const getCoinsFor = <
-  A extends SkybridgeAction,
+  A extends SkybridgeResource,
   M extends SkybridgeMode,
   D extends SkybridgeDirection,
   B extends SkybridgeBridge
@@ -82,7 +82,7 @@ export const getCoinsFor = <
 };
 
 export const getBridgesForCoin = <
-  A extends SkybridgeAction,
+  A extends SkybridgeResource,
   M extends SkybridgeMode,
   D extends SkybridgeDirection
 >({
@@ -120,7 +120,7 @@ export const getBridgesForCoin = <
 };
 
 export const getSwapableWith = <
-  A extends SkybridgeAction,
+  A extends SkybridgeResource,
   M extends SkybridgeMode,
   B extends SkybridgeBridge
 >({

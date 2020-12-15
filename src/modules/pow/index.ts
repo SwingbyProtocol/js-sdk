@@ -4,7 +4,7 @@ import crypto from 'isomorphic-webcrypto';
 
 import type { SkybridgeParams } from '../common-params';
 import type { SkybridgeMode } from '../modes';
-import type { SkybridgeAction } from '../actions';
+import type { SkybridgeResource } from '../resources';
 import { getBridgeFor } from '../context';
 
 import { getBlockHeight } from './getBlockHeight';
@@ -12,12 +12,12 @@ import { getBlockHeight } from './getBlockHeight';
 const difficultyZeroBits = 10;
 
 type Params<M extends SkybridgeMode> = Pick<
-  SkybridgeParams<SkybridgeAction, M>,
+  SkybridgeParams<SkybridgeResource, M>,
   'context' | 'addressUserIn' | 'currencyIn' | 'currencyOut' | 'amountUser'
 >;
 
 type Result<M extends SkybridgeMode> = Pick<
-  SkybridgeParams<SkybridgeAction, M>,
+  SkybridgeParams<SkybridgeResource, M>,
   'amountIn' | 'nonce'
 >;
 
@@ -65,7 +65,7 @@ export const getRound = async <M extends SkybridgeMode>({
   context,
   currencyOut,
   currencyIn,
-}: Pick<SkybridgeParams<SkybridgeAction, M>, 'context' | 'currencyIn' | 'currencyOut'>): Promise<
+}: Pick<SkybridgeParams<SkybridgeResource, M>, 'context' | 'currencyIn' | 'currencyOut'>): Promise<
   string
 > => {
   const round: number = await (async () => {

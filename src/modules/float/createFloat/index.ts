@@ -6,12 +6,12 @@ import type { SkybridgeParams } from '../../common-params';
 import { runProofOfWork } from '../../pow';
 
 type Params<M extends SkybridgeMode> = Pick<
-  SkybridgeParams<'float', M>,
+  SkybridgeParams<'pool', M>,
   'context' | 'addressUserIn' | 'currencyIn' | 'amountUser'
 >;
 
 type Result<M extends SkybridgeMode> = Pick<
-  SkybridgeParams<'float', M>,
+  SkybridgeParams<'pool', M>,
   | 'addressSwapIn'
   | 'addressUserIn'
   | 'amountIn'
@@ -42,7 +42,7 @@ const createSwapRec = async <M extends SkybridgeMode>({
   const { amountIn, nonce } = await runProofOfWork({ ...params, currencyOut: 'sbBTC' });
 
   type ApiResponse = Pick<
-    SkybridgeParams<'float', M>,
+    SkybridgeParams<'pool', M>,
     'amountIn' | 'amountOut' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
   > & { timestamp: number; addressDeposit: string; addressOut: string };
 

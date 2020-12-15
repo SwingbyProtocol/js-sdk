@@ -3,7 +3,7 @@ import { fetch } from '../../fetch';
 import { logger } from '../../logger';
 import type { SkybridgeMode } from '../../modes';
 import type { SkybridgeParams } from '../../common-params';
-import type { SkybridgeAction } from '../../actions';
+import type { SkybridgeResource } from '../../resources';
 
 const TIMEOUT = 1 * 60 * 1000;
 const INTERVAL = 2000;
@@ -11,7 +11,7 @@ const INTERVAL = 2000;
 export const getBlockHeight = async <M extends SkybridgeMode>({
   context,
   bridge,
-}: Pick<SkybridgeParams<SkybridgeAction, M>, 'context'> & { bridge: SkybridgeBridge }): Promise<
+}: Pick<SkybridgeParams<SkybridgeResource, M>, 'context'> & { bridge: SkybridgeBridge }): Promise<
   number
 > => {
   return getBlockHeightRec({ context, bridge, startedAt: Date.now() });
@@ -21,7 +21,7 @@ const getBlockHeightRec = async <M extends SkybridgeMode>({
   context,
   bridge,
   startedAt,
-}: Pick<SkybridgeParams<SkybridgeAction, M>, 'context'> & {
+}: Pick<SkybridgeParams<SkybridgeResource, M>, 'context'> & {
   bridge: SkybridgeBridge;
   startedAt: number;
 }): Promise<number> => {

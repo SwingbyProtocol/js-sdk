@@ -1,6 +1,6 @@
 export type { SkybridgeMode } from './modules/modes';
 export type { SkybridgeBridge } from './modules/bridges';
-export type { SkybridgeAction } from './modules/actions';
+export type { SkybridgeResource } from './modules/resources';
 export type { SkybridgeDirection } from './modules/directions';
 export type { SkybridgeStatus } from './modules/common-params';
 export type { SkybridgeContext } from './modules/context';

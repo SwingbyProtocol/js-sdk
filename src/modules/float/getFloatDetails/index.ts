@@ -5,7 +5,7 @@ import type { SkybridgeParams, SkybridgeStatus } from '../../common-params';
 type ServerReturnType<M extends SkybridgeMode> = {
   items: Array<
     Pick<
-      SkybridgeParams<'float', M>,
+      SkybridgeParams<'pool', M>,
       'amountIn' | 'amountOut' | 'currencyIn' | 'currencyOut' | 'feeCurrency' | 'hash'
     > & {
       addressDeposit: string;
@@ -23,9 +23,9 @@ type ServerReturnType<M extends SkybridgeMode> = {
 export const getFloatDetails = async <M extends SkybridgeMode>({
   context,
   hash,
-}: Pick<SkybridgeParams<'float', M>, 'context' | 'hash'>): Promise<
+}: Pick<SkybridgeParams<'pool', M>, 'context' | 'hash'>): Promise<
   Pick<
-    SkybridgeParams<'float', M>,
+    SkybridgeParams<'pool', M>,
     | 'addressSwapIn'
     | 'addressUserIn'
     | 'amountIn'
@@ -38,9 +38,9 @@ export const getFloatDetails = async <M extends SkybridgeMode>({
     | 'status'
     | 'timestamp'
   > & {
-    addressUserOut: SkybridgeParams<'float', M>['addressUserOut'] | null;
-    transactionInId: SkybridgeParams<'float', M>['transactionInId'] | null;
-    transactionOutId: SkybridgeParams<'float', M>['transactionOutId'] | null;
+    addressUserOut: SkybridgeParams<'pool', M>['addressUserOut'] | null;
+    transactionInId: SkybridgeParams<'pool', M>['transactionInId'] | null;
+    transactionOutId: SkybridgeParams<'pool', M>['transactionOutId'] | null;
   }
 > => {
   const result = await (async () => {

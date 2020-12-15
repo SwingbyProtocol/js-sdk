@@ -1,7 +1,7 @@
 import type { SkybridgeBridge } from '../bridges';
 import type { SkybridgeMode } from '../modes';
 import type { SkybridgeParams } from '../common-params';
-import type { SkybridgeAction } from '../actions';
+import type { SkybridgeResource } from '../resources';
 import { getBridgesForCoin } from '../coins';
 
 export const getBridgeFor = <M extends SkybridgeMode>({
@@ -9,7 +9,7 @@ export const getBridgeFor = <M extends SkybridgeMode>({
   currencyIn,
   currencyOut,
 }: Pick<
-  SkybridgeParams<SkybridgeAction, M>,
+  SkybridgeParams<SkybridgeResource, M>,
   'context' | 'currencyIn' | 'currencyOut'
 >): SkybridgeBridge => {
   const inBridges = getBridgesForCoin({ context, coin: currencyIn });

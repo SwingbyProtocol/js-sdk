@@ -2,7 +2,7 @@ import { SkybridgeChain, getChainFor } from '../chains';
 import type { SkybridgeCoin } from '../coins';
 import type { SkybridgeMode } from '../modes';
 import type { SkybridgeParams } from '../common-params';
-import type { SkybridgeAction } from '../actions';
+import type { SkybridgeResource } from '../resources';
 
 const explorers: { [k in SkybridgeChain]: { [k in SkybridgeMode]: string } } = {
   ethereum: {
@@ -23,7 +23,7 @@ export const buildExplorerLink = <M extends SkybridgeMode>({
   context,
   transactionId,
   coin,
-}: Pick<SkybridgeParams<SkybridgeAction, M>, 'context'> & {
+}: Pick<SkybridgeParams<SkybridgeResource, M>, 'context'> & {
   transactionId: string;
   coin: SkybridgeCoin;
 }) => {
