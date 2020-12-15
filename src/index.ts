@@ -12,5 +12,8 @@ export { createSwap, estimateSwapAmountOut, getSwapDetails } from './modules/swa
 export { buildContext } from './modules/context';
 export { isAddressValid } from './modules/validate-address';
 export { buildExplorerLink } from './modules/explorer-link';
-export { getChainFor } from './modules/chains';
+export { getChainFor, isSkybridgeChain } from './modules/chains';
 export { createFloat } from './modules/float';
+export { isSkybridgeBridge } from './modules/bridges';
+export { isSkybridgeMode } from './modules/modes';
+export { isSkybridgeResource } from './modules/resources';
