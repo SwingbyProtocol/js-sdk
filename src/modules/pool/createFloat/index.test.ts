@@ -1,7 +1,7 @@
 import { buildContext } from '../../context';
 import type { SkybridgeParams } from '../../common-params';
 
-import { createFloat } from './';
+import { createFloat } from '.';
 
 jest.mock('../../context/buildContext');
 
