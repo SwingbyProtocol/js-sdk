@@ -16,7 +16,7 @@ it.each<Pick<SkybridgeParams<'pool', 'test'>, 'addressUserIn' | 'currencyIn' | '
     addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     currencyIn: 'BTC',
   },
-])('"/swaps/create" succeeds with %O', async ({ addressUserIn, currencyIn, amountUser }) => {
+])('"/floats/create" succeeds with %O', async ({ addressUserIn, currencyIn, amountUser }) => {
   jest.setTimeout(180000);
   expect.assertions(1);
 

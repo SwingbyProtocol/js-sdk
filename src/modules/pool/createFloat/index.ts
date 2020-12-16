@@ -37,7 +37,7 @@ const createSwapRec = async <M extends SkybridgeMode>({
   timeout,
   ...params
 }: Params<M> & { startedAt: number; timeout: number }): Promise<Result<M>> => {
-  logger('Will execute createSwap(%O).', params);
+  logger('Will execute createFloat(%O).', params);
 
   const { amountIn, nonce } = await runProofOfWork({ ...params, currencyOut: 'sbBTC' });
 
@@ -60,10 +60,9 @@ const createSwapRec = async <M extends SkybridgeMode>({
     },
   );
 
-  logger('/swaps/create has replied: %O', result);
+  logger('/floats/create has replied: %O', result);
 
   if (result.ok) {
-    console.log('heyyy', result.response);
     return {
       ...result.response,
       addressSwapIn: result.response.addressDeposit,
