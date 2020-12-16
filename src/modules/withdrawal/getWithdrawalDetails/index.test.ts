@@ -5,7 +5,7 @@ import { getWithdrawalDetails } from './';
 
 jest.mock('../../context/buildContext');
 
-it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
+it.skip.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
   { hash: 'HSGoe4kiMme5lmKrYmvPqkn5Rj1TZ0-saiFTEOvOzAE=' },
 ])('gets withdrawal details for %O', async ({ hash }) => {
   expect.assertions(1);

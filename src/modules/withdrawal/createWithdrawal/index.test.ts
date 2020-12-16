@@ -5,7 +5,7 @@ import { createWithdrawal } from '.';
 
 jest.mock('../../context/buildContext');
 
-it.each<
+it.skip.each<
   Pick<SkybridgeParams<'withdrawal', 'test'>, 'addressUserIn' | 'currencyOut' | 'amountUser'>
 >([
   {
