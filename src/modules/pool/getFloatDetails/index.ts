@@ -55,7 +55,7 @@ export const getFloatDetails = async <M extends SkybridgeMode>({
       }
     } catch (e) {}
 
-    throw new Error(`Could not find swap with hash "${hash}"`);
+    throw new Error(`Could not find float with hash "${hash}"`);
   })();
 
   return {
