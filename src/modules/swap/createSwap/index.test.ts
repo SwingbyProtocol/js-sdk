@@ -17,12 +17,12 @@ it.each<
     currencyIn: 'BTC',
     currencyOut: 'WBTC',
   },
-  {
-    amountUser: '1',
-    addressUserIn: 'tbnb16ke3clwqmduvzv6awlprjw3ecw7g52qw7c6hdm',
-    currencyIn: 'BTC',
-    currencyOut: 'BTCB',
-  },
+  // {
+  //   amountUser: '1',
+  //   addressUserIn: 'tbnb16ke3clwqmduvzv6awlprjw3ecw7g52qw7c6hdm',
+  //   currencyIn: 'BTC',
+  //   currencyOut: 'BTCB',
+  // },
 ])(
   '"/swaps/create" succeeds with %O',
   async ({ addressUserIn, currencyIn, currencyOut, amountUser }) => {

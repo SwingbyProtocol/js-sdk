@@ -11,11 +11,11 @@ it.each<
   {
     amountUser: '1',
     addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
-    currencyOut: 'BTC',
+    currencyOut: 'WBTC',
   },
   {
     amountUser: '1',
-    addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    addressUserIn: 'tb1qu9xlvyrkj47t0cgu8e5kyanygec74zd9j2j9hh',
     currencyOut: 'BTC',
   },
 ])('"/swaps/create" succeeds with %O', async ({ addressUserIn, currencyOut, amountUser }) => {
