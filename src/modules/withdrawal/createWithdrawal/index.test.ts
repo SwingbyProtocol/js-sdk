@@ -5,40 +5,47 @@ import { createWithdrawal } from '.';
 
 jest.mock('../../context/buildContext');
 
-it.skip.each<
-  Pick<SkybridgeParams<'withdrawal', 'test'>, 'addressUserIn' | 'currencyOut' | 'amountUser'>
+it.each<
+  Pick<SkybridgeParams<'withdrawal', 'test'>, 'addressUserIn' | 'currencyOut' | 'amountUser'> & {
+    expected: { addressUserIn: string };
+  }
 >([
   {
     amountUser: '1',
     addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
-    currencyOut: 'BTC',
+    currencyOut: 'WBTC',
+    expected: { addressUserIn: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
   },
   {
     amountUser: '1',
-    addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    addressUserIn: 'tb1qu9xlvyrkj47t0cgu8e5kyanygec74zd9j2j9hh',
     currencyOut: 'BTC',
+    expected: { addressUserIn: 'tb1qu9xlvyrkj47t0cgu8e5kyanygec74zd9j2j9hh' },
   },
-])('"/swaps/create" succeeds with %O', async ({ addressUserIn, currencyOut, amountUser }) => {
-  jest.setTimeout(180000);
-  expect.assertions(1);
+])(
+  '"/swaps/create" for withdrawals succeeds with %O',
+  async ({ addressUserIn, currencyOut, amountUser, expected }) => {
+    jest.setTimeout(180000);
+    expect.assertions(1);
 
-  try {
-    const context = await buildContext({ mode: 'test' });
-    const result = await createWithdrawal({
-      context,
-      addressUserIn,
-      currencyOut,
-      amountUser,
-    });
-    return expect(result).toMatchObject({
-      addressSwapIn: expect.any(String),
-      addressUserIn,
-      amountIn: expect.stringContaining('0.99'),
-      currencyIn: 'sbBTC',
-      currencyOut,
-      timestamp: expect.any(Date),
-    });
-  } catch (e) {
-    expect(e.message).toMatch(/The KVStore key \d+ already exists in epoch bucket \d+/);
-  }
-});
+    try {
+      const context = await buildContext({ mode: 'test' });
+      const result = await createWithdrawal({
+        context,
+        addressUserIn,
+        currencyOut,
+        amountUser,
+      });
+      return expect(result).toMatchObject({
+        addressSwapIn: expect.any(String),
+        addressUserIn: expected.addressUserIn,
+        amountIn: expect.stringContaining('0.99'),
+        currencyIn: 'sbBTC',
+        currencyOut,
+        timestamp: expect.any(Date),
+      });
+    } catch (e) {
+      expect(e.message).toMatch(/The KVStore key \d+ already exists in epoch bucket \d+/);
+    }
+  },
+);

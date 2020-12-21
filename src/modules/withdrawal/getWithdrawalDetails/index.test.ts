@@ -6,7 +6,7 @@ import { getWithdrawalDetails } from './';
 jest.mock('../../context/buildContext');
 
 it.skip.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
-  { hash: 'HSGoe4kiMme5lmKrYmvPqkn5Rj1TZ0-saiFTEOvOzAE=' },
+  { hash: 'wV5XmpgMgU9T9S-3wiaaYJN32RV9bNpLGB7XM78khj8=' },
 ])('gets withdrawal details for %O', async ({ hash }) => {
   expect.assertions(1);
 
@@ -32,7 +32,7 @@ it.skip.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
 });
 
 it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
-  { hash: 'HSGoe4kiMme5lmKrYmvPqkn5Rj1TZ0-saiFTEOvOzAE=' },
+  { hash: 'D6ffXDodsQevLWS0EX_Od4i120TNvbAdCRAjAouKDXg=' },
 ])('throws for normal swap %O', async ({ hash }) => {
   expect.assertions(1);
 
@@ -40,6 +40,6 @@ it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
     const context = await buildContext({ mode: 'test' });
     await getWithdrawalDetails({ context, hash });
   } catch (e) {
-    expect(e.message).toMatch(/belongs to a swap, not a withdrawal/);
+    expect(e.message).toMatch(/is not a withdrawal, it is a swap/);
   }
 });

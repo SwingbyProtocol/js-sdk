@@ -6,7 +6,7 @@ import { getSwapDetails } from './';
 jest.mock('../../context/buildContext');
 
 it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
-  { hash: 'HSGoe4kiMme5lmKrYmvPqkn5Rj1TZ0-saiFTEOvOzAE=' },
+  { hash: 'D6ffXDodsQevLWS0EX_Od4i120TNvbAdCRAjAouKDXg=' },
 ])('gets swaps details for %O', async ({ hash }) => {
   expect.assertions(1);
 
@@ -14,19 +14,31 @@ it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
   const result = await getSwapDetails({ context, hash });
 
   return expect(result).toMatchObject({
-    addressUserOut: null,
-    addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
-    addressSwapIn: 'mzJ9Gi7vvp1NGw4fviWjkZaJxWakk5zfHt',
-    amountIn: '0.0000954',
-    amountOut: '0.0000953',
+    addressUserIn: 'tb1q8hk7wlqgtvdrvtmjll4xtxkpjdf5svtcgmacep',
+    addressSwapIn: 'msEKP7ZSma3rQtWSQBBZCiJAvjAaowf2c6',
+    amountIn: '0.00099717',
+    amountOut: '0.00074517',
     currencyIn: 'BTC',
-    currencyOut: 'WBTC',
-    feeCurrency: 'WBTC',
-    feeTotal: '0.0000001',
+    currencyOut: 'BTC',
+    feeCurrency: 'BTC',
+    feeTotal: '0.000252',
     hash,
-    status: 'COMPLETED',
-    transactionInId: 'ea3549ee8887b9c707d4ee5301ad8e4da6989b39099b758b09bcede24613dc11',
-    transactionOutId: '0x8a5bfbab780396e8de5731d61de846d51de294bda98b7c8cad742d4c56840cbb',
-    timestamp: new Date('2020-12-11T10:11:31.000Z'),
+    status: 'REFUNDED',
+    transactionInId: 'b025316d9f6f4c1b111f525988ebcdc2ad67a798c0b276ffb9be7e48e8ba814b',
+    transactionOutId: 'd0b7fae62c5c5ef281fd021eac9da9dbd6340324d642cddb5e76fbc61a995a9a',
+    timestamp: new Date('2020-12-21T08:31:56.000Z'),
   });
+});
+
+it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
+  { hash: 'wV5XmpgMgU9T9S-3wiaaYJN32RV9bNpLGB7XM78khj8=' },
+])('throws for withdrawal %O', async ({ hash }) => {
+  expect.assertions(1);
+
+  try {
+    const context = await buildContext({ mode: 'test' });
+    await getSwapDetails({ context, hash });
+  } catch (e) {
+    expect(e.message).toMatch(/is not a swap, it is a withdrawal/);
+  }
 });

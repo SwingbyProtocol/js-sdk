@@ -47,6 +47,15 @@ it.each<
     {
       amountUser: '1',
       currencyIn: 'WBTC',
+      currencyOut: 'BTC',
+      addressUserIn: 'msEKP7ZSma3rQtWSQBBZCiJAvjAaowf2c6',
+    },
+    { amountIn: '0.99999817', nonce: 4221 },
+  ],
+  [
+    {
+      amountUser: '1',
+      currencyIn: 'WBTC',
       currencyOut: 'sbBTC',
       addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     },

@@ -5,6 +5,7 @@ import { SkybridgeMode } from '../modes';
 import { SkybridgeParams } from '../common-params';
 import { runProofOfWork } from '../pow';
 import { SkybridgeResource } from '../resources';
+import { getChainFor } from '../chains';
 
 export type CreateParams<R extends SkybridgeResource, M extends SkybridgeMode> = {
   resource: R;
@@ -70,7 +71,10 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
     {
       method: 'post',
       body: JSON.stringify({
-        address_to: params.addressUserIn,
+        address_to:
+          getChainFor({ coin: params.currencyOut }) === 'ethereum'
+            ? params.addressUserIn.toLowerCase()
+            : params.addressUserIn,
         amount: amountIn,
         currency_from: params.currencyIn,
         currency_to: params.currencyOut,
