@@ -17,7 +17,7 @@ const STATUSES = [
 export type SkybridgeStatus = typeof STATUSES[number];
 
 export type SkybridgeParams<
-  A extends SkybridgeResource = SkybridgeResource,
+  R extends SkybridgeResource = SkybridgeResource,
   M extends SkybridgeMode = SkybridgeMode
 > = {
   context: SkybridgeContext<M>;
@@ -34,15 +34,15 @@ export type SkybridgeParams<
   /** Amount that users have to send to Skybridge to start the swap. */
   amountIn: string;
   amountOut: string;
-  currencyIn: SkybridgeCoin<A, M, 'in'>;
-  currencyOut: SkybridgeCoin<A, M, 'out'>;
+  currencyIn: SkybridgeCoin<R, M, 'in'>;
+  currencyOut: SkybridgeCoin<R, M, 'out'>;
   nonce: number;
   timestamp: Date;
   /** e.g. `0.1` means `10%`. */
   feeBridgePercent: string;
   /** In the units specified by `feeCurrency`. */
   feeMiner: string;
-  feeCurrency: SkybridgeCoin<A, M, 'out'>;
+  feeCurrency: SkybridgeCoin<R, M, 'out'>;
   /** In the units specified by `feeCurrency`. */
   feeTotal: string;
   status: SkybridgeStatus;

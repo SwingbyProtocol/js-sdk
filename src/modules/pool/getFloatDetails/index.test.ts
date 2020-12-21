@@ -14,19 +14,18 @@ it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
   const result = await getFloatDetails({ context, hash });
 
   return expect(result).toMatchObject({
-    addressUserOut: null,
     addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     addressSwapIn: 'msEKP7ZSma3rQtWSQBBZCiJAvjAaowf2c6',
-    amountIn: '0.00099717',
-    amountOut: '0.00074517',
+    amountIn: '0.00099747',
+    amountOut: null,
     currencyIn: 'BTC',
-    currencyOut: 'WBTC',
-    feeCurrency: 'WBTC',
-    feeTotal: '0.000252',
+    currencyOut: 'sbBTC',
+    feeCurrency: undefined,
+    feeTotal: undefined,
     hash,
     status: 'COMPLETED',
-    transactionInId: 'b025316d9f6f4c1b111f525988ebcdc2ad67a798c0b276ffb9be7e48e8ba814b',
-    transactionOutId: '0x8a5bfbab780396e8de5731d61de846d51de294bda98b7c8cad742d4c56840cbb',
-    timestamp: new Date('2020-12-21T08:31:56.000Z'),
+    transactionInId: 'd5680247e9a7a1b2551831ec3b4b942970041448d02999a2af8cdd49473681f3',
+    transactionOutId: null,
+    timestamp: new Date('2020-12-21T09:00:07.000Z'),
   });
 });
