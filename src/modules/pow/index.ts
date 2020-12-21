@@ -6,6 +6,7 @@ import type { SkybridgeParams } from '../common-params';
 import type { SkybridgeMode } from '../modes';
 import type { SkybridgeResource } from '../resources';
 import { getBridgeFor } from '../context';
+import { getChainFor } from '../chains';
 
 import { getBlockHeight } from './getBlockHeight';
 
@@ -23,7 +24,7 @@ type Result<M extends SkybridgeMode> = Pick<
 
 export const runProofOfWork = async <M extends SkybridgeMode>({
   context,
-  addressUserIn,
+  addressUserIn: addressUserInParam,
   currencyIn,
   currencyOut,
   amountUser,
@@ -33,6 +34,10 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
   let latestRound = await getRound({ context, currencyIn, currencyOut });
   let strHashArg = '';
   const flooredAmount = floorAmount(amountUser);
+  const addressUserIn =
+    getChainFor({ coin: currencyOut }) === 'ethereum'
+      ? addressUserInParam.toLowerCase()
+      : addressUserInParam;
 
   do {
     nonce += 1;
@@ -42,7 +47,7 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
       ';' +
       latestRound +
       ';' +
-      addressUserIn.toLowerCase() +
+      addressUserIn +
       ';' +
       currencyIn +
       ';' +
@@ -130,9 +135,7 @@ const generateHash = async (
   name = 'SHA-512',
 ) => {
   const digest = await crypto.subtle.digest(
-    {
-      name,
-    },
+    { name },
     typeof data === 'string' ? Buffer.from(data) : data,
   );
   return Buffer.from(digest).toString(format);
