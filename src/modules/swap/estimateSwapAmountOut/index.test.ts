@@ -12,16 +12,16 @@ it.each<
     any,
   ]
 >([
-  [
-    { amountUser: '1', currencyIn: 'BTC', currencyOut: 'BTCB' },
-    {
-      amountOut: '0.998995',
-      feeBridgePercent: '0.001',
-      feeMiner: '0.000005',
-      feeCurrency: 'BTCB',
-      feeTotal: '0.001005',
-    },
-  ],
+  // [
+  //   { amountUser: '1', currencyIn: 'BTC', currencyOut: 'BTCB' },
+  //   {
+  //     amountOut: '0.998995',
+  //     feeBridgePercent: '0.001',
+  //     feeMiner: '0.000005',
+  //     feeCurrency: 'BTCB',
+  //     feeTotal: '0.001005',
+  //   },
+  // ],
   [
     { amountUser: '3', currencyIn: 'BTC', currencyOut: 'WBTC' },
     {
