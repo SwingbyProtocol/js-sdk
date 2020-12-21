@@ -9,13 +9,14 @@ it.each<
   Pick<
     SkybridgeParams<'swap', 'test'>,
     'addressUserIn' | 'currencyIn' | 'currencyOut' | 'amountUser'
-  >
+  > & { expected: { addressUserIn: string } }
 >([
   {
     amountUser: '1',
     addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     currencyIn: 'BTC',
     currencyOut: 'WBTC',
+    expected: { addressUserIn: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
   },
   // {
   //   amountUser: '1',
@@ -25,7 +26,7 @@ it.each<
   // },
 ])(
   '"/swaps/create" succeeds with %O',
-  async ({ addressUserIn, currencyIn, currencyOut, amountUser }) => {
+  async ({ addressUserIn, currencyIn, currencyOut, amountUser, expected }) => {
     jest.setTimeout(180000);
     expect.assertions(1);
 
@@ -40,7 +41,7 @@ it.each<
       });
       return expect(result).toMatchObject({
         addressSwapIn: expect.any(String),
-        addressUserIn,
+        addressUserIn: expected.addressUserIn,
         amountIn: expect.stringContaining('0.99'),
         amountOut: expect.stringContaining('0.99'),
         currencyIn,
