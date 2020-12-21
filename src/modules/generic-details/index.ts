@@ -3,6 +3,7 @@ import type { SkybridgeMode } from '../modes';
 import type { SkybridgeParams, SkybridgeStatus } from '../common-params';
 import type { SkybridgeResource } from '../resources';
 import { SkybridgeCoin } from '../coins';
+import { SkybridgeBridge } from '../bridges';
 
 type ServerReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = {
   items: Array<
@@ -54,6 +55,8 @@ type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = R extend
       transactionOutId: SkybridgeParams<R, M>['transactionOutId'] | null;
     };
 
+const bridgeCache = new Map<string, SkybridgeBridge>();
+
 export const getDetails = async <R extends SkybridgeResource, M extends SkybridgeMode>({
   resource,
   context,
@@ -62,32 +65,53 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
   ReturnType<R, M>
 > => {
   const result = await (async () => {
-    const ethereumFetch = fetch<ServerReturnType<R, M>>(
-      `${context.servers.swapNode.btc_bep}/api/v1/${
-        resource === 'pool' ? 'floats' : 'swaps'
-      }/query?hash=${hash}`,
-    );
-    const binanceFetch = fetch<ServerReturnType<R, M>>(
-      `${context.servers.swapNode.btc_erc}/api/v1/${
-        resource === 'pool' ? 'floats' : 'swaps'
-      }/query?hash=${hash}`,
-    );
+    const bridge = bridgeCache.get(hash);
+    if (bridge) {
+      try {
+        const result = await fetch<ServerReturnType<R, M>>(
+          `${context.servers.swapNode[bridge]}/api/v1/${
+            resource === 'pool' ? 'floats' : 'swaps'
+          }/query?hash=${hash}`,
+        );
 
-    try {
-      const result = await ethereumFetch;
-      if (result.ok && result.response.items.length > 0) {
-        return result.response.items[0];
+        if (result.ok && result.response.items.length > 0) {
+          bridgeCache.set(hash, bridge);
+          return result.response.items[0];
+        }
+
+        throw new Error();
+      } catch (e) {
+        throw new Error(`Could not find swap with hash "${hash}"`);
       }
-    } catch (e) {}
+    }
 
-    try {
-      const result = await binanceFetch;
-      if (result.ok && result.response.items.length > 0) {
-        return result.response.items[0];
-      }
-    } catch (e) {}
+    const results = await Promise.all(
+      (Object.keys(context.servers.swapNode) as SkybridgeBridge[]).map(async (bridge) => {
+        try {
+          const result = await fetch<ServerReturnType<R, M>>(
+            `${context.servers.swapNode[bridge]}/api/v1/${
+              resource === 'pool' ? 'floats' : 'swaps'
+            }/query?hash=${hash}`,
+          );
 
-    throw new Error(`Could not find swap with hash "${hash}"`);
+          if (result.ok && result.response.items.length > 0) {
+            bridgeCache.set(hash, bridge);
+            return result.response.items[0];
+          }
+
+          return null;
+        } catch (e) {
+          return null;
+        }
+      }),
+    );
+
+    const result = results.find((it) => !!it);
+    if (!result) {
+      throw new Error(`Could not find swap with hash "${hash}"`);
+    }
+
+    return result;
   })();
 
   if (resource === 'withdrawal' && result.currencyIn !== 'sbBTC') {
