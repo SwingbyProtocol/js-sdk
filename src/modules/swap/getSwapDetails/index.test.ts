@@ -29,3 +29,16 @@ it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
     timestamp: new Date('2020-12-21T08:31:56.000Z'),
   });
 });
+
+it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
+  { hash: 'wV5XmpgMgU9T9S-3wiaaYJN32RV9bNpLGB7XM78khj8=' },
+])('throws for withdrawal %O', async ({ hash }) => {
+  expect.assertions(1);
+
+  try {
+    const context = await buildContext({ mode: 'test' });
+    await getSwapDetails({ context, hash });
+  } catch (e) {
+    expect(e.message).toMatch(/is not a swap, it is a withdrawal/);
+  }
+});
