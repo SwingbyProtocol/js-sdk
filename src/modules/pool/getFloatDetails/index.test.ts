@@ -1,17 +1,17 @@
 import { buildContext } from '../../context';
 import type { SkybridgeParams } from '../../common-params';
 
-import { getSwapDetails } from './';
+import { getFloatDetails } from './';
 
 jest.mock('../../context/buildContext');
 
 it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
-  { hash: 'D6ffXDodsQevLWS0EX_Od4i120TNvbAdCRAjAouKDXg=' },
-])('gets swaps details for %O', async ({ hash }) => {
+  { hash: 'dniUX39yLjKMPixHawxeyreUYpgaDafFlpP1YN4BK_o=' },
+])('gets float details for %O', async ({ hash }) => {
   expect.assertions(1);
 
   const context = await buildContext({ mode: 'test' });
-  const result = await getSwapDetails({ context, hash });
+  const result = await getFloatDetails({ context, hash });
 
   return expect(result).toMatchObject({
     addressUserOut: null,

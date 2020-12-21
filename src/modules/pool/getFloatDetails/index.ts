@@ -45,7 +45,7 @@ export const getFloatDetails = async <M extends SkybridgeMode>({
 > => {
   const result = await (async () => {
     const ethereumFetch = fetch<ServerReturnType<M>>(
-      `${context.servers.swapNode.btc_bep}/api/v1/floats/query?hash=${hash}`,
+      `${context.servers.swapNode.btc_erc}/api/v1/floats/query?hash=${hash}`,
     );
 
     try {
