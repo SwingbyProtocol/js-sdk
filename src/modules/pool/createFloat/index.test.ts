@@ -6,25 +6,25 @@ import { createFloat } from '.';
 jest.mock('../../context/buildContext');
 
 it.each<
-  Pick<SkybridgeParams<'pool', 'test'>, 'addressUserIn' | 'currencyIn' | 'amountUser'> & {
-    expected: { addressUserIn: string };
+  Pick<SkybridgeParams<'pool', 'test'>, 'addressReceiving' | 'currencyIn' | 'amountUser'> & {
+    expected: { addressReceiving: string };
   }
 >([
   {
     amountUser: '1',
-    addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     currencyIn: 'BTC',
-    expected: { addressUserIn: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
+    expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
   },
   {
     amountUser: '1',
-    addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     currencyIn: 'BTC',
-    expected: { addressUserIn: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
+    expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
   },
 ])(
   '"/floats/create" succeeds with %O',
-  async ({ addressUserIn, currencyIn, amountUser, expected }) => {
+  async ({ addressReceiving, currencyIn, amountUser, expected }) => {
     jest.setTimeout(180000);
     expect.assertions(1);
 
@@ -32,13 +32,13 @@ it.each<
       const context = await buildContext({ mode: 'test' });
       const result = await createFloat({
         context,
-        addressUserIn,
+        addressReceiving,
         currencyIn,
         amountUser,
       });
       return expect(result).toMatchObject({
         addressSwapIn: expect.any(String),
-        addressUserIn: expected.addressUserIn,
+        addressReceiving: expected.addressReceiving,
         amountIn: expect.stringContaining('0.99'),
         currencyIn,
         currencyOut: 'sbBTC',

@@ -14,7 +14,7 @@ it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
   const result = await getSwapDetails({ context, hash });
 
   return expect(result).toMatchObject({
-    addressUserIn: 'tb1q8hk7wlqgtvdrvtmjll4xtxkpjdf5svtcgmacep',
+    addressReceiving: 'tb1q8hk7wlqgtvdrvtmjll4xtxkpjdf5svtcgmacep',
     addressSwapIn: 'msEKP7ZSma3rQtWSQBBZCiJAvjAaowf2c6',
     amountIn: '0.00099717',
     amountOut: '0.00074517',

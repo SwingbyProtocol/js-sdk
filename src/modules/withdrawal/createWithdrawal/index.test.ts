@@ -6,25 +6,25 @@ import { createWithdrawal } from '.';
 jest.mock('../../context/buildContext');
 
 it.each<
-  Pick<SkybridgeParams<'withdrawal', 'test'>, 'addressUserIn' | 'currencyOut' | 'amountUser'> & {
-    expected: { addressUserIn: string };
+  Pick<SkybridgeParams<'withdrawal', 'test'>, 'addressReceiving' | 'currencyOut' | 'amountUser'> & {
+    expected: { addressReceiving: string };
   }
 >([
   {
     amountUser: '1',
-    addressUserIn: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     currencyOut: 'WBTC',
-    expected: { addressUserIn: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
+    expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
   },
   {
     amountUser: '1',
-    addressUserIn: 'tb1qu9xlvyrkj47t0cgu8e5kyanygec74zd9j2j9hh',
+    addressReceiving: 'tb1qu9xlvyrkj47t0cgu8e5kyanygec74zd9j2j9hh',
     currencyOut: 'BTC',
-    expected: { addressUserIn: 'tb1qu9xlvyrkj47t0cgu8e5kyanygec74zd9j2j9hh' },
+    expected: { addressReceiving: 'tb1qu9xlvyrkj47t0cgu8e5kyanygec74zd9j2j9hh' },
   },
 ])(
   '"/swaps/create" for withdrawals succeeds with %O',
-  async ({ addressUserIn, currencyOut, amountUser, expected }) => {
+  async ({ addressReceiving, currencyOut, amountUser, expected }) => {
     jest.setTimeout(180000);
     expect.assertions(1);
 
@@ -32,13 +32,13 @@ it.each<
       const context = await buildContext({ mode: 'test' });
       const result = await createWithdrawal({
         context,
-        addressUserIn,
+        addressReceiving,
         currencyOut,
         amountUser,
       });
       return expect(result).toMatchObject({
         addressSwapIn: expect.any(String),
-        addressUserIn: expected.addressUserIn,
+        addressReceiving: expected.addressReceiving,
         amountIn: expect.stringContaining('0.99'),
         currencyIn: 'sbBTC',
         currencyOut,

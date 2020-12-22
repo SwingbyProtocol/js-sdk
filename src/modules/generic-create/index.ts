@@ -13,14 +13,14 @@ export type CreateParams<R extends SkybridgeResource, M extends SkybridgeMode> =
   timeout?: number;
 } & Pick<
   SkybridgeParams<R, M>,
-  'context' | 'addressUserIn' | 'currencyIn' | 'currencyOut' | 'amountUser'
+  'context' | 'addressReceiving' | 'currencyIn' | 'currencyOut' | 'amountUser'
 >;
 
 export type CreateResult<R extends SkybridgeResource, M extends SkybridgeMode> = R extends 'pool'
   ? Pick<
       SkybridgeParams<R, M>,
       | 'addressSwapIn'
-      | 'addressUserIn'
+      | 'addressReceiving'
       | 'amountIn'
       | 'currencyIn'
       | 'currencyOut'
@@ -31,7 +31,7 @@ export type CreateResult<R extends SkybridgeResource, M extends SkybridgeMode> =
   : Pick<
       SkybridgeParams<R, M>,
       | 'addressSwapIn'
-      | 'addressUserIn'
+      | 'addressReceiving'
       | 'amountIn'
       | 'currencyIn'
       | 'currencyOut'
@@ -73,8 +73,8 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
       body: JSON.stringify({
         address_to:
           getChainFor({ coin: params.currencyOut }) === 'ethereum'
-            ? params.addressUserIn.toLowerCase()
-            : params.addressUserIn,
+            ? params.addressReceiving.toLowerCase()
+            : params.addressReceiving,
         amount: amountIn,
         currency_from: params.currencyIn,
         currency_to: params.currencyOut,
@@ -94,7 +94,7 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
       hash: result.response.hash,
       nonce: result.response.nonce,
       addressSwapIn: result.response.addressDeposit,
-      addressUserIn: result.response.addressOut,
+      addressReceiving: result.response.addressOut,
       timestamp: new Date(result.response.timestamp * 1000),
     } as CreateResult<R, M>;
   }

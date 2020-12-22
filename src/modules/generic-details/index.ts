@@ -26,7 +26,7 @@ type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = R extend
   ? Pick<
       SkybridgeParams<R, M>,
       | 'addressSwapIn'
-      | 'addressUserIn'
+      | 'addressReceiving'
       | 'amountIn'
       | 'amountOut'
       | 'currencyIn'
@@ -40,7 +40,7 @@ type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = R extend
   : Pick<
       SkybridgeParams<R, M>,
       | 'addressSwapIn'
-      | 'addressUserIn'
+      | 'addressReceiving'
       | 'amountIn'
       | 'amountOut'
       | 'currencyIn'
@@ -123,7 +123,7 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
   }
 
   return {
-    addressUserIn: result.addressOut,
+    addressReceiving: result.addressOut,
     addressSwapIn: result.addressDeposit,
     amountIn: result.amountIn,
     amountOut: result.amountOut || null,

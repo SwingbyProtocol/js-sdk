@@ -23,10 +23,8 @@ export type SkybridgeParams<
   context: SkybridgeContext<M>;
   /** Unique identifier for a swap. */
   hash: string;
-  /** Address the user has sent funds from. */
-  addressUserOut: string;
   /** Address where the user will receive their funds after the swap. */
-  addressUserIn: string;
+  addressReceiving: string;
   /** Address that users have to send funds to to initiate a swap. */
   addressSwapIn: string;
   /** Amount that users type in the UI. */
