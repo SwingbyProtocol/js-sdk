@@ -1,9 +1,9 @@
 import { buildContext, createSwap, estimateSwapAmountReceiving } from '@swingby-protocol/sdk';
 
-const addressReceiving = 'tbnb16ke3clwqmduvzv6awlprjw3ecw7g52qw7c6hdm';
+const addressReceiving = '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc';
 const amountDesired = '1';
 const currencyDeposit = 'BTC';
-const currencyReceiving = 'BTCB';
+const currencyReceiving = 'WBTC';
 
 (async () => {
   const context = await buildContext({ mode: 'test' });
