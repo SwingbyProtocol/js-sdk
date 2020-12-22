@@ -19,7 +19,7 @@ it.each<
   // [
   //   { amountDesired: '1', currencyIn: 'BTC', currencyOut: 'BTCB' },
   //   {
-  //     amountOut: '0.998995',
+  //     amountReceiving: '0.998995',
   //     feeBridgePercent: '0.001',
   //     feeMiner: '0.000005',
   //     feeCurrency: 'BTCB',
@@ -29,7 +29,7 @@ it.each<
   [
     { amountDesired: '3', currencyIn: 'BTC', currencyOut: 'WBTC' },
     {
-      amountOut: '2.99375',
+      amountReceiving: '2.99375',
       feeBridgePercent: '0.002',
       feeMiner: '0.00025',
       feeCurrency: 'WBTC',
@@ -39,7 +39,7 @@ it.each<
   [
     { amountDesired: '156', currencyIn: 'WBTC', currencyOut: 'BTC' },
     {
-      amountOut: '155.6877',
+      amountReceiving: '155.6877',
       feeBridgePercent: '0.002',
       feeMiner: '0.0003',
       feeCurrency: 'BTC',

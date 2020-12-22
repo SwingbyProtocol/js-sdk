@@ -38,7 +38,7 @@ export type CreateResult<R extends SkybridgeResource, M extends SkybridgeMode> =
       | 'nonce'
       | 'timestamp'
       | 'hash'
-      | 'amountOut'
+      | 'amountReceiving'
     >;
 
 const INTERVAL = 2000;
@@ -62,8 +62,8 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
 
   type ApiResponse = Pick<
     SkybridgeParams<R, M>,
-    'addressDeposit' | 'amountOut' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
-  > & { amountIn: string; timestamp: number; addressOut: string };
+    'addressDeposit' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
+  > & { amountIn: string; amountOut: string; timestamp: number; addressOut: string };
 
   const bridge = getBridgeFor(params);
   const result = await fetch<ApiResponse>(
@@ -88,7 +88,7 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
   if (result.ok) {
     return {
       amountDeposit: result.response.amountIn,
-      amountOut: result.response.amountOut,
+      amountReceiving: result.response.amountOut,
       currencyIn: result.response.currencyIn,
       currencyOut: result.response.currencyOut,
       hash: result.response.hash,

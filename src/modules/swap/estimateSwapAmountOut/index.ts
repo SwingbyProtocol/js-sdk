@@ -15,7 +15,7 @@ export const estimateSwapAmountOut = async <M extends SkybridgeMode>({
 >): Promise<
   Pick<
     SkybridgeParams<'swap', M>,
-    'feeBridgePercent' | 'feeMiner' | 'feeCurrency' | 'amountOut' | 'feeTotal'
+    'feeBridgePercent' | 'feeMiner' | 'feeCurrency' | 'amountReceiving' | 'feeTotal'
   >
 > => {
   const fees = await calculateSwapFees({ context, currencyIn, currencyOut });
@@ -24,6 +24,6 @@ export const estimateSwapAmountOut = async <M extends SkybridgeMode>({
   return {
     ...fees,
     feeTotal: totalFee.toFixed(),
-    amountOut: new Big(amountDesired).minus(totalFee).toFixed(),
+    amountReceiving: new Big(amountDesired).minus(totalFee).toFixed(),
   };
 };

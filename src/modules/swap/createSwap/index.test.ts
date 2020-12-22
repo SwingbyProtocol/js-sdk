@@ -43,7 +43,7 @@ it.each<
         addressDeposit: expect.any(String),
         addressReceiving: expected.addressReceiving,
         amountDeposit: expect.stringContaining('0.99'),
-        amountOut: expect.stringContaining('0.99'),
+        amountReceiving: expect.stringContaining('0.99'),
         currencyIn,
         currencyOut,
         timestamp: expect.any(Date),

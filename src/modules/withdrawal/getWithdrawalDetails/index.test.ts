@@ -17,7 +17,7 @@ it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
     addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc',
     addressDeposit: '0xe06ff2b69b822807b8ac14479ff4386fe051e242',
     amountDeposit: '0.00098766',
-    amountOut: '0.00073568',
+    amountReceiving: '0.00073568',
     currencyIn: 'sbBTC',
     currencyOut: 'WBTC',
     feeCurrency: 'WBTC',

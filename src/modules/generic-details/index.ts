@@ -29,7 +29,7 @@ type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = R extend
       | 'addressDeposit'
       | 'addressReceiving'
       | 'amountDeposit'
-      | 'amountOut'
+      | 'amountReceiving'
       | 'currencyIn'
       | 'currencyOut'
       | 'hash'
@@ -43,7 +43,7 @@ type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = R extend
       | 'addressDeposit'
       | 'addressReceiving'
       | 'amountDeposit'
-      | 'amountOut'
+      | 'amountReceiving'
       | 'currencyIn'
       | 'currencyOut'
       | 'feeTotal'
@@ -127,7 +127,7 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
     addressReceiving: result.addressOut,
     addressDeposit: result.addressDeposit,
     amountDeposit: result.amountIn,
-    amountOut: result.amountOut || null,
+    amountReceiving: result.amountOut || null,
     // Temporarily fixes API bug where it retuns `BTCE` instead of `WBTC`
     currencyIn: (result.currencyIn as any) === 'BTCE' ? 'WBTC' : result.currencyIn,
     currencyOut: (result.currencyOut as any) === 'BTCE' ? 'WBTC' : result.currencyOut,
