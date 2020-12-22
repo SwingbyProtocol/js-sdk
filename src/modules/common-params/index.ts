@@ -33,7 +33,7 @@ export type SkybridgeParams<
   amountDeposit: string;
   amountReceiving: string;
   currencyDeposit: SkybridgeCoin<R, M, 'in'>;
-  currencyOut: SkybridgeCoin<R, M, 'out'>;
+  currencyReceiving: SkybridgeCoin<R, M, 'out'>;
   nonce: number;
   timestamp: Date;
   /** e.g. `0.1` means `10%`. */

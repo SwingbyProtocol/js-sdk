@@ -14,7 +14,7 @@ const difficultyZeroBits = 10;
 
 type Params<M extends SkybridgeMode> = Pick<
   SkybridgeParams<SkybridgeResource, M>,
-  'context' | 'addressReceiving' | 'currencyDeposit' | 'currencyOut' | 'amountDesired'
+  'context' | 'addressReceiving' | 'currencyDeposit' | 'currencyReceiving' | 'amountDesired'
 >;
 
 type Result<M extends SkybridgeMode> = Pick<
@@ -26,16 +26,16 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
   context,
   addressReceiving: addressReceivingParam,
   currencyDeposit,
-  currencyOut,
+  currencyReceiving,
   amountDesired,
 }: Params<M>): Promise<Result<M>> => {
   let nonce = 0;
   let hash: any;
-  let latestRound = await getRound({ context, currencyDeposit, currencyOut });
+  let latestRound = await getRound({ context, currencyDeposit, currencyReceiving });
   let strHashArg = '';
   const flooredAmount = floorAmount(amountDesired);
   const addressReceiving =
-    getChainFor({ coin: currencyOut }) === 'ethereum'
+    getChainFor({ coin: currencyReceiving }) === 'ethereum'
       ? addressReceivingParam.toLowerCase()
       : addressReceivingParam;
 
@@ -68,14 +68,18 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
 
 export const getRound = async <M extends SkybridgeMode>({
   context,
-  currencyOut,
+  currencyReceiving,
   currencyDeposit,
 }: Pick<
   SkybridgeParams<SkybridgeResource, M>,
-  'context' | 'currencyDeposit' | 'currencyOut'
+  'context' | 'currencyDeposit' | 'currencyReceiving'
 >): Promise<string> => {
   const round: number = await (async () => {
-    const bridge = getBridgeFor({ context, currencyDeposit: currencyDeposit, currencyOut });
+    const bridge = getBridgeFor({
+      context,
+      currencyDeposit: currencyDeposit,
+      currencyReceiving: currencyReceiving,
+    });
     if (bridge === 'btc_erc') {
       const blockHeight = await getBlockHeight({ context, bridge });
       return Math.floor(blockHeight / 3);

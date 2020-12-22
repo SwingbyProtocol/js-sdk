@@ -7,18 +7,18 @@ import { calculateSwapFees } from '../calculateSwapFees';
 export const estimateSwapAmountReceiving = async <M extends SkybridgeMode>({
   context,
   currencyDeposit,
-  currencyOut,
+  currencyReceiving,
   amountDesired,
 }: Pick<
   SkybridgeParams<'swap', M>,
-  'context' | 'amountDesired' | 'currencyDeposit' | 'currencyOut'
+  'context' | 'amountDesired' | 'currencyDeposit' | 'currencyReceiving'
 >): Promise<
   Pick<
     SkybridgeParams<'swap', M>,
     'feeBridgePercent' | 'feeMiner' | 'feeCurrency' | 'amountReceiving' | 'feeTotal'
   >
 > => {
-  const fees = await calculateSwapFees({ context, currencyDeposit: currencyDeposit, currencyOut });
+  const fees = await calculateSwapFees({ context, currencyDeposit, currencyReceiving });
   const totalFee = new Big(amountDesired).times(fees.feeBridgePercent).plus(fees.feeMiner);
 
   return {

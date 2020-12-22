@@ -19,7 +19,7 @@ it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
     amountDeposit: '0.00099747',
     amountReceiving: null,
     currencyDeposit: 'BTC',
-    currencyOut: 'sbBTC',
+    currencyReceiving: 'sbBTC',
     feeCurrency: null,
     feeTotal: null,
     hash,

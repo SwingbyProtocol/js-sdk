@@ -7,18 +7,20 @@ import { getBridgesForCoin } from '../coins';
 export const getBridgeFor = <M extends SkybridgeMode>({
   context,
   currencyDeposit,
-  currencyOut,
+  currencyReceiving,
 }: Pick<
   SkybridgeParams<SkybridgeResource, M>,
-  'context' | 'currencyDeposit' | 'currencyOut'
+  'context' | 'currencyDeposit' | 'currencyReceiving'
 >): SkybridgeBridge => {
   const inBridges = getBridgesForCoin({ context, coin: currencyDeposit });
-  const outBridges = getBridgesForCoin({ context, coin: currencyOut });
+  const outBridges = getBridgesForCoin({ context, coin: currencyReceiving });
 
   const result = inBridges.find((it) => outBridges.includes(it));
   if (result) {
     return result;
   }
 
-  throw new Error(`Could not find ${context.mode} bridge for ${currencyDeposit}<>${currencyOut}`);
+  throw new Error(
+    `Could not find ${context.mode} bridge for ${currencyDeposit}<>${currencyReceiving}`,
+  );
 };

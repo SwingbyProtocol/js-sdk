@@ -11,7 +11,7 @@ it.each<
   [
     Pick<
       SkybridgeParams<SkybridgeResource, 'test'>,
-      'currencyDeposit' | 'currencyOut' | 'amountDesired' | 'addressReceiving'
+      'currencyDeposit' | 'currencyReceiving' | 'amountDesired' | 'addressReceiving'
     >,
     Pick<SkybridgeParams<SkybridgeResource, 'test'>, 'nonce' | 'amountDeposit'>,
   ]
@@ -20,7 +20,7 @@ it.each<
     {
       amountDesired: '1',
       currencyDeposit: 'BTC',
-      currencyOut: 'BTCB',
+      currencyReceiving: 'BTCB',
       addressReceiving: 'tbnb1k3cp6jl7z757hewt30nfvr97uywlxeap69glam',
     },
     { amountDeposit: '0.99998995', nonce: 2646 },
@@ -29,7 +29,7 @@ it.each<
     {
       amountDesired: '1',
       currencyDeposit: 'BTC',
-      currencyOut: 'WBTC',
+      currencyReceiving: 'WBTC',
       addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     },
     { amountDeposit: '0.99999948', nonce: 743 },
@@ -38,7 +38,7 @@ it.each<
     {
       amountDesired: '1',
       currencyDeposit: 'WBTC',
-      currencyOut: 'BTC',
+      currencyReceiving: 'BTC',
       addressReceiving: 'tb1q0fzppaflhcju7emf9sh5n5st3c47mwuczwxmt7',
     },
     { amountDeposit: '0.9999927', nonce: 257 },
@@ -47,7 +47,7 @@ it.each<
     {
       amountDesired: '1',
       currencyDeposit: 'WBTC',
-      currencyOut: 'BTC',
+      currencyReceiving: 'BTC',
       addressReceiving: 'msEKP7ZSma3rQtWSQBBZCiJAvjAaowf2c6',
     },
     { amountDeposit: '0.99999817', nonce: 4221 },
@@ -56,7 +56,7 @@ it.each<
     {
       amountDesired: '1',
       currencyDeposit: 'WBTC',
-      currencyOut: 'sbBTC',
+      currencyReceiving: 'sbBTC',
       addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     },
     { amountDeposit: '0.9999961', nonce: 1722 },

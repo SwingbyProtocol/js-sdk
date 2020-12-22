@@ -44,7 +44,7 @@ it.each<
         addressReceiving: expected.addressReceiving,
         amountDeposit: expect.stringContaining('0.99'),
         currencyDeposit,
-        currencyOut: 'sbBTC',
+        currencyReceiving: 'sbBTC',
         timestamp: expect.any(Date),
       });
     } catch (e) {

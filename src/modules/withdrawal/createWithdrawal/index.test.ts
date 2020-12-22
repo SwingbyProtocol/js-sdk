@@ -8,7 +8,7 @@ jest.mock('../../context/buildContext');
 it.each<
   Pick<
     SkybridgeParams<'withdrawal', 'test'>,
-    'addressReceiving' | 'currencyOut' | 'amountDesired'
+    'addressReceiving' | 'currencyReceiving' | 'amountDesired'
   > & {
     expected: { addressReceiving: string };
   }
@@ -16,18 +16,18 @@ it.each<
   {
     amountDesired: '1',
     addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
-    currencyOut: 'WBTC',
+    currencyReceiving: 'WBTC',
     expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
   },
   {
     amountDesired: '1',
     addressReceiving: 'tb1qu9xlvyrkj47t0cgu8e5kyanygec74zd9j2j9hh',
-    currencyOut: 'BTC',
+    currencyReceiving: 'BTC',
     expected: { addressReceiving: 'tb1qu9xlvyrkj47t0cgu8e5kyanygec74zd9j2j9hh' },
   },
 ])(
   '"/swaps/create" for withdrawals succeeds with %O',
-  async ({ addressReceiving, currencyOut, amountDesired, expected }) => {
+  async ({ addressReceiving, currencyReceiving, amountDesired, expected }) => {
     jest.setTimeout(180000);
     expect.assertions(1);
 
@@ -36,7 +36,7 @@ it.each<
       const result = await createWithdrawal({
         context,
         addressReceiving,
-        currencyOut,
+        currencyReceiving,
         amountDesired,
       });
       return expect(result).toMatchObject({
@@ -44,7 +44,7 @@ it.each<
         addressReceiving: expected.addressReceiving,
         amountDeposit: expect.stringContaining('0.99'),
         currencyDeposit: 'sbBTC',
-        currencyOut,
+        currencyReceiving,
         timestamp: expect.any(Date),
       });
     } catch (e) {
