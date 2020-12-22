@@ -29,5 +29,5 @@ const currencyOut = 'BTCB';
     currencyOut,
   });
 
-  console.log(`Send ${swap.amountIn} (${swap.currencyIn}) to ${swap.addressSwapIn}`);
+  console.log(`Send ${swap.amountIn} (${swap.currencyIn}) to ${swap.addressDeposit}`);
 })();

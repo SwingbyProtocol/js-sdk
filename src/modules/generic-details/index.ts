@@ -25,7 +25,7 @@ type ServerReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = {
 type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = R extends 'pool'
   ? Pick<
       SkybridgeParams<R, M>,
-      | 'addressSwapIn'
+      | 'addressDeposit'
       | 'addressReceiving'
       | 'amountIn'
       | 'amountOut'
@@ -39,7 +39,7 @@ type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = R extend
     }
   : Pick<
       SkybridgeParams<R, M>,
-      | 'addressSwapIn'
+      | 'addressDeposit'
       | 'addressReceiving'
       | 'amountIn'
       | 'amountOut'
@@ -124,7 +124,7 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
 
   return {
     addressReceiving: result.addressOut,
-    addressSwapIn: result.addressDeposit,
+    addressDeposit: result.addressDeposit,
     amountIn: result.amountIn,
     amountOut: result.amountOut || null,
     // Temporarily fixes API bug where it retuns `BTCE` instead of `WBTC`

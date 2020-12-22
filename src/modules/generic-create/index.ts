@@ -19,7 +19,7 @@ export type CreateParams<R extends SkybridgeResource, M extends SkybridgeMode> =
 export type CreateResult<R extends SkybridgeResource, M extends SkybridgeMode> = R extends 'pool'
   ? Pick<
       SkybridgeParams<R, M>,
-      | 'addressSwapIn'
+      | 'addressDeposit'
       | 'addressReceiving'
       | 'amountIn'
       | 'currencyIn'
@@ -30,7 +30,7 @@ export type CreateResult<R extends SkybridgeResource, M extends SkybridgeMode> =
     >
   : Pick<
       SkybridgeParams<R, M>,
-      | 'addressSwapIn'
+      | 'addressDeposit'
       | 'addressReceiving'
       | 'amountIn'
       | 'currencyIn'
@@ -62,8 +62,8 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
 
   type ApiResponse = Pick<
     SkybridgeParams<R, M>,
-    'amountIn' | 'amountOut' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
-  > & { timestamp: number; addressDeposit: string; addressOut: string };
+    'amountIn' | 'addressDeposit' | 'amountOut' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
+  > & { timestamp: number; addressOut: string };
 
   const bridge = getBridgeFor(params);
   const result = await fetch<ApiResponse>(
@@ -93,7 +93,7 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
       currencyOut: result.response.currencyOut,
       hash: result.response.hash,
       nonce: result.response.nonce,
-      addressSwapIn: result.response.addressDeposit,
+      addressDeposit: result.response.addressDeposit,
       addressReceiving: result.response.addressOut,
       timestamp: new Date(result.response.timestamp * 1000),
     } as CreateResult<R, M>;

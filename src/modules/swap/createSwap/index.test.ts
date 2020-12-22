@@ -40,7 +40,7 @@ it.each<
         amountUser,
       });
       return expect(result).toMatchObject({
-        addressSwapIn: expect.any(String),
+        addressDeposit: expect.any(String),
         addressReceiving: expected.addressReceiving,
         amountIn: expect.stringContaining('0.99'),
         amountOut: expect.stringContaining('0.99'),
