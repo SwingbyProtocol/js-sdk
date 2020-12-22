@@ -23,19 +23,17 @@ export type SkybridgeParams<
   context: SkybridgeContext<M>;
   /** Unique identifier for a swap. */
   hash: string;
-  /** Address the user has sent funds from. */
-  addressUserOut: string;
   /** Address where the user will receive their funds after the swap. */
-  addressUserIn: string;
+  addressReceiving: string;
   /** Address that users have to send funds to to initiate a swap. */
-  addressSwapIn: string;
+  addressDeposit: string;
   /** Amount that users type in the UI. */
-  amountUser: string;
+  amountDesired: string;
   /** Amount that users have to send to Skybridge to start the swap. */
-  amountIn: string;
-  amountOut: string;
-  currencyIn: SkybridgeCoin<R, M, 'in'>;
-  currencyOut: SkybridgeCoin<R, M, 'out'>;
+  amountDeposit: string;
+  amountReceiving: string;
+  currencyDeposit: SkybridgeCoin<R, M, 'in'>;
+  currencyReceiving: SkybridgeCoin<R, M, 'out'>;
   nonce: number;
   timestamp: Date;
   /** e.g. `0.1` means `10%`. */
@@ -46,6 +44,6 @@ export type SkybridgeParams<
   /** In the units specified by `feeCurrency`. */
   feeTotal: string;
   status: SkybridgeStatus;
-  transactionInId: string;
-  transactionOutId: string;
+  txDepositId: string;
+  txReceivingId: string;
 };

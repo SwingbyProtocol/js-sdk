@@ -14,18 +14,18 @@ it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
   const result = await getSwapDetails({ context, hash });
 
   return expect(result).toMatchObject({
-    addressUserIn: 'tb1q8hk7wlqgtvdrvtmjll4xtxkpjdf5svtcgmacep',
-    addressSwapIn: 'msEKP7ZSma3rQtWSQBBZCiJAvjAaowf2c6',
-    amountIn: '0.00099717',
-    amountOut: '0.00074517',
-    currencyIn: 'BTC',
-    currencyOut: 'BTC',
+    addressReceiving: 'tb1q8hk7wlqgtvdrvtmjll4xtxkpjdf5svtcgmacep',
+    addressDeposit: 'msEKP7ZSma3rQtWSQBBZCiJAvjAaowf2c6',
+    amountDeposit: '0.00099717',
+    amountReceiving: '0.00074517',
+    currencyDeposit: 'BTC',
+    currencyReceiving: 'BTC',
     feeCurrency: 'BTC',
     feeTotal: '0.000252',
     hash,
     status: 'REFUNDED',
-    transactionInId: 'b025316d9f6f4c1b111f525988ebcdc2ad67a798c0b276ffb9be7e48e8ba814b',
-    transactionOutId: 'd0b7fae62c5c5ef281fd021eac9da9dbd6340324d642cddb5e76fbc61a995a9a',
+    txDepositId: 'b025316d9f6f4c1b111f525988ebcdc2ad67a798c0b276ffb9be7e48e8ba814b',
+    txReceivingId: 'd0b7fae62c5c5ef281fd021eac9da9dbd6340324d642cddb5e76fbc61a995a9a',
     timestamp: new Date('2020-12-21T08:31:56.000Z'),
   });
 });

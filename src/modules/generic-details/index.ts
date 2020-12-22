@@ -7,7 +7,10 @@ import { SkybridgeBridge } from '../bridges';
 
 type ServerReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = {
   items: Array<
-    Pick<SkybridgeParams<R, M>, 'amountIn' | 'currencyIn' | 'currencyOut' | 'hash'> & {
+    Pick<SkybridgeParams<R, M>, 'hash'> & {
+      currencyIn: SkybridgeCoin<R, M, 'in'>;
+      currencyOut: SkybridgeCoin<R, M, 'out'>;
+      amountIn: string;
       amountOut: string;
       feeCurrency: SkybridgeCoin<R, M>;
       addressDeposit: string;
@@ -25,34 +28,34 @@ type ServerReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = {
 type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = R extends 'pool'
   ? Pick<
       SkybridgeParams<R, M>,
-      | 'addressSwapIn'
-      | 'addressUserIn'
-      | 'amountIn'
-      | 'amountOut'
-      | 'currencyIn'
-      | 'currencyOut'
+      | 'addressDeposit'
+      | 'addressReceiving'
+      | 'amountDeposit'
+      | 'amountReceiving'
+      | 'currencyDeposit'
+      | 'currencyReceiving'
       | 'hash'
       | 'status'
       | 'timestamp'
     > & {
-      transactionInId: SkybridgeParams<R, M>['transactionInId'] | null;
+      txDepositId: SkybridgeParams<R, M>['txDepositId'] | null;
     }
   : Pick<
       SkybridgeParams<R, M>,
-      | 'addressSwapIn'
-      | 'addressUserIn'
-      | 'amountIn'
-      | 'amountOut'
-      | 'currencyIn'
-      | 'currencyOut'
+      | 'addressDeposit'
+      | 'addressReceiving'
+      | 'amountDeposit'
+      | 'amountReceiving'
+      | 'currencyDeposit'
+      | 'currencyReceiving'
       | 'feeTotal'
       | 'feeCurrency'
       | 'hash'
       | 'status'
       | 'timestamp'
     > & {
-      transactionInId: SkybridgeParams<R, M>['transactionInId'] | null;
-      transactionOutId: SkybridgeParams<R, M>['transactionOutId'] | null;
+      txDepositId: SkybridgeParams<R, M>['txDepositId'] | null;
+      txReceivingId: SkybridgeParams<R, M>['txReceivingId'] | null;
     };
 
 const bridgeCache = new Map<string, SkybridgeBridge>();
@@ -123,19 +126,19 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
   }
 
   return {
-    addressUserIn: result.addressOut,
-    addressSwapIn: result.addressDeposit,
-    amountIn: result.amountIn,
-    amountOut: result.amountOut || null,
+    addressReceiving: result.addressOut,
+    addressDeposit: result.addressDeposit,
+    amountDeposit: result.amountIn,
+    amountReceiving: result.amountOut || null,
     // Temporarily fixes API bug where it retuns `BTCE` instead of `WBTC`
-    currencyIn: (result.currencyIn as any) === 'BTCE' ? 'WBTC' : result.currencyIn,
-    currencyOut: (result.currencyOut as any) === 'BTCE' ? 'WBTC' : result.currencyOut,
+    currencyDeposit: (result.currencyIn as any) === 'BTCE' ? 'WBTC' : result.currencyIn,
+    currencyReceiving: (result.currencyOut as any) === 'BTCE' ? 'WBTC' : result.currencyOut,
     feeCurrency: ((result.feeCurrency as any) === 'BTCE' ? 'WBTC' : result.feeCurrency) || null,
     feeTotal: result.fee || null,
     hash: result.hash,
     status: result.status,
-    transactionInId: result.txIdIn || null,
-    transactionOutId: result.txIdOut || null,
+    txDepositId: result.txIdIn || null,
+    txReceivingId: result.txIdOut || null,
     timestamp: new Date(result.timestamp * 1000),
   } as ReturnType<R, M>;
 };

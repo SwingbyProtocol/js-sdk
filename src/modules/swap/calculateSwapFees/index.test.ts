@@ -6,45 +6,47 @@ import { calculateSwapFees } from './';
 
 jest.mock('../../context/buildContext');
 
-it.each<[{ currencyIn: SkybridgeCoin<'swap'>; currencyOut: SkybridgeCoin<'swap'> }, any]>([
+it.each<
+  [{ currencyDeposit: SkybridgeCoin<'swap'>; currencyReceiving: SkybridgeCoin<'swap'> }, any]
+>([
   // [
-  //   { currencyIn: 'BTC', currencyOut: 'BTCB' },
+  //   { currencyDeposit: 'BTC', currencyReceiving: 'BTCB' },
   //   { feeBridgePercent: '0.001', feeMiner: '0.000005', feeCurrency: 'BTCB' },
   // ],
   [
-    { currencyIn: 'BTC', currencyOut: 'WBTC' },
+    { currencyDeposit: 'BTC', currencyReceiving: 'WBTC' },
     { feeBridgePercent: '0.002', feeMiner: '0.00025', feeCurrency: 'WBTC' },
   ],
   [
-    { currencyIn: 'WBTC', currencyOut: 'BTC' },
+    { currencyDeposit: 'WBTC', currencyReceiving: 'BTC' },
     { feeBridgePercent: '0.002', feeMiner: '0.0003', feeCurrency: 'BTC' },
   ],
-])('works for %O', async ({ currencyIn, currencyOut }, expected) => {
+])('works for %O', async ({ currencyDeposit, currencyReceiving }, expected) => {
   expect.assertions(1);
 
   const context = await buildContext({ mode: 'test' });
   const result = await calculateSwapFees({
     context,
-    currencyIn,
-    currencyOut,
+    currencyDeposit,
+    currencyReceiving,
   });
 
   expect(result).toMatchObject(expected);
 });
 
-it.each<{ currencyIn: any; mode: SkybridgeMode; currencyOut: any }>([
-  { currencyIn: 'WBTC', mode: 'test', currencyOut: 'BTCB' },
-  { currencyIn: 'BTCB', mode: 'test', currencyOut: 'WBTC' },
-  { currencyIn: 'BTC', mode: 'production', currencyOut: 'BTCB' },
-])('throws for %O', async ({ currencyIn, mode, currencyOut }) => {
+it.each<{ currencyDeposit: any; mode: SkybridgeMode; currencyReceiving: any }>([
+  { currencyDeposit: 'WBTC', mode: 'test', currencyReceiving: 'BTCB' },
+  { currencyDeposit: 'BTCB', mode: 'test', currencyReceiving: 'WBTC' },
+  { currencyDeposit: 'BTC', mode: 'production', currencyReceiving: 'BTCB' },
+])('throws for %O', async ({ currencyDeposit, mode, currencyReceiving }) => {
   expect.assertions(1);
 
   const context = await buildContext({ mode });
   try {
     await calculateSwapFees({
       context,
-      currencyIn,
-      currencyOut,
+      currencyDeposit,
+      currencyReceiving,
     });
   } catch (e) {
     expect(e.message).toMatch(/Could not find (test|production) bridge for/);

@@ -14,30 +14,30 @@ const difficultyZeroBits = 10;
 
 type Params<M extends SkybridgeMode> = Pick<
   SkybridgeParams<SkybridgeResource, M>,
-  'context' | 'addressUserIn' | 'currencyIn' | 'currencyOut' | 'amountUser'
+  'context' | 'addressReceiving' | 'currencyDeposit' | 'currencyReceiving' | 'amountDesired'
 >;
 
 type Result<M extends SkybridgeMode> = Pick<
   SkybridgeParams<SkybridgeResource, M>,
-  'amountIn' | 'nonce'
+  'amountDeposit' | 'nonce'
 >;
 
 export const runProofOfWork = async <M extends SkybridgeMode>({
   context,
-  addressUserIn: addressUserInParam,
-  currencyIn,
-  currencyOut,
-  amountUser,
+  addressReceiving: addressReceivingParam,
+  currencyDeposit,
+  currencyReceiving,
+  amountDesired,
 }: Params<M>): Promise<Result<M>> => {
   let nonce = 0;
   let hash: any;
-  let latestRound = await getRound({ context, currencyIn, currencyOut });
+  let latestRound = await getRound({ context, currencyDeposit, currencyReceiving });
   let strHashArg = '';
-  const flooredAmount = floorAmount(amountUser);
-  const addressUserIn =
-    getChainFor({ coin: currencyOut }) === 'ethereum'
-      ? addressUserInParam.toLowerCase()
-      : addressUserInParam;
+  const flooredAmount = floorAmount(amountDesired);
+  const addressReceiving =
+    getChainFor({ coin: currencyReceiving }) === 'ethereum'
+      ? addressReceivingParam.toLowerCase()
+      : addressReceivingParam;
 
   do {
     nonce += 1;
@@ -47,9 +47,9 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
       ';' +
       latestRound +
       ';' +
-      addressUserIn +
+      addressReceiving +
       ';' +
-      currencyIn +
+      currencyDeposit +
       ';' +
       flooredAmount +
       ';';
@@ -61,20 +61,25 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
   const BigNumberFloorAmount = toSatoshi(flooredAmount);
   const toSendBI = BigNumberFloorAmount.minus(rejectionSample);
   const numSendAmount = toBTC(toSendBI.toString());
-  const sendAmount = numSendAmount.toFixed();
+  const amountDeposit = numSendAmount.toFixed();
 
-  return { amountIn: sendAmount, nonce };
+  return { amountDeposit, nonce };
 };
 
 export const getRound = async <M extends SkybridgeMode>({
   context,
-  currencyOut,
-  currencyIn,
-}: Pick<SkybridgeParams<SkybridgeResource, M>, 'context' | 'currencyIn' | 'currencyOut'>): Promise<
-  string
-> => {
+  currencyReceiving,
+  currencyDeposit,
+}: Pick<
+  SkybridgeParams<SkybridgeResource, M>,
+  'context' | 'currencyDeposit' | 'currencyReceiving'
+>): Promise<string> => {
   const round: number = await (async () => {
-    const bridge = getBridgeFor({ context, currencyIn, currencyOut });
+    const bridge = getBridgeFor({
+      context,
+      currencyDeposit: currencyDeposit,
+      currencyReceiving: currencyReceiving,
+    });
     if (bridge === 'btc_erc') {
       const blockHeight = await getBlockHeight({ context, bridge });
       return Math.floor(blockHeight / 3);

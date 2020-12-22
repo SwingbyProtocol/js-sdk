@@ -6,6 +6,7 @@ import { SkybridgeParams } from '../common-params';
 import { runProofOfWork } from '../pow';
 import { SkybridgeResource } from '../resources';
 import { getChainFor } from '../chains';
+import { SkybridgeCoin } from '../coins';
 
 export type CreateParams<R extends SkybridgeResource, M extends SkybridgeMode> = {
   resource: R;
@@ -13,32 +14,32 @@ export type CreateParams<R extends SkybridgeResource, M extends SkybridgeMode> =
   timeout?: number;
 } & Pick<
   SkybridgeParams<R, M>,
-  'context' | 'addressUserIn' | 'currencyIn' | 'currencyOut' | 'amountUser'
+  'context' | 'addressReceiving' | 'currencyDeposit' | 'currencyReceiving' | 'amountDesired'
 >;
 
 export type CreateResult<R extends SkybridgeResource, M extends SkybridgeMode> = R extends 'pool'
   ? Pick<
       SkybridgeParams<R, M>,
-      | 'addressSwapIn'
-      | 'addressUserIn'
-      | 'amountIn'
-      | 'currencyIn'
-      | 'currencyOut'
+      | 'addressDeposit'
+      | 'addressReceiving'
+      | 'amountDeposit'
+      | 'currencyDeposit'
+      | 'currencyReceiving'
       | 'nonce'
       | 'timestamp'
       | 'hash'
     >
   : Pick<
       SkybridgeParams<R, M>,
-      | 'addressSwapIn'
-      | 'addressUserIn'
-      | 'amountIn'
-      | 'currencyIn'
-      | 'currencyOut'
+      | 'addressDeposit'
+      | 'addressReceiving'
+      | 'amountDeposit'
+      | 'currencyDeposit'
+      | 'currencyReceiving'
       | 'nonce'
       | 'timestamp'
       | 'hash'
-      | 'amountOut'
+      | 'amountReceiving'
     >;
 
 const INTERVAL = 2000;
@@ -58,12 +59,16 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
   logger('Will execute create(%O).', { ...params, resource, startedAt, timeout });
 
   const apiPathResource = resource === 'pool' ? 'floats' : 'swaps';
-  const { amountIn, nonce } = await runProofOfWork(params);
+  const { amountDeposit, nonce } = await runProofOfWork(params);
 
-  type ApiResponse = Pick<
-    SkybridgeParams<R, M>,
-    'amountIn' | 'amountOut' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
-  > & { timestamp: number; addressDeposit: string; addressOut: string };
+  type ApiResponse = Pick<SkybridgeParams<R, M>, 'addressDeposit' | 'nonce' | 'hash'> & {
+    amountIn: string;
+    amountOut: string;
+    currencyIn: SkybridgeCoin<R, M, 'in'>;
+    currencyOut: SkybridgeCoin<R, M, 'out'>;
+    timestamp: number;
+    addressOut: string;
+  };
 
   const bridge = getBridgeFor(params);
   const result = await fetch<ApiResponse>(
@@ -72,12 +77,12 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
       method: 'post',
       body: JSON.stringify({
         address_to:
-          getChainFor({ coin: params.currencyOut }) === 'ethereum'
-            ? params.addressUserIn.toLowerCase()
-            : params.addressUserIn,
-        amount: amountIn,
-        currency_from: params.currencyIn,
-        currency_to: params.currencyOut,
+          getChainFor({ coin: params.currencyReceiving }) === 'ethereum'
+            ? params.addressReceiving.toLowerCase()
+            : params.addressReceiving,
+        amount: amountDeposit,
+        currency_from: params.currencyDeposit,
+        currency_to: params.currencyReceiving,
         nonce,
       }),
     },
@@ -87,14 +92,14 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
 
   if (result.ok) {
     return {
-      amountIn: result.response.amountIn,
-      amountOut: result.response.amountOut,
-      currencyIn: result.response.currencyIn,
-      currencyOut: result.response.currencyOut,
+      amountDeposit: result.response.amountIn,
+      amountReceiving: result.response.amountOut,
+      currencyDeposit: result.response.currencyIn,
+      currencyReceiving: result.response.currencyOut,
       hash: result.response.hash,
       nonce: result.response.nonce,
-      addressSwapIn: result.response.addressDeposit,
-      addressUserIn: result.response.addressOut,
+      addressDeposit: result.response.addressDeposit,
+      addressReceiving: result.response.addressOut,
       timestamp: new Date(result.response.timestamp * 1000),
     } as CreateResult<R, M>;
   }

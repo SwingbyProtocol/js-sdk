@@ -1,18 +1,18 @@
-import { buildContext, createSwap, estimateSwapAmountOut } from '@swingby-protocol/sdk';
+import { buildContext, createSwap, estimateSwapAmountReceiving } from '@swingby-protocol/sdk';
 
-const addressUserIn = 'tbnb16ke3clwqmduvzv6awlprjw3ecw7g52qw7c6hdm';
-const amountUser = '1';
-const currencyIn = 'BTC';
-const currencyOut = 'BTCB';
+const addressReceiving = 'tbnb16ke3clwqmduvzv6awlprjw3ecw7g52qw7c6hdm';
+const amountDesired = '1';
+const currencyDeposit = 'BTC';
+const currencyReceiving = 'BTCB';
 
 (async () => {
   const context = await buildContext({ mode: 'test' });
 
-  const { feeTotal, feeBridgePercent, feeMiner, feeCurrency } = await estimateSwapAmountOut({
+  const { feeTotal, feeBridgePercent, feeMiner, feeCurrency } = await estimateSwapAmountReceiving({
     context,
-    amountUser,
-    currencyIn,
-    currencyOut,
+    amountDesired,
+    currencyDeposit,
+    currencyReceiving,
   });
 
   console.log(
@@ -23,11 +23,11 @@ const currencyOut = 'BTCB';
 
   const swap = await createSwap({
     context,
-    amountUser,
-    addressUserIn,
-    currencyIn,
-    currencyOut,
+    amountDesired,
+    addressReceiving,
+    currencyDeposit,
+    currencyReceiving,
   });
 
-  console.log(`Send ${swap.amountIn} (${swap.currencyIn}) to ${swap.addressSwapIn}`);
+  console.log(`Send ${swap.amountDeposit} (${swap.currencyDeposit}) to ${swap.addressDeposit}`);
 })();
