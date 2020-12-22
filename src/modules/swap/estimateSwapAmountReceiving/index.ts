@@ -4,7 +4,7 @@ import type { SkybridgeMode } from '../../modes';
 import type { SkybridgeParams } from '../../common-params';
 import { calculateSwapFees } from '../calculateSwapFees';
 
-export const estimateSwapAmountOut = async <M extends SkybridgeMode>({
+export const estimateSwapAmountReceiving = async <M extends SkybridgeMode>({
   context,
   currencyIn,
   currencyOut,

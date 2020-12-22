@@ -1,3 +1,3 @@
 export { createSwap } from './createSwap';
-export { estimateSwapAmountOut } from './estimateSwapAmountOut';
+export { estimateSwapAmountReceiving } from './estimateSwapAmountReceiving';
 export { getSwapDetails } from './getSwapDetails';

@@ -8,7 +8,7 @@ export type { SkybridgeCoin } from './modules/coins';
 export type { SkybridgeChain } from './modules/chains';
 
 export { getCoinsFor, getSwapableWith } from './modules/coins';
-export { createSwap, estimateSwapAmountOut, getSwapDetails } from './modules/swap';
+export { createSwap, estimateSwapAmountReceiving, getSwapDetails } from './modules/swap';
 export { buildContext } from './modules/context';
 export { isAddressValid } from './modules/validate-address';
 export { buildExplorerLink } from './modules/explorer-link';

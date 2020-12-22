@@ -2,7 +2,7 @@ import type { SkybridgeCoin } from '../../coins';
 import { buildContext } from '../../context';
 import type { SkybridgeMode } from '../../modes';
 
-import { estimateSwapAmountOut } from './';
+import { estimateSwapAmountReceiving } from '.';
 
 jest.mock('../../context/buildContext');
 
@@ -50,7 +50,7 @@ it.each<
   expect.assertions(1);
 
   const context = await buildContext({ mode: 'test' });
-  const result = await estimateSwapAmountOut({
+  const result = await estimateSwapAmountReceiving({
     context,
     currencyIn,
     currencyOut,
@@ -69,7 +69,7 @@ it.each<{ currencyIn: any; mode: SkybridgeMode; currencyOut: any }>([
 
   const context = await buildContext({ mode });
   try {
-    await estimateSwapAmountOut({
+    await estimateSwapAmountReceiving({
       context,
       currencyIn,
       currencyOut,
