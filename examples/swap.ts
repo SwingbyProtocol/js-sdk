@@ -1,7 +1,7 @@
 import { buildContext, createSwap, estimateSwapAmountOut } from '@swingby-protocol/sdk';
 
 const addressReceiving = 'tbnb16ke3clwqmduvzv6awlprjw3ecw7g52qw7c6hdm';
-const amountUser = '1';
+const amountDesired = '1';
 const currencyIn = 'BTC';
 const currencyOut = 'BTCB';
 
@@ -10,7 +10,7 @@ const currencyOut = 'BTCB';
 
   const { feeTotal, feeBridgePercent, feeMiner, feeCurrency } = await estimateSwapAmountOut({
     context,
-    amountUser,
+    amountDesired,
     currencyIn,
     currencyOut,
   });
@@ -23,7 +23,7 @@ const currencyOut = 'BTCB';
 
   const swap = await createSwap({
     context,
-    amountUser,
+    amountDesired,
     addressReceiving,
     currencyIn,
     currencyOut,

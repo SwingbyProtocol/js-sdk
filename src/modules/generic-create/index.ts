@@ -13,7 +13,7 @@ export type CreateParams<R extends SkybridgeResource, M extends SkybridgeMode> =
   timeout?: number;
 } & Pick<
   SkybridgeParams<R, M>,
-  'context' | 'addressReceiving' | 'currencyIn' | 'currencyOut' | 'amountUser'
+  'context' | 'addressReceiving' | 'currencyIn' | 'currencyOut' | 'amountDesired'
 >;
 
 export type CreateResult<R extends SkybridgeResource, M extends SkybridgeMode> = R extends 'pool'

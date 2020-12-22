@@ -14,7 +14,7 @@ const difficultyZeroBits = 10;
 
 type Params<M extends SkybridgeMode> = Pick<
   SkybridgeParams<SkybridgeResource, M>,
-  'context' | 'addressReceiving' | 'currencyIn' | 'currencyOut' | 'amountUser'
+  'context' | 'addressReceiving' | 'currencyIn' | 'currencyOut' | 'amountDesired'
 >;
 
 type Result<M extends SkybridgeMode> = Pick<
@@ -27,13 +27,13 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
   addressReceiving: addressReceivingParam,
   currencyIn,
   currencyOut,
-  amountUser,
+  amountDesired,
 }: Params<M>): Promise<Result<M>> => {
   let nonce = 0;
   let hash: any;
   let latestRound = await getRound({ context, currencyIn, currencyOut });
   let strHashArg = '';
-  const flooredAmount = floorAmount(amountUser);
+  const flooredAmount = floorAmount(amountDesired);
   const addressReceiving =
     getChainFor({ coin: currencyOut }) === 'ethereum'
       ? addressReceivingParam.toLowerCase()

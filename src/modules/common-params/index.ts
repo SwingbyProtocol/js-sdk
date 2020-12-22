@@ -28,7 +28,7 @@ export type SkybridgeParams<
   /** Address that users have to send funds to to initiate a swap. */
   addressDeposit: string;
   /** Amount that users type in the UI. */
-  amountUser: string;
+  amountDesired: string;
   /** Amount that users have to send to Skybridge to start the swap. */
   amountDeposit: string;
   amountOut: string;

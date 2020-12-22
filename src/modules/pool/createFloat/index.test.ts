@@ -6,25 +6,25 @@ import { createFloat } from '.';
 jest.mock('../../context/buildContext');
 
 it.each<
-  Pick<SkybridgeParams<'pool', 'test'>, 'addressReceiving' | 'currencyIn' | 'amountUser'> & {
+  Pick<SkybridgeParams<'pool', 'test'>, 'addressReceiving' | 'currencyIn' | 'amountDesired'> & {
     expected: { addressReceiving: string };
   }
 >([
   {
-    amountUser: '1',
+    amountDesired: '1',
     addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     currencyIn: 'BTC',
     expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
   },
   {
-    amountUser: '1',
+    amountDesired: '1',
     addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     currencyIn: 'BTC',
     expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
   },
 ])(
   '"/floats/create" succeeds with %O',
-  async ({ addressReceiving, currencyIn, amountUser, expected }) => {
+  async ({ addressReceiving, currencyIn, amountDesired, expected }) => {
     jest.setTimeout(180000);
     expect.assertions(1);
 
@@ -34,7 +34,7 @@ it.each<
         context,
         addressReceiving,
         currencyIn,
-        amountUser,
+        amountDesired,
       });
       return expect(result).toMatchObject({
         addressDeposit: expect.any(String),

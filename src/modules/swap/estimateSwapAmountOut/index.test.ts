@@ -8,12 +8,16 @@ jest.mock('../../context/buildContext');
 
 it.each<
   [
-    { amountUser: string; currencyIn: SkybridgeCoin<'swap'>; currencyOut: SkybridgeCoin<'swap'> },
+    {
+      amountDesired: string;
+      currencyIn: SkybridgeCoin<'swap'>;
+      currencyOut: SkybridgeCoin<'swap'>;
+    },
     any,
   ]
 >([
   // [
-  //   { amountUser: '1', currencyIn: 'BTC', currencyOut: 'BTCB' },
+  //   { amountDesired: '1', currencyIn: 'BTC', currencyOut: 'BTCB' },
   //   {
   //     amountOut: '0.998995',
   //     feeBridgePercent: '0.001',
@@ -23,7 +27,7 @@ it.each<
   //   },
   // ],
   [
-    { amountUser: '3', currencyIn: 'BTC', currencyOut: 'WBTC' },
+    { amountDesired: '3', currencyIn: 'BTC', currencyOut: 'WBTC' },
     {
       amountOut: '2.99375',
       feeBridgePercent: '0.002',
@@ -33,7 +37,7 @@ it.each<
     },
   ],
   [
-    { amountUser: '156', currencyIn: 'WBTC', currencyOut: 'BTC' },
+    { amountDesired: '156', currencyIn: 'WBTC', currencyOut: 'BTC' },
     {
       amountOut: '155.6877',
       feeBridgePercent: '0.002',
@@ -42,7 +46,7 @@ it.each<
       feeTotal: '0.3123',
     },
   ],
-])('works for %O', async ({ amountUser, currencyIn, currencyOut }, expected) => {
+])('works for %O', async ({ amountDesired, currencyIn, currencyOut }, expected) => {
   expect.assertions(1);
 
   const context = await buildContext({ mode: 'test' });
@@ -50,7 +54,7 @@ it.each<
     context,
     currencyIn,
     currencyOut,
-    amountUser,
+    amountDesired,
   });
 
   expect(result).toMatchObject(expected);
@@ -69,7 +73,7 @@ it.each<{ currencyIn: any; mode: SkybridgeMode; currencyOut: any }>([
       context,
       currencyIn,
       currencyOut,
-      amountUser: '1',
+      amountDesired: '1',
     });
   } catch (e) {
     expect(e.message).toMatch(/Could not find (test|production) bridge for/);
