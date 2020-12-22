@@ -7,7 +7,8 @@ import { SkybridgeBridge } from '../bridges';
 
 type ServerReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = {
   items: Array<
-    Pick<SkybridgeParams<R, M>, 'currencyIn' | 'currencyOut' | 'hash'> & {
+    Pick<SkybridgeParams<R, M>, 'currencyOut' | 'hash'> & {
+      currencyIn: SkybridgeCoin<R, M, 'in'>;
       amountIn: string;
       amountOut: string;
       feeCurrency: SkybridgeCoin<R, M>;
@@ -30,7 +31,7 @@ type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = R extend
       | 'addressReceiving'
       | 'amountDeposit'
       | 'amountReceiving'
-      | 'currencyIn'
+      | 'currencyDeposit'
       | 'currencyOut'
       | 'hash'
       | 'status'
@@ -44,7 +45,7 @@ type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = R extend
       | 'addressReceiving'
       | 'amountDeposit'
       | 'amountReceiving'
-      | 'currencyIn'
+      | 'currencyDeposit'
       | 'currencyOut'
       | 'feeTotal'
       | 'feeCurrency'
@@ -129,7 +130,7 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
     amountDeposit: result.amountIn,
     amountReceiving: result.amountOut || null,
     // Temporarily fixes API bug where it retuns `BTCE` instead of `WBTC`
-    currencyIn: (result.currencyIn as any) === 'BTCE' ? 'WBTC' : result.currencyIn,
+    currencyDeposit: (result.currencyIn as any) === 'BTCE' ? 'WBTC' : result.currencyIn,
     currencyOut: (result.currencyOut as any) === 'BTCE' ? 'WBTC' : result.currencyOut,
     feeCurrency: ((result.feeCurrency as any) === 'BTCE' ? 'WBTC' : result.feeCurrency) || null,
     feeTotal: result.fee || null,

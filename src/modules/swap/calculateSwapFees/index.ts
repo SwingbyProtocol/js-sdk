@@ -8,12 +8,12 @@ import type { SkybridgeCoin } from '../../coins';
 
 export const calculateSwapFees = async <M extends SkybridgeMode>({
   context,
-  currencyIn,
+  currencyDeposit,
   currencyOut,
-}: Pick<SkybridgeParams<'swap', M>, 'context' | 'currencyIn' | 'currencyOut'>): Promise<
+}: Pick<SkybridgeParams<'swap', M>, 'context' | 'currencyDeposit' | 'currencyOut'>): Promise<
   Pick<SkybridgeParams<'swap', M>, 'feeBridgePercent' | 'feeMiner' | 'feeCurrency'>
 > => {
-  const bridge = getBridgeFor({ context, currencyIn, currencyOut });
+  const bridge = getBridgeFor({ context, currencyDeposit: currencyDeposit, currencyOut });
   const result = await fetch<
     Array<{ bridgeFeePercent: string; currency: SkybridgeCoin<'swap', M>; minerFee: string }>
   >(`${context.servers.swapNode[bridge]}/api/v1/swaps/fees`);

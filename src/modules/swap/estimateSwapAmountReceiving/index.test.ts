@@ -10,14 +10,14 @@ it.each<
   [
     {
       amountDesired: string;
-      currencyIn: SkybridgeCoin<'swap'>;
+      currencyDeposit: SkybridgeCoin<'swap'>;
       currencyOut: SkybridgeCoin<'swap'>;
     },
     any,
   ]
 >([
   // [
-  //   { amountDesired: '1', currencyIn: 'BTC', currencyOut: 'BTCB' },
+  //   { amountDesired: '1', currencyDeposit: 'BTC', currencyOut: 'BTCB' },
   //   {
   //     amountReceiving: '0.998995',
   //     feeBridgePercent: '0.001',
@@ -27,7 +27,7 @@ it.each<
   //   },
   // ],
   [
-    { amountDesired: '3', currencyIn: 'BTC', currencyOut: 'WBTC' },
+    { amountDesired: '3', currencyDeposit: 'BTC', currencyOut: 'WBTC' },
     {
       amountReceiving: '2.99375',
       feeBridgePercent: '0.002',
@@ -37,7 +37,7 @@ it.each<
     },
   ],
   [
-    { amountDesired: '156', currencyIn: 'WBTC', currencyOut: 'BTC' },
+    { amountDesired: '156', currencyDeposit: 'WBTC', currencyOut: 'BTC' },
     {
       amountReceiving: '155.6877',
       feeBridgePercent: '0.002',
@@ -46,13 +46,13 @@ it.each<
       feeTotal: '0.3123',
     },
   ],
-])('works for %O', async ({ amountDesired, currencyIn, currencyOut }, expected) => {
+])('works for %O', async ({ amountDesired, currencyDeposit, currencyOut }, expected) => {
   expect.assertions(1);
 
   const context = await buildContext({ mode: 'test' });
   const result = await estimateSwapAmountReceiving({
     context,
-    currencyIn,
+    currencyDeposit,
     currencyOut,
     amountDesired,
   });
@@ -60,18 +60,18 @@ it.each<
   expect(result).toMatchObject(expected);
 });
 
-it.each<{ currencyIn: any; mode: SkybridgeMode; currencyOut: any }>([
-  { currencyIn: 'WBTC', mode: 'test', currencyOut: 'BTCB' },
-  { currencyIn: 'BTCB', mode: 'test', currencyOut: 'WBTC' },
-  { currencyIn: 'BTC', mode: 'production', currencyOut: 'BTCB' },
-])('throws for %O', async ({ currencyIn, mode, currencyOut }) => {
+it.each<{ currencyDeposit: any; mode: SkybridgeMode; currencyOut: any }>([
+  { currencyDeposit: 'WBTC', mode: 'test', currencyOut: 'BTCB' },
+  { currencyDeposit: 'BTCB', mode: 'test', currencyOut: 'WBTC' },
+  { currencyDeposit: 'BTC', mode: 'production', currencyOut: 'BTCB' },
+])('throws for %O', async ({ currencyDeposit, mode, currencyOut }) => {
   expect.assertions(1);
 
   const context = await buildContext({ mode });
   try {
     await estimateSwapAmountReceiving({
       context,
-      currencyIn,
+      currencyDeposit,
       currencyOut,
       amountDesired: '1',
     });

@@ -32,7 +32,7 @@ export type SkybridgeParams<
   /** Amount that users have to send to Skybridge to start the swap. */
   amountDeposit: string;
   amountReceiving: string;
-  currencyIn: SkybridgeCoin<R, M, 'in'>;
+  currencyDeposit: SkybridgeCoin<R, M, 'in'>;
   currencyOut: SkybridgeCoin<R, M, 'out'>;
   nonce: number;
   timestamp: Date;
