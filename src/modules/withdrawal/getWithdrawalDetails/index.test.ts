@@ -24,8 +24,8 @@ it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
     feeTotal: '0.00025198',
     hash,
     status: 'SENDING',
-    transactionInId: '0x207cb67ff5aa3e435444dd6ffb900232ed2e5abb94c90b4a4b3d7d8e4e5787ce',
-    transactionOutId: null,
+    txDepositId: '0x207cb67ff5aa3e435444dd6ffb900232ed2e5abb94c90b4a4b3d7d8e4e5787ce',
+    txReceivingId: null,
     timestamp: new Date('2020-12-21T14:13:48.000Z'),
   });
 });

@@ -44,6 +44,6 @@ export type SkybridgeParams<
   /** In the units specified by `feeCurrency`. */
   feeTotal: string;
   status: SkybridgeStatus;
-  transactionInId: string;
-  transactionOutId: string;
+  txDepositId: string;
+  txReceivingId: string;
 };

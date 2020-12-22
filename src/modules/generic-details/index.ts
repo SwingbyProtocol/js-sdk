@@ -38,7 +38,7 @@ type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = R extend
       | 'status'
       | 'timestamp'
     > & {
-      transactionInId: SkybridgeParams<R, M>['transactionInId'] | null;
+      txDepositId: SkybridgeParams<R, M>['txDepositId'] | null;
     }
   : Pick<
       SkybridgeParams<R, M>,
@@ -54,8 +54,8 @@ type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = R extend
       | 'status'
       | 'timestamp'
     > & {
-      transactionInId: SkybridgeParams<R, M>['transactionInId'] | null;
-      transactionOutId: SkybridgeParams<R, M>['transactionOutId'] | null;
+      txDepositId: SkybridgeParams<R, M>['txDepositId'] | null;
+      txReceivingId: SkybridgeParams<R, M>['txReceivingId'] | null;
     };
 
 const bridgeCache = new Map<string, SkybridgeBridge>();
@@ -137,8 +137,8 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
     feeTotal: result.fee || null,
     hash: result.hash,
     status: result.status,
-    transactionInId: result.txIdIn || null,
-    transactionOutId: result.txIdOut || null,
+    txDepositId: result.txIdIn || null,
+    txReceivingId: result.txIdOut || null,
     timestamp: new Date(result.timestamp * 1000),
   } as ReturnType<R, M>;
 };
