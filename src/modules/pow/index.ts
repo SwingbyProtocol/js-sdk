@@ -19,7 +19,7 @@ type Params<M extends SkybridgeMode> = Pick<
 
 type Result<M extends SkybridgeMode> = Pick<
   SkybridgeParams<SkybridgeResource, M>,
-  'amountIn' | 'nonce'
+  'amountDeposit' | 'nonce'
 >;
 
 export const runProofOfWork = async <M extends SkybridgeMode>({
@@ -61,9 +61,9 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
   const BigNumberFloorAmount = toSatoshi(flooredAmount);
   const toSendBI = BigNumberFloorAmount.minus(rejectionSample);
   const numSendAmount = toBTC(toSendBI.toString());
-  const sendAmount = numSendAmount.toFixed();
+  const amountDeposit = numSendAmount.toFixed();
 
-  return { amountIn: sendAmount, nonce };
+  return { amountDeposit, nonce };
 };
 
 export const getRound = async <M extends SkybridgeMode>({

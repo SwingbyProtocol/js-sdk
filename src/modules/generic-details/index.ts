@@ -7,7 +7,8 @@ import { SkybridgeBridge } from '../bridges';
 
 type ServerReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = {
   items: Array<
-    Pick<SkybridgeParams<R, M>, 'amountIn' | 'currencyIn' | 'currencyOut' | 'hash'> & {
+    Pick<SkybridgeParams<R, M>, 'currencyIn' | 'currencyOut' | 'hash'> & {
+      amountIn: string;
       amountOut: string;
       feeCurrency: SkybridgeCoin<R, M>;
       addressDeposit: string;
@@ -27,7 +28,7 @@ type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = R extend
       SkybridgeParams<R, M>,
       | 'addressDeposit'
       | 'addressReceiving'
-      | 'amountIn'
+      | 'amountDeposit'
       | 'amountOut'
       | 'currencyIn'
       | 'currencyOut'
@@ -41,7 +42,7 @@ type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = R extend
       SkybridgeParams<R, M>,
       | 'addressDeposit'
       | 'addressReceiving'
-      | 'amountIn'
+      | 'amountDeposit'
       | 'amountOut'
       | 'currencyIn'
       | 'currencyOut'
@@ -125,7 +126,7 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
   return {
     addressReceiving: result.addressOut,
     addressDeposit: result.addressDeposit,
-    amountIn: result.amountIn,
+    amountDeposit: result.amountIn,
     amountOut: result.amountOut || null,
     // Temporarily fixes API bug where it retuns `BTCE` instead of `WBTC`
     currencyIn: (result.currencyIn as any) === 'BTCE' ? 'WBTC' : result.currencyIn,

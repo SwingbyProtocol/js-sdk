@@ -21,7 +21,7 @@ export type CreateResult<R extends SkybridgeResource, M extends SkybridgeMode> =
       SkybridgeParams<R, M>,
       | 'addressDeposit'
       | 'addressReceiving'
-      | 'amountIn'
+      | 'amountDeposit'
       | 'currencyIn'
       | 'currencyOut'
       | 'nonce'
@@ -32,7 +32,7 @@ export type CreateResult<R extends SkybridgeResource, M extends SkybridgeMode> =
       SkybridgeParams<R, M>,
       | 'addressDeposit'
       | 'addressReceiving'
-      | 'amountIn'
+      | 'amountDeposit'
       | 'currencyIn'
       | 'currencyOut'
       | 'nonce'
@@ -58,12 +58,12 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
   logger('Will execute create(%O).', { ...params, resource, startedAt, timeout });
 
   const apiPathResource = resource === 'pool' ? 'floats' : 'swaps';
-  const { amountIn, nonce } = await runProofOfWork(params);
+  const { amountDeposit, nonce } = await runProofOfWork(params);
 
   type ApiResponse = Pick<
     SkybridgeParams<R, M>,
-    'amountIn' | 'addressDeposit' | 'amountOut' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
-  > & { timestamp: number; addressOut: string };
+    'addressDeposit' | 'amountOut' | 'currencyIn' | 'currencyOut' | 'nonce' | 'hash'
+  > & { amountIn: string; timestamp: number; addressOut: string };
 
   const bridge = getBridgeFor(params);
   const result = await fetch<ApiResponse>(
@@ -75,7 +75,7 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
           getChainFor({ coin: params.currencyOut }) === 'ethereum'
             ? params.addressReceiving.toLowerCase()
             : params.addressReceiving,
-        amount: amountIn,
+        amount: amountDeposit,
         currency_from: params.currencyIn,
         currency_to: params.currencyOut,
         nonce,
@@ -87,7 +87,7 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
 
   if (result.ok) {
     return {
-      amountIn: result.response.amountIn,
+      amountDeposit: result.response.amountIn,
       amountOut: result.response.amountOut,
       currencyIn: result.response.currencyIn,
       currencyOut: result.response.currencyOut,
