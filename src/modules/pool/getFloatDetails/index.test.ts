@@ -6,7 +6,7 @@ import { getFloatDetails } from './';
 jest.mock('../../context/buildContext');
 
 it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
-  { hash: 'dniUX39yLjKMPixHawxeyreUYpgaDafFlpP1YN4BK_o=' },
+  { hash: 'bWRloGO3ah3p9jJ_MKNZLF6x3Nr4rgp0fh0D5RIYo5E=' },
 ])('gets float details for %O', async ({ hash }) => {
   expect.assertions(1);
 
@@ -14,18 +14,16 @@ it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
   const result = await getFloatDetails({ context, hash });
 
   return expect(result).toMatchObject({
-    addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc',
     addressDeposit: 'msEKP7ZSma3rQtWSQBBZCiJAvjAaowf2c6',
-    amountDeposit: '0.00099747',
-    amountReceiving: null,
+    amountDeposit: '0.00099019',
+    amountReceiving: '0.00099019',
     currencyDeposit: 'BTC',
     currencyReceiving: 'sbBTC',
-    feeCurrency: null,
-    feeTotal: null,
     hash,
     status: 'COMPLETED',
-    txDepositId: 'd5680247e9a7a1b2551831ec3b4b942970041448d02999a2af8cdd49473681f3',
+    txDepositId: '1bca4204aed84e083e7f0207b0018e844b8087c5d45158568643c79df268f4ef',
     txReceivingId: null,
-    timestamp: new Date('2020-12-21T09:00:07.000Z'),
+    timestamp: new Date('2020-12-22T15:51:17.000Z'),
   });
 });
