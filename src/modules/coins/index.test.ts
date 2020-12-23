@@ -16,14 +16,14 @@ describe('getCoinsFor()', () => {
     direction?: SkybridgeDirection;
     expected: SkybridgeCoin[];
   }>([
-    { expected: ['BTC', 'WBTC', 'BTCB', 'sbBTC'] },
-    { mode: 'test', expected: ['BTC', 'WBTC', 'BTCB', 'sbBTC'] },
+    { expected: ['BTC', 'WBTC', 'sbBTC', 'BTCB'] },
+    { mode: 'test', expected: ['BTC', 'WBTC', 'sbBTC', 'BTCB'] },
     { mode: 'production', expected: ['BTC', 'WBTC', 'sbBTC'] },
     { mode: 'test', bridge: 'btc_bep', expected: ['BTC', 'BTCB'] },
     { mode: 'production', bridge: 'btc_bep', expected: [] },
     { mode: 'test', bridge: 'btc_erc', expected: ['BTC', 'WBTC', 'sbBTC'] },
     { mode: 'production', bridge: 'btc_erc', expected: ['BTC', 'WBTC', 'sbBTC'] },
-    { resource: 'swap', expected: ['BTC', 'WBTC', 'BTCB'] },
+    { resource: 'swap', expected: ['BTC', 'WBTC', 'sbBTC', 'BTCB'] },
     { resource: 'pool', expected: ['BTC', 'WBTC', 'sbBTC'] },
     { resource: 'withdrawal', expected: ['sbBTC', 'BTC', 'WBTC'] },
     { resource: 'pool', direction: 'in', expected: ['BTC', 'WBTC'] },

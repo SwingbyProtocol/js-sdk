@@ -32,13 +32,25 @@ it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
 
 it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
   { hash: 't2CaqiS60g0wEyGXgrYi4nwKWw8F7dJRNQPAceWVx8I=' },
-])('throws for withdrawal %O', async ({ hash }) => {
+])('works for withdrawal %O', async ({ hash }) => {
   expect.assertions(1);
 
-  try {
-    const context = await buildContext({ mode: 'test' });
-    await getSwapDetails({ context, hash });
-  } catch (e) {
-    expect(e.message).toMatch(/is not a swap, it is a withdrawal/);
-  }
+  const context = await buildContext({ mode: 'test' });
+  const result = await getSwapDetails({ context, hash });
+
+  return expect(result).toMatchObject({
+    addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc',
+    addressDeposit: '0x6fA311C964Bc07c6A29E1A5CfCbB69Bc5520Aaf4',
+    amountDeposit: '0.00098851',
+    amountReceiving: '0.00073653',
+    currencyDeposit: 'sbBTC',
+    currencyReceiving: 'WBTC',
+    feeCurrency: 'WBTC',
+    feeTotal: '0.00025198',
+    hash,
+    status: 'COMPLETED',
+    txDepositId: '0xa772b0ec48c436f82739e69ed624f8f5427afac6bbaa70361a67490340b762fc',
+    txReceivingId: null,
+    timestamp: new Date('2020-12-22T16:26:08.000Z'),
+  });
 });

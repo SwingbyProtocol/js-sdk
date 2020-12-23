@@ -6,8 +6,8 @@ import type { SkybridgeDirection } from '../directions';
 const COINS = {
   swap: {
     btc_erc: {
-      test: { in: ['BTC', 'WBTC'], out: ['BTC', 'WBTC'] },
-      production: { in: ['BTC', 'WBTC'], out: ['BTC', 'WBTC'] },
+      test: { in: ['BTC', 'WBTC', 'sbBTC'], out: ['BTC', 'WBTC'] },
+      production: { in: ['BTC', 'WBTC', 'sbBTC'], out: ['BTC', 'WBTC'] },
     },
     btc_bep: {
       test: { in: ['BTC', 'BTCB'], out: ['BTC', 'BTCB'] },

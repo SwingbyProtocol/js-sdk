@@ -104,10 +104,6 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
     throw new Error(`"${hash}" is not a withdrawal, it is a swap.`);
   }
 
-  if (resource === 'swap' && result.currencyIn === 'sbBTC') {
-    throw new Error(`"${hash}" is not a swap, it is a withdrawal.`);
-  }
-
   const fees =
     resource === 'pool'
       ? {}
