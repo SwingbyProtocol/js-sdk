@@ -10,8 +10,8 @@ it.each<
   [
     {
       amountDesired: string;
-      currencyDeposit: SkybridgeCoin<'swap'>;
-      currencyReceiving: SkybridgeCoin<'swap'>;
+      currencyDeposit: SkybridgeCoin<'swap', 'test', 'in'>;
+      currencyReceiving: SkybridgeCoin<'swap', 'test', 'out'>;
     },
     any,
   ]
@@ -44,6 +44,16 @@ it.each<
       feeMiner: '0.0003',
       feeCurrency: 'BTC',
       feeTotal: '0.3123',
+    },
+  ],
+  [
+    { amountDesired: '156', currencyDeposit: 'sbBTC', currencyReceiving: 'WBTC' },
+    {
+      amountReceiving: '155.68775',
+      feeBridgePercent: '0.002',
+      feeMiner: '0.00025',
+      feeCurrency: 'WBTC',
+      feeTotal: '0.31225',
     },
   ],
 ])('works for %O', async ({ amountDesired, currencyDeposit, currencyReceiving }, expected) => {

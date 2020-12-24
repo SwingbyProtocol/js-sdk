@@ -7,7 +7,13 @@ import { calculateSwapFees } from './';
 jest.mock('../../context/buildContext');
 
 it.each<
-  [{ currencyDeposit: SkybridgeCoin<'swap'>; currencyReceiving: SkybridgeCoin<'swap'> }, any]
+  [
+    {
+      currencyDeposit: SkybridgeCoin<'swap', 'test', 'in'>;
+      currencyReceiving: SkybridgeCoin<'swap', 'test', 'out'>;
+    },
+    any,
+  ]
 >([
   // [
   //   { currencyDeposit: 'BTC', currencyReceiving: 'BTCB' },
