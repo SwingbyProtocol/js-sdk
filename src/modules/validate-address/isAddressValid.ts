@@ -10,7 +10,7 @@ export const isAddressValid = ({
   address,
   chain,
 }: {
-  context: SkybridgeContext;
+  context: Pick<SkybridgeContext, 'mode'>;
   address: string;
   /**
    * If passed, this function will verify whether the address is valid for this partifular chain.

@@ -6,7 +6,7 @@ export const isBitcoinAddress = ({
   context,
   address,
 }: {
-  context: SkybridgeContext;
+  context: Pick<SkybridgeContext, 'mode'>;
   address: string;
 }): boolean => {
   const result = validate(address);

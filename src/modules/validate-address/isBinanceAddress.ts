@@ -7,7 +7,7 @@ export const isBinanceAddress = ({
   context,
   address,
 }: {
-  context: SkybridgeContext;
+  context: Pick<SkybridgeContext, 'mode'>;
   address: string;
 }): boolean => {
   const prefix = context.mode === 'production' ? 'bnb' : 'tbnb';
