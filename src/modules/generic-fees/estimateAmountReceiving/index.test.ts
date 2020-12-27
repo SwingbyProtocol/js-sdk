@@ -1,8 +1,9 @@
 import type { SkybridgeCoin } from '../../coins';
 import { buildContext } from '../../context';
 import type { SkybridgeMode } from '../../modes';
+import { SkybridgeResource } from '../../resources';
 
-import { estimateSwapAmountReceiving } from '.';
+import { estimateAmountReceiving } from '.';
 
 jest.mock('../../context/buildContext');
 
@@ -10,8 +11,8 @@ it.each<
   [
     {
       amountDesired: string;
-      currencyDeposit: SkybridgeCoin<'swap', 'test', 'in'>;
-      currencyReceiving: SkybridgeCoin<'swap', 'test', 'out'>;
+      currencyDeposit: SkybridgeCoin<SkybridgeResource, 'test', 'in'>;
+      currencyReceiving: SkybridgeCoin<SkybridgeResource, 'test', 'out'>;
     },
     any,
   ]
@@ -29,38 +30,48 @@ it.each<
   [
     { amountDesired: '3', currencyDeposit: 'BTC', currencyReceiving: 'WBTC' },
     {
-      amountReceiving: '2.99375',
+      amountReceiving: '2.99385',
       feeBridgePercent: '0.002',
-      feeMiner: '0.00025',
+      feeMiner: '0.00015',
       feeCurrency: 'WBTC',
-      feeTotal: '0.00625',
+      feeTotal: '0.00615',
     },
   ],
   [
     { amountDesired: '156', currencyDeposit: 'WBTC', currencyReceiving: 'BTC' },
     {
-      amountReceiving: '155.6877',
+      amountReceiving: '155.68799',
       feeBridgePercent: '0.002',
-      feeMiner: '0.0003',
+      feeMiner: '0.00001',
       feeCurrency: 'BTC',
-      feeTotal: '0.3123',
+      feeTotal: '0.31201',
     },
   ],
   [
     { amountDesired: '156', currencyDeposit: 'sbBTC', currencyReceiving: 'WBTC' },
     {
-      amountReceiving: '155.68775',
+      amountReceiving: '155.68785',
       feeBridgePercent: '0.002',
-      feeMiner: '0.00025',
+      feeMiner: '0.00015',
       feeCurrency: 'WBTC',
-      feeTotal: '0.31225',
+      feeTotal: '0.31215',
+    },
+  ],
+  [
+    { amountDesired: '156', currencyDeposit: 'BTC', currencyReceiving: 'sbBTC' },
+    {
+      amountReceiving: '155.68785',
+      feeBridgePercent: '0.002',
+      feeMiner: '0.00015',
+      feeCurrency: 'sbBTC',
+      feeTotal: '0.31215',
     },
   ],
 ])('works for %O', async ({ amountDesired, currencyDeposit, currencyReceiving }, expected) => {
   expect.assertions(1);
 
   const context = await buildContext({ mode: 'test' });
-  const result = await estimateSwapAmountReceiving({
+  const result = await estimateAmountReceiving({
     context,
     currencyDeposit,
     currencyReceiving,
@@ -79,7 +90,7 @@ it.each<{ currencyDeposit: any; mode: SkybridgeMode; currencyReceiving: any }>([
 
   const context = await buildContext({ mode });
   try {
-    await estimateSwapAmountReceiving({
+    await estimateAmountReceiving({
       context,
       currencyDeposit,
       currencyReceiving,
