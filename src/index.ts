@@ -8,7 +8,7 @@ export type { SkybridgeCoin } from './modules/coins';
 export type { SkybridgeChain } from './modules/chains';
 
 export { getCoinsFor, getSwapableWith } from './modules/coins';
-export { createSwap, estimateSwapAmountReceiving, getSwapDetails } from './modules/swap';
+export { createSwap, getSwapDetails } from './modules/swap';
 export { buildContext } from './modules/context';
 export { isAddressValid } from './modules/validate-address';
 export { buildExplorerLink } from './modules/explorer-link';
@@ -18,3 +18,4 @@ export { createWithdrawal, getWithdrawalDetails } from './modules/withdrawal';
 export { isSkybridgeBridge } from './modules/bridges';
 export { isSkybridgeMode } from './modules/modes';
 export { isSkybridgeResource } from './modules/resources';
+export { estimateAmountReceiving } from './modules/generic-fees';
