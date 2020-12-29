@@ -19,7 +19,7 @@ export const buildContext = async <M extends SkybridgeMode>({
         indexerNodes: { [k in SkybridgeBridge]: string[] };
       };
     }
-  >('https://seed-kappa.vercel.app/api/network');
+  >('https://network.skybridge.exchange/api/network');
 
   if (!result.ok) {
     throw new Error(`${result.status}: ${result.response}`);
