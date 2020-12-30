@@ -1,6 +1,16 @@
 import { ABI_SKYBRIDGE, ABI_TOKEN } from './abis';
 
 export const CONTRACTS = {
+  BTC: {
+    test: {
+      address: '0x0000000000000000000000000000000000000000',
+      abi: [],
+    },
+    production: {
+      address: '0x0000000000000000000000000000000000000000',
+      abi: [],
+    },
+  },
   sbBTC: {
     test: {
       address: '0x8D412ACfCDE66B2c66057E08C8a457c29A9CC8C7',
