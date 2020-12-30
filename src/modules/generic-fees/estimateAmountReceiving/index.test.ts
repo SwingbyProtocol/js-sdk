@@ -60,11 +60,11 @@ it.each<
   [
     { amountDesired: '156', currencyDeposit: 'BTC', currencyReceiving: 'sbBTC' },
     {
-      amountReceiving: '155.68785',
-      feeBridgeFraction: '0.002',
+      amountReceiving: '155.21985',
+      feeBridgeFraction: '0.005',
       feeMiner: '0.00015',
       feeCurrency: 'sbBTC',
-      feeTotal: '0.31215',
+      feeTotal: '0.78015',
     },
   ],
 ])('works for %O', async ({ amountDesired, currencyDeposit, currencyReceiving }, expected) => {
@@ -97,6 +97,6 @@ it.each<{ currencyDeposit: any; mode: SkybridgeMode; currencyReceiving: any }>([
       amountDesired: '1',
     });
   } catch (e) {
-    expect(e.message).toMatch(/Could not find (test|production) bridge for/);
+    expect(e.message).toMatch(/must be one of/);
   }
 });
