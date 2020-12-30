@@ -15,7 +15,7 @@ export const calculateFees = async <M extends SkybridgeMode>({
   SkybridgeParams<SkybridgeResource, M>,
   'context' | 'currencyDeposit' | 'currencyReceiving'
 >): Promise<
-  Pick<SkybridgeParams<SkybridgeResource, M>, 'feeBridgePercent' | 'feeMiner' | 'feeCurrency'>
+  Pick<SkybridgeParams<SkybridgeResource, M>, 'feeBridgeFraction' | 'feeMiner' | 'feeCurrency'>
 > => {
   const bridge = getBridgeFor({ context, currencyDeposit, currencyReceiving });
   const result = await fetch<
@@ -36,7 +36,7 @@ export const calculateFees = async <M extends SkybridgeMode>({
   }
 
   return {
-    feeBridgePercent: new Big(fees.bridgeFeePercent).div('100').toFixed(),
+    feeBridgeFraction: new Big(fees.bridgeFeePercent).div('100').toFixed(),
     feeMiner: new Big(fees.minerFee).div('1e8').toFixed(),
     feeCurrency: currencyReceiving,
   };

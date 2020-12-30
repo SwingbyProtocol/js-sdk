@@ -16,11 +16,11 @@ export const estimateAmountReceiving = async <M extends SkybridgeMode>({
 >): Promise<
   Pick<
     SkybridgeParams<SkybridgeResource, M>,
-    'feeBridgePercent' | 'feeMiner' | 'feeCurrency' | 'amountReceiving' | 'feeTotal'
+    'feeBridgeFraction' | 'feeMiner' | 'feeCurrency' | 'amountReceiving' | 'feeTotal'
   >
 > => {
   const fees = await calculateFees({ context, currencyDeposit, currencyReceiving });
-  const totalFee = new Big(amountDesired).times(fees.feeBridgePercent).plus(fees.feeMiner);
+  const totalFee = new Big(amountDesired).times(fees.feeBridgeFraction).plus(fees.feeMiner);
 
   return {
     ...fees,

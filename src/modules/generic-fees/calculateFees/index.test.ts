@@ -18,19 +18,19 @@ it.each<
 >([
   // [
   //   { currencyDeposit: 'BTC', currencyReceiving: 'BTCB' },
-  //   { feeBridgePercent: '0.001', feeMiner: '0.000005', feeCurrency: 'BTCB' },
+  //   { feeBridgeFraction: '0.001', feeMiner: '0.000005', feeCurrency: 'BTCB' },
   // ],
   [
     { currencyDeposit: 'BTC', currencyReceiving: 'WBTC' },
-    { feeBridgePercent: '0.002', feeMiner: '0.00015', feeCurrency: 'WBTC' },
+    { feeBridgeFraction: '0.002', feeMiner: '0.00015', feeCurrency: 'WBTC' },
   ],
   [
     { currencyDeposit: 'WBTC', currencyReceiving: 'BTC' },
-    { feeBridgePercent: '0.002', feeMiner: '0.00001', feeCurrency: 'BTC' },
+    { feeBridgeFraction: '0.002', feeMiner: '0.00001', feeCurrency: 'BTC' },
   ],
   [
     { currencyDeposit: 'WBTC', currencyReceiving: 'sbBTC' },
-    { feeBridgePercent: '0.002', feeMiner: '0.00015', feeCurrency: 'sbBTC' },
+    { feeBridgeFraction: '0.002', feeMiner: '0.00015', feeCurrency: 'sbBTC' },
   ],
 ])('works for %O', async ({ currencyDeposit, currencyReceiving }, expected) => {
   expect.assertions(1);

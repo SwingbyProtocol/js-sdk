@@ -8,7 +8,7 @@ const currencyReceiving = 'WBTC';
 (async () => {
   const context = await buildContext({ mode: 'test' });
 
-  const { feeTotal, feeBridgePercent, feeMiner, feeCurrency } = await estimateAmountReceiving({
+  const { feeTotal, feeBridgeFraction, feeMiner, feeCurrency } = await estimateAmountReceiving({
     context,
     amountDesired,
     currencyDeposit,
@@ -17,7 +17,7 @@ const currencyReceiving = 'WBTC';
 
   console.log(
     `Transacion fee: ${feeTotal} ${feeCurrency} (${
-      +feeBridgePercent * 100
+      +feeBridgeFraction * 100
     }% + ${feeMiner} ${feeCurrency})`,
   );
 

@@ -37,7 +37,7 @@ export type SkybridgeParams<
   nonce: number;
   timestamp: Date;
   /** e.g. `0.1` means `10%`. */
-  feeBridgePercent: string;
+  feeBridgeFraction: string;
   /** In the units specified by `feeCurrency`. */
   feeMiner: string;
   feeCurrency: SkybridgeCoin<R, M, 'out'>;

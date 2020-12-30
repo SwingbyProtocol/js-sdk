@@ -21,7 +21,7 @@ it.each<
   //   { amountDesired: '1', currencyDeposit: 'BTC', currencyReceiving: 'BTCB' },
   //   {
   //     amountReceiving: '0.998995',
-  //     feeBridgePercent: '0.001',
+  //     feeBridgeFraction: '0.001',
   //     feeMiner: '0.000005',
   //     feeCurrency: 'BTCB',
   //     feeTotal: '0.001005',
@@ -31,7 +31,7 @@ it.each<
     { amountDesired: '3', currencyDeposit: 'BTC', currencyReceiving: 'WBTC' },
     {
       amountReceiving: '2.99385',
-      feeBridgePercent: '0.002',
+      feeBridgeFraction: '0.002',
       feeMiner: '0.00015',
       feeCurrency: 'WBTC',
       feeTotal: '0.00615',
@@ -41,7 +41,7 @@ it.each<
     { amountDesired: '156', currencyDeposit: 'WBTC', currencyReceiving: 'BTC' },
     {
       amountReceiving: '155.68799',
-      feeBridgePercent: '0.002',
+      feeBridgeFraction: '0.002',
       feeMiner: '0.00001',
       feeCurrency: 'BTC',
       feeTotal: '0.31201',
@@ -51,7 +51,7 @@ it.each<
     { amountDesired: '156', currencyDeposit: 'sbBTC', currencyReceiving: 'WBTC' },
     {
       amountReceiving: '155.68785',
-      feeBridgePercent: '0.002',
+      feeBridgeFraction: '0.002',
       feeMiner: '0.00015',
       feeCurrency: 'WBTC',
       feeTotal: '0.31215',
@@ -61,7 +61,7 @@ it.each<
     { amountDesired: '156', currencyDeposit: 'BTC', currencyReceiving: 'sbBTC' },
     {
       amountReceiving: '155.68785',
-      feeBridgePercent: '0.002',
+      feeBridgeFraction: '0.002',
       feeMiner: '0.00015',
       feeCurrency: 'sbBTC',
       feeTotal: '0.31215',
