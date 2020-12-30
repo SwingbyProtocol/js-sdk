@@ -19,3 +19,4 @@ export { isSkybridgeBridge } from './modules/bridges';
 export { isSkybridgeMode } from './modules/modes';
 export { isSkybridgeResource } from './modules/resources';
 export { estimateAmountReceiving } from './modules/generic-fees';
+export { CONTRACTS } from './modules/contracts';
