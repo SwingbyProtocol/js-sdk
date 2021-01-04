@@ -81,6 +81,15 @@ it.each<
   ],
   [
     {
+      amountDesired: '0.02950426',
+      currencyDeposit: 'BTC',
+      currencyReceiving: 'WBTC',
+      addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    },
+    { amountDeposit: '0.0294928', nonce: 1818 },
+  ],
+  [
+    {
       amountDesired: '1',
       currencyDeposit: 'WBTC',
       currencyReceiving: 'BTC',

@@ -92,22 +92,13 @@ export const getRound = async <M extends SkybridgeMode>({
 };
 
 export const floorAmount = (amount: BigSource): string => {
-  const numAmount = Number(amount);
-  const decimals = countDecimals(numAmount);
-  if (decimals === 0) {
-    return String(numAmount) + '.0';
-  } else if (5 > decimals) {
-    return String(numAmount);
-  } else {
-    const fixedAmount = numAmount.toFixed(8);
-    const floorAmount = fixedAmount.slice(0, -3);
-    return floorAmount;
-  }
-};
+  const numAmount = new Big(amount);
 
-const countDecimals = (value: number): number => {
-  if (value % 1 !== 0) return value.toString().split('.')[1].length;
-  return 0;
+  if (Number.isInteger(+numAmount.toFixed())) {
+    return numAmount.toFixed(1);
+  }
+
+  return numAmount.round(5, 0).toFixed();
 };
 
 const verifyHashPrefix = (hash: string) => {
