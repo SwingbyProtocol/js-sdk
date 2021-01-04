@@ -6,7 +6,7 @@ import { getWithdrawalDetails } from './';
 jest.mock('../../context/buildContext');
 
 it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
-  { hash: 't2CaqiS60g0wEyGXgrYi4nwKWw8F7dJRNQPAceWVx8I=' },
+  { hash: 'HKIPyyDX2oAgplGThTFdCt50a5YsfPe506BQMQnJHOU=' },
 ])('gets withdrawal details for %O', async ({ hash }) => {
   expect.assertions(1);
 
@@ -16,22 +16,22 @@ it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
   return expect(result).toMatchObject({
     addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc',
     addressDeposit: '0x6c3F42F943022B4746Fb6522760F62ae758b8826',
-    amountDeposit: '0.00098851',
-    amountReceiving: '0.00073653',
+    amountDeposit: '0.00199223',
+    amountReceiving: '0.00201809',
     currencyDeposit: 'sbBTC',
     currencyReceiving: 'WBTC',
-    feeCurrency: 'WBTC',
-    feeTotal: '0.00025198',
+    feeCurrency: 'sbBTC',
+    feeTotal: '0.00015404',
     hash,
     status: 'COMPLETED',
-    txDepositId: '0xa772b0ec48c436f82739e69ed624f8f5427afac6bbaa70361a67490340b762fc',
+    txDepositId: '0x0770915d082b11f76678c01d3161089730c66449960abe874f053cf20061d919',
     txReceivingId: null,
-    timestamp: new Date('2020-12-22T16:26:08.000Z'),
+    timestamp: new Date('2021-01-04T10:59:11.000Z'),
   });
 });
 
 it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
-  { hash: 'sQmT1Q1RROVwVLxs2wJWa5ZVa49zFIBr-9jC_wJsyqM=' },
+  { hash: 'asG3GufNCz2AisFAFlMPHK6AuSFieRrArheTmqyDvuc=' },
 ])('throws for normal swap %O', async ({ hash }) => {
   expect.assertions(1);
 

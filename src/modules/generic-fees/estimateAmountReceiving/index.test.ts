@@ -40,11 +40,11 @@ it.each<
   [
     { amountDesired: '156', currencyDeposit: 'WBTC', currencyReceiving: 'BTC' },
     {
-      amountReceiving: '155.68799',
+      amountReceiving: '155.6877',
       feeBridgeFraction: '0.002',
-      feeMiner: '0.00001',
+      feeMiner: '0.0003',
       feeCurrency: 'BTC',
-      feeTotal: '0.31201',
+      feeTotal: '0.3123',
     },
   ],
   [
