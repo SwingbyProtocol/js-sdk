@@ -10,7 +10,7 @@ import { SkybridgeCoin } from '../coins';
 
 export type CreateParams<R extends SkybridgeResource, M extends SkybridgeMode> = {
   resource: R;
-  /** Time in milliseconds that this method will retry in case of error before throwing. Default: `120000` (2 min.). */
+  /** Time in milliseconds that this method will retry in case of error before throwing. Default: `30000` (30 seconds). */
   timeout?: number;
 } & Pick<
   SkybridgeParams<R, M>,
@@ -45,7 +45,7 @@ export type CreateResult<R extends SkybridgeResource, M extends SkybridgeMode> =
 const INTERVAL = 2000;
 
 export const create = async <R extends SkybridgeResource, M extends SkybridgeMode>({
-  timeout = 2 * 60 * 1000,
+  timeout = 30 * 1000,
   ...params
 }: CreateParams<R, M>): Promise<CreateResult<R, M>> =>
   createRec({ ...params, startedAt: Date.now(), timeout });
