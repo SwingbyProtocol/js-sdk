@@ -36,6 +36,51 @@ it.each<
   ],
   [
     {
+      amountDesired: '1.12',
+      currencyDeposit: 'BTC',
+      currencyReceiving: 'WBTC',
+      addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    },
+    { amountDeposit: '1.11999981', nonce: 1826 },
+  ],
+  [
+    {
+      amountDesired: '1.1234',
+      currencyDeposit: 'BTC',
+      currencyReceiving: 'WBTC',
+      addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    },
+    { amountDeposit: '1.12339495', nonce: 595 },
+  ],
+  [
+    {
+      amountDesired: '1.12345',
+      currencyDeposit: 'BTC',
+      currencyReceiving: 'WBTC',
+      addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    },
+    { amountDeposit: '1.12344858', nonce: 207 },
+  ],
+  [
+    {
+      amountDesired: '1.123456',
+      currencyDeposit: 'BTC',
+      currencyReceiving: 'WBTC',
+      addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    },
+    { amountDeposit: '1.12344858', nonce: 207 },
+  ],
+  [
+    {
+      amountDesired: '1.123456789',
+      currencyDeposit: 'BTC',
+      currencyReceiving: 'WBTC',
+      addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    },
+    { amountDeposit: '1.12344858', nonce: 207 },
+  ],
+  [
+    {
       amountDesired: '1',
       currencyDeposit: 'WBTC',
       currencyReceiving: 'BTC',
