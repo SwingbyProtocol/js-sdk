@@ -8,6 +8,7 @@ export const buildContext = async <M extends SkybridgeMode>({
 }): Promise<SkybridgeContext<M>> => {
   return {
     mode,
+    affiliateApi: 'https://affiliate-app-testnet.swingby.vercel.app',
     servers: {
       swapNode: {
         btc_erc: 'https://tbtc-goerli-node-1.swingby.network',

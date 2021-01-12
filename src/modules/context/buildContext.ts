@@ -27,6 +27,7 @@ export const buildContext = async <M extends SkybridgeMode>({
 
   return {
     mode,
+    affiliateApi: mode === 'test' ? 'https://affiliate-app-testnet.swingby.vercel.app' : undefined,
     servers: {
       swapNode: {
         btc_erc:
