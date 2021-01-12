@@ -19,14 +19,14 @@ it.each<
     expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
   },
   {
-    amountDesired: '1',
+    amountDesired: '0.1',
     addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     currencyDeposit: 'BTC',
     currencyReceiving: 'WBTC',
     expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
   },
   // {
-  //   amountDesired: '1',
+  //   amountDesired: '0.1',
   //   addressReceiving: 'tbnb16ke3clwqmduvzv6awlprjw3ecw7g52qw7c6hdm',
   //   currencyDeposit: 'BTC',
   //   currencyReceiving: 'BTCB',
@@ -61,3 +61,20 @@ it.each<
     }
   },
 );
+
+it('crashes if there is not enough balance of the receiving currency', async () => {
+  expect.assertions(1);
+
+  try {
+    const context = await buildContext({ mode: 'test' });
+    await createSwap({
+      context,
+      addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+      currencyDeposit: 'BTC',
+      currencyReceiving: 'WBTC',
+      amountDesired: '100',
+    });
+  } catch (e) {
+    expect(e.message).toMatch(/There is not enough WBTC in float to perform your swap/);
+  }
+});

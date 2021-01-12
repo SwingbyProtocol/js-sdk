@@ -10,6 +10,12 @@ type TestData = { address: string; expected: boolean; mode: SkybridgeMode; chain
 
 it.each<TestData>([
   {
+    address: 'bc1qgsrm7gaav7edmua42deq3lxenpywnjhl7wmv5h',
+    chain: undefined,
+    expected: true,
+    mode: 'production',
+  },
+  {
     address: 'tb1q0fzppaflhcju7emf9sh5n5st3c47mwuczwxmt7',
     chain: undefined,
     expected: true,
