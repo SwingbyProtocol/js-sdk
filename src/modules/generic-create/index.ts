@@ -7,6 +7,7 @@ import { runProofOfWork } from '../pow';
 import { SkybridgeResource } from '../resources';
 import { getChainFor } from '../chains';
 import { SkybridgeCoin } from '../coins';
+import { Big } from 'big.js';
 
 export type CreateParams<R extends SkybridgeResource, M extends SkybridgeMode> = {
   resource: R;
@@ -57,6 +58,27 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
   ...params
 }: CreateParams<R, M> & { startedAt: number; timeout: number }): Promise<CreateResult<R, M>> => {
   logger('Will execute create(%O).', { ...params, resource, startedAt, timeout });
+  const bridge = getBridgeFor(params);
+
+  await (async () => {
+    const result = await fetch<Array<{ amount: string; currency: string }>>(
+      `${params.context.servers.swapNode[bridge]}/api/v1/floats/balances`,
+    );
+
+    if (!result.ok) {
+      throw new Error(`${result.status}: ${result.response}`);
+    }
+
+    const item = result.response.find((it) => it.currency === params.currencyReceiving);
+    if (!item) {
+      logger('Could not find balance for "%s"', params.currencyReceiving);
+      return;
+    }
+
+    if (new Big(params.amountDesired).gte(item.amount)) {
+      throw new Error(`There is not enough ${params.currencyReceiving} to perform your swap`);
+    }
+  })();
 
   const apiPathResource = resource === 'pool' ? 'floats' : 'swaps';
   const { amountDeposit, nonce } = await runProofOfWork(params);
@@ -70,7 +92,6 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
     addressOut: string;
   };
 
-  const bridge = getBridgeFor(params);
   const result = await fetch<ApiResponse>(
     `${params.context.servers.swapNode[bridge]}/api/v1/${apiPathResource}/create`,
     {
