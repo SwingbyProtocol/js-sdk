@@ -76,7 +76,9 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
     }
 
     if (new Big(params.amountDesired).gte(item.amount)) {
-      throw new Error(`There is not enough ${params.currencyReceiving} to perform your swap`);
+      throw new Error(
+        `There is not enough ${params.currencyReceiving} in float to perform your swap.`,
+      );
     }
   })();
 

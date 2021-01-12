@@ -75,6 +75,6 @@ it('crashes if there is not enough balance of the receiving currency', async () 
       amountDesired: '100',
     });
   } catch (e) {
-    expect(e.message).toMatch(/There is not enough WBTC to perform your swap/);
+    expect(e.message).toMatch(/There is not enough WBTC in float to perform your swap/);
   }
 });
