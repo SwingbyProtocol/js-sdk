@@ -14,7 +14,7 @@ export { isAddressValid } from './modules/validate-address';
 export { buildExplorerLink } from './modules/explorer-link';
 export { getChainFor, isSkybridgeChain } from './modules/chains';
 export { createFloat, getFloatDetails } from './modules/pool';
-export { createWithdrawal, getWithdrawalDetails } from './modules/withdrawal';
+export { createWithdrawal, getWithdrawalDetails, getMinimumWithdrawal } from './modules/withdrawal';
 export { isSkybridgeBridge } from './modules/bridges';
 export { isSkybridgeMode } from './modules/modes';
 export { isSkybridgeResource } from './modules/resources';
