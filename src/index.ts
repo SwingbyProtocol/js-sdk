@@ -13,7 +13,7 @@ export { buildContext } from './modules/context';
 export { isAddressValid } from './modules/validate-address';
 export { buildExplorerLink } from './modules/explorer-link';
 export { getChainFor, isSkybridgeChain } from './modules/chains';
-export { createFloat, getFloatDetails } from './modules/pool';
+export { createFloat, getFloatDetails, getSbbtcPrice } from './modules/pool';
 export { createWithdrawal, getWithdrawalDetails, getMinimumWithdrawal } from './modules/withdrawal';
 export { isSkybridgeBridge } from './modules/bridges';
 export { isSkybridgeMode } from './modules/modes';
