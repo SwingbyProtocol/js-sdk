@@ -21,7 +21,7 @@ export const createSwap = async <M extends SkybridgeMode>(
       }
 
       const linkResult = await fetch<{ affiliateCode: string }>(
-        `${params.context.affiliateApi}/api/swaps/link`,
+        `${params.context.affiliateApi}/api/${params.context.mode}/swaps/link`,
         {
           method: 'POST',
           body: JSON.stringify({ affiliateCode: params.affiliateCode, swapHash: result.hash }),
