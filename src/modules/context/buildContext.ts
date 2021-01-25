@@ -33,21 +33,21 @@ export const buildContext = async <M extends SkybridgeMode>({
         btc_erc:
           result.response[mode].swapNodes.btc_erc[
             randomInt(0, result.response[mode].swapNodes.btc_erc.length - 1)
-          ],
+          ] || null,
         btc_bep:
           result.response[mode].swapNodes.btc_bep[
             randomInt(0, result.response[mode].swapNodes.btc_bep.length - 1)
-          ],
+          ] || null,
       },
       indexer: {
         btc_erc:
           result.response[mode].indexerNodes.btc_erc[
             randomInt(0, result.response[mode].indexerNodes.btc_erc.length - 1)
-          ],
+          ] || null,
         btc_bep:
           result.response[mode].indexerNodes.btc_bep[
             randomInt(0, result.response[mode].indexerNodes.btc_bep.length - 1)
-          ],
+          ] || null,
       },
     },
   };
