@@ -33,7 +33,7 @@ export const CONTRACTS = {
   },
   skybridge: {
     test: {
-      address: '0x6c3F42F943022B4746Fb6522760F62ae758b8826',
+      address: '0xFba4a3612C0dF10b9bF694B2133aD4f038462191',
       abi: ABI_SKYBRIDGE,
     },
     production: {
