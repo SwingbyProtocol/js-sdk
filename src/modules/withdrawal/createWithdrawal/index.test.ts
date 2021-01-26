@@ -48,7 +48,9 @@ it.each<
         timestamp: expect.any(Date),
       });
     } catch (e) {
-      expect(e.message).toMatch(/The KVStore key \d+ already exists in epoch bucket \d+/);
+      expect(e.message).toMatch(
+        /(The KVStore key \d+ already exists in epoch bucket \d+)|(There is not enough [a-zA-Z]+ in float to perform your swap)/,
+      );
     }
   },
 );

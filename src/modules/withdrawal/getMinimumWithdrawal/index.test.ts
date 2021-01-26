@@ -14,15 +14,15 @@ it.each<
 >([
   [
     { amountDesired: '0', currencyReceiving: 'BTC' },
-    { minimumWithdrawal: '0.14807314', minimumWithdrawalCurrency: 'BTC' },
+    { minimumWithdrawal: '0.14802148', minimumWithdrawalCurrency: 'BTC' },
   ],
   [
     { amountDesired: '0', currencyReceiving: 'WBTC' },
-    { minimumWithdrawal: '0.07403662', minimumWithdrawalCurrency: 'WBTC' },
+    { minimumWithdrawal: '0.07401078', minimumWithdrawalCurrency: 'WBTC' },
   ],
   [
     { amountDesired: '200', currencyReceiving: 'WBTC' },
-    { minimumWithdrawal: '0.07403662', minimumWithdrawalCurrency: 'WBTC' },
+    { minimumWithdrawal: '0.07401078', minimumWithdrawalCurrency: 'WBTC' },
   ],
 ])('gets minimum withdrawal for %O', async ({ amountDesired, currencyReceiving }, expected) => {
   expect.assertions(1);

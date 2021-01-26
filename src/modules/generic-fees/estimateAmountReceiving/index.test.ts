@@ -60,11 +60,11 @@ it.each<
   [
     { amountDesired: '156', currencyDeposit: 'BTC', currencyReceiving: 'sbBTC' },
     {
-      amountReceiving: '155.21985',
-      feeBridgeFraction: '0.005',
+      amountReceiving: '155.99985',
+      feeBridgeFraction: '0',
       feeMiner: '0.00015',
       feeCurrency: 'sbBTC',
-      feeTotal: '0.78015',
+      feeTotal: '0.00015',
     },
   ],
 ])('works for %O', async ({ amountDesired, currencyDeposit, currencyReceiving }, expected) => {
