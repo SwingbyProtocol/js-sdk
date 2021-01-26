@@ -8,7 +8,7 @@ export const createSwap = async <M extends SkybridgeMode>(
 ): Promise<CreateResult<'swap', M>> => {
   const result = await create({ ...params, resource: 'swap' });
 
-  await (async () => {
+  (async () => {
     try {
       if (!params.context.affiliateApi) {
         logger('No affiliate program API present in context.');
