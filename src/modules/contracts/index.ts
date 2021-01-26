@@ -13,7 +13,7 @@ export const CONTRACTS = {
   },
   sbBTC: {
     test: {
-      address: '0x8D412ACfCDE66B2c66057E08C8a457c29A9CC8C7',
+      address: '0x1DF6c00941Cb0898bc77F423DACBD23ABB77F8A5',
       abi: ABI_TOKEN,
     },
     production: {
