@@ -13,7 +13,7 @@ export const CONTRACTS = {
   },
   sbBTC: {
     test: {
-      address: '0x8D412ACfCDE66B2c66057E08C8a457c29A9CC8C7',
+      address: '0x1DF6c00941Cb0898bc77F423DACBD23ABB77F8A5',
       abi: ABI_TOKEN,
     },
     production: {
@@ -33,7 +33,7 @@ export const CONTRACTS = {
   },
   skybridge: {
     test: {
-      address: '0x6c3F42F943022B4746Fb6522760F62ae758b8826',
+      address: '0xFba4a3612C0dF10b9bF694B2133aD4f038462191',
       abi: ABI_SKYBRIDGE,
     },
     production: {
