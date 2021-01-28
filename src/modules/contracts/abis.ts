@@ -263,7 +263,6 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -271,7 +270,6 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
     outputs: [{ internalType: 'uint8', name: '', type: 'uint8' }],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -279,7 +277,13 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
     outputs: [{ internalType: 'uint8', name: '', type: 'uint8' }],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
+  },
+  {
+    inputs: [],
+    name: 'initialExchangeRate',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
@@ -287,7 +291,6 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -295,7 +298,6 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -303,7 +305,6 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
     outputs: [{ internalType: 'uint8', name: '', type: 'uint8' }],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -311,7 +312,6 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -333,7 +333,6 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
     outputs: [{ internalType: 'uint8', name: '', type: 'uint8' }],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [{ internalType: 'address', name: '', type: 'address' }],
@@ -341,7 +340,6 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -349,7 +347,6 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
     outputs: [{ internalType: 'uint8', name: '', type: 'uint8' }],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [
@@ -382,6 +379,7 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
     inputs: [
       { internalType: 'address', name: '_destToken', type: 'address' },
       { internalType: 'uint256', name: '_incomingAmount', type: 'uint256' },
+      { internalType: 'uint256', name: '_minerFee', type: 'uint256' },
       { internalType: 'uint256', name: '_rewardsAmount', type: 'uint256' },
     ],
     name: 'collectSwapFeesForBTC',
@@ -422,7 +420,7 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
   },
   {
     inputs: [
-      { internalType: 'uint256', name: '_minerFees', type: 'uint256' },
+      { internalType: 'uint256', name: '_minerFee', type: 'uint256' },
       { internalType: 'bytes32', name: '_txid', type: 'bytes32' },
     ],
     name: 'recordUTXOSweepMinerFee',
@@ -451,7 +449,6 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -459,7 +456,6 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
     outputs: [{ internalType: 'uint256', name: 'nowPrice', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [
@@ -470,24 +466,11 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
     outputs: [{ internalType: 'uint256', name: 'depositFeeRate', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
-  },
-  {
-    inputs: [{ internalType: 'uint256', name: '_minerFees', type: 'uint256' }],
-    name: 'getMinimumAmountOfLPTokens',
-    outputs: [
-      { internalType: 'uint256', name: '', type: 'uint256' },
-      { internalType: 'uint256', name: '', type: 'uint256' },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-    constant: true,
   },
   {
     inputs: [
       { internalType: 'address', name: '_tokenA', type: 'address' },
       { internalType: 'address', name: '_tokenB', type: 'address' },
-      { internalType: 'bool', name: '_mergeRewards', type: 'bool' },
     ],
     name: 'getFloatReserve',
     outputs: [
@@ -496,7 +479,6 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -504,6 +486,5 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
     outputs: [{ internalType: 'bytes32[]', name: '', type: 'bytes32[]' }],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
 ];
