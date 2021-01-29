@@ -1,7 +1,9 @@
 import { decode, fromWords } from 'bech32';
 
 import type { SkybridgeContext } from '../context';
-import { logger } from '../logger';
+import { baseLogger } from '../logger';
+
+const logger = baseLogger.extend('address-binance');
 
 export const isBinanceAddress = ({
   context,

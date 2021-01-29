@@ -1,7 +1,9 @@
 import type { SkybridgeMode } from '../../modes';
 import { create, CreateParams, CreateResult } from '../../generic-create';
-import { logger } from '../../logger';
+import { baseLogger } from '../../logger';
 import { fetch } from '../../fetch';
+
+const logger = baseLogger.extend('create-swap');
 
 export const createSwap = async <M extends SkybridgeMode>(
   params: Omit<CreateParams<'swap', M>, 'resource'> & { affiliateCode?: string | null },
@@ -32,7 +34,7 @@ export const createSwap = async <M extends SkybridgeMode>(
         throw new Error(`Affiliate code linking failed: ${linkResult.response}`);
       }
 
-      logger('Swap linked to affiliate code: %O', linkResult.response);
+      logger('Swap linked to affiliate code: %j', linkResult.response);
     } catch (e) {
       logger('Failed calling the affiliate program API: %s', e.message);
     }

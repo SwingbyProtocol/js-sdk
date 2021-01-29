@@ -1,9 +1,11 @@
 import type { SkybridgeBridge } from '../../bridges';
 import { fetch } from '../../fetch';
-import { logger } from '../../logger';
+import { baseLogger } from '../../logger';
 import type { SkybridgeMode } from '../../modes';
 import type { SkybridgeParams } from '../../common-params';
 import type { SkybridgeResource } from '../../resources';
+
+const logger = baseLogger.extend('block-height');
 
 const TIMEOUT = 1 * 60 * 1000;
 const INTERVAL = 2000;

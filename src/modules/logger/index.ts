@@ -1,3 +1,3 @@
 import debug from 'debug';
 
-export const logger = debug('skybridge-sdk');
+export const baseLogger = debug('skybridge-sdk');

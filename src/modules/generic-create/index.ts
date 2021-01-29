@@ -1,13 +1,16 @@
+import { Big } from 'big.js';
+
 import { getBridgeFor } from '../context';
 import { fetch } from '../fetch';
-import { logger } from '../logger';
+import { baseLogger } from '../logger';
 import { SkybridgeMode } from '../modes';
 import { SkybridgeParams } from '../common-params';
 import { runProofOfWork } from '../pow';
 import { SkybridgeResource } from '../resources';
 import { getChainFor } from '../chains';
 import { SkybridgeCoin } from '../coins';
-import { Big } from 'big.js';
+
+const logger = baseLogger.extend('generic-create');
 
 export type CreateParams<R extends SkybridgeResource, M extends SkybridgeMode> = {
   resource: R;
@@ -57,7 +60,7 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
   timeout,
   ...params
 }: CreateParams<R, M> & { startedAt: number; timeout: number }): Promise<CreateResult<R, M>> => {
-  logger('Will execute create(%O).', { ...params, resource, startedAt, timeout });
+  logger('Will execute create(%j).', { ...params, resource, startedAt, timeout });
   const bridge = getBridgeFor(params);
 
   await (async () => {
@@ -111,7 +114,7 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
     },
   );
 
-  logger(`/${apiPathResource}/create has replied: %O`, result);
+  logger('/%s/create has replied: %j', apiPathResource, result);
 
   if (result.ok) {
     return {
