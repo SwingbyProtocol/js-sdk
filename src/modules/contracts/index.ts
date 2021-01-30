@@ -17,7 +17,7 @@ export const CONTRACTS = {
       abi: ABI_TOKEN,
     },
     production: {
-      address: '0x97e7523d80bda7d648cf44f701466e985559a2f4',
+      address: '0x22883a3dB06737eCe21F479A8009B8B9f22b6cC9',
       abi: ABI_TOKEN,
     },
   },
@@ -37,7 +37,7 @@ export const CONTRACTS = {
       abi: ABI_SKYBRIDGE,
     },
     production: {
-      address: '0x9bdfe9d2ec5a0eb9e9b6df935b34e5da04c497d5',
+      address: '0xbe83f11d3900F3a13d8D12fB62F5e85646cDA45e',
       abi: ABI_SKYBRIDGE,
     },
   },
