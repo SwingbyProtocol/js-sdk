@@ -12,7 +12,7 @@ export const createSwap = async <M extends SkybridgeMode>(
 
   (async () => {
     try {
-      if (!params.context.affiliateApi) {
+      if (typeof params.context.affiliateApi !== 'string') {
         logger('No affiliate program API present in context.');
         return;
       }
