@@ -494,4 +494,11 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
+  {
+    inputs: [],
+    name: 'distributeNodeRewards',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
 ];
