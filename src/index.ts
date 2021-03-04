@@ -15,7 +15,7 @@ export { buildExplorerLink } from './modules/explorer-link';
 export { getChainFor, isSkybridgeChain } from './modules/chains';
 export { createFloat, getFloatDetails, getSbbtcPrice } from './modules/pool';
 export { createWithdrawal, getWithdrawalDetails, getMinimumWithdrawal } from './modules/withdrawal';
-export { isSkybridgeBridge } from './modules/bridges';
+export { isSkybridgeBridge, SKYBRIDGE_BRIDGES } from './modules/bridges';
 export { isSkybridgeMode } from './modules/modes';
 export { isSkybridgeResource } from './modules/resources';
 export { estimateAmountReceiving } from './modules/generic-fees';
