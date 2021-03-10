@@ -6,6 +6,7 @@ import type { SkybridgeParams } from '../common-params';
 import type { SkybridgeMode } from '../modes';
 import type { SkybridgeResource } from '../resources';
 import type { SkybridgeBridge } from '../bridges';
+import type { SkybridgeContext } from '../context';
 import { getBridgeFor } from '../context';
 import { getChainFor } from '../chains';
 
@@ -72,12 +73,13 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
   return { amountDeposit, nonce };
 };
 
-export const getPowEpoch = async <M extends SkybridgeMode>({
+export const getPowEpoch = async ({
   context,
   bridge,
-}: Pick<SkybridgeParams<SkybridgeResource, M>, 'context'> & { bridge: SkybridgeBridge }): Promise<
-  string
-> => {
+}: {
+  context: SkybridgeContext;
+  bridge: SkybridgeBridge;
+}): Promise<string> => {
   const round: number = await (async () => {
     if (bridge === 'btc_erc') {
       const blockHeight = await getBlockHeight({ context, bridge });
