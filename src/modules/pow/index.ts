@@ -81,7 +81,7 @@ export const getPowEpoch = ({
 }: {
   bridge: SkybridgeBridge;
   blockHeight: number;
-}): string => {
+}): number => {
   const round: number = (() => {
     if (bridge === 'btc_erc') {
       return Math.floor(blockHeight / 3);
@@ -90,7 +90,7 @@ export const getPowEpoch = ({
     return blockHeight;
   })();
 
-  return String(round + 1);
+  return round + 1;
 };
 
 const floorAmount = (amount: BigSource): string => {
