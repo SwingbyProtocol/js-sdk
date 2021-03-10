@@ -5,6 +5,7 @@ import crypto from 'isomorphic-webcrypto';
 import type { SkybridgeParams } from '../common-params';
 import type { SkybridgeMode } from '../modes';
 import type { SkybridgeResource } from '../resources';
+import type { SkybridgeBridge } from '../bridges';
 import { getBridgeFor } from '../context';
 import { getChainFor } from '../chains';
 
@@ -31,7 +32,12 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
 }: Params<M>): Promise<Result<M>> => {
   let nonce = 0;
   let hash: any;
-  let latestRound = await getPowEpoch({ context, currencyDeposit, currencyReceiving });
+  const bridge = getBridgeFor({
+    context,
+    currencyDeposit: currencyDeposit,
+    currencyReceiving: currencyReceiving,
+  });
+  let latestRound = await getPowEpoch({ context, bridge });
   let strHashArg = '';
   const flooredAmount = floorAmount(amountDesired);
   const addressReceiving =
@@ -68,18 +74,11 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
 
 export const getPowEpoch = async <M extends SkybridgeMode>({
   context,
-  currencyReceiving,
-  currencyDeposit,
-}: Pick<
-  SkybridgeParams<SkybridgeResource, M>,
-  'context' | 'currencyDeposit' | 'currencyReceiving'
->): Promise<string> => {
+  bridge,
+}: Pick<SkybridgeParams<SkybridgeResource, M>, 'context'> & { bridge: SkybridgeBridge }): Promise<
+  string
+> => {
   const round: number = await (async () => {
-    const bridge = getBridgeFor({
-      context,
-      currencyDeposit: currencyDeposit,
-      currencyReceiving: currencyReceiving,
-    });
     if (bridge === 'btc_erc') {
       const blockHeight = await getBlockHeight({ context, bridge });
       return Math.floor(blockHeight / 3);
