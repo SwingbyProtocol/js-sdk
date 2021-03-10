@@ -31,7 +31,7 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
 }: Params<M>): Promise<Result<M>> => {
   let nonce = 0;
   let hash: any;
-  let latestRound = await getRound({ context, currencyDeposit, currencyReceiving });
+  let latestRound = await getPowEpoch({ context, currencyDeposit, currencyReceiving });
   let strHashArg = '';
   const flooredAmount = floorAmount(amountDesired);
   const addressReceiving =
@@ -66,7 +66,7 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
   return { amountDeposit, nonce };
 };
 
-export const getRound = async <M extends SkybridgeMode>({
+export const getPowEpoch = async <M extends SkybridgeMode>({
   context,
   currencyReceiving,
   currencyDeposit,

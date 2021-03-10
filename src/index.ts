@@ -20,3 +20,4 @@ export { isSkybridgeMode } from './modules/modes';
 export { isSkybridgeResource } from './modules/resources';
 export { estimateAmountReceiving } from './modules/generic-fees';
 export { CONTRACTS } from './modules/contracts';
+export { runProofOfWork, getPowEpoch } from './modules/pow';
