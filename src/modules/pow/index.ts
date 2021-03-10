@@ -6,11 +6,12 @@ import type { SkybridgeParams } from '../common-params';
 import type { SkybridgeMode } from '../modes';
 import type { SkybridgeResource } from '../resources';
 import type { SkybridgeBridge } from '../bridges';
-import type { SkybridgeContext } from '../context';
 import { getBridgeFor } from '../context';
 import { getChainFor } from '../chains';
 
 import { getBlockHeight } from './getBlockHeight';
+
+export { getBlockHeight };
 
 const difficultyZeroBits = 10;
 
@@ -38,7 +39,8 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
     currencyDeposit: currencyDeposit,
     currencyReceiving: currencyReceiving,
   });
-  let latestRound = await getPowEpoch({ context, bridge });
+  const blockHeight = await getBlockHeight({ context, bridge });
+  const latestRound = await getPowEpoch({ bridge, blockHeight });
   let strHashArg = '';
   const flooredAmount = floorAmount(amountDesired);
   const addressReceiving =
@@ -73,26 +75,25 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
   return { amountDeposit, nonce };
 };
 
-export const getPowEpoch = async ({
-  context,
+export const getPowEpoch = ({
   bridge,
+  blockHeight,
 }: {
-  context: SkybridgeContext;
   bridge: SkybridgeBridge;
-}): Promise<string> => {
-  const round: number = await (async () => {
+  blockHeight: number;
+}): string => {
+  const round: number = (() => {
     if (bridge === 'btc_erc') {
-      const blockHeight = await getBlockHeight({ context, bridge });
       return Math.floor(blockHeight / 3);
     }
 
-    return await getBlockHeight({ context, bridge });
+    return blockHeight;
   })();
 
   return String(round + 1);
 };
 
-export const floorAmount = (amount: BigSource): string => {
+const floorAmount = (amount: BigSource): string => {
   const numAmount = new Big(amount);
 
   if (Number.isInteger(+numAmount.toFixed())) {
