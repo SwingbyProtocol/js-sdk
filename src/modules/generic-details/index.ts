@@ -36,10 +36,12 @@ type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = Pick<
   | 'hash'
   | 'status'
   | 'timestamp'
+  | 'feeTotal'
+  | 'feeCurrency'
 > & {
   txDepositId: SkybridgeParams<R, M>['txDepositId'] | null;
   txReceivingId: SkybridgeParams<R, M>['txReceivingId'] | null;
-} & (R extends 'pool' ? {} : Pick<SkybridgeParams<R, M>, 'feeTotal' | 'feeCurrency'>);
+};
 
 const bridgeCache = new Map<string, SkybridgeBridge>();
 
@@ -104,17 +106,7 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
     throw new Error(`"${hash}" is not a withdrawal, it is a swap.`);
   }
 
-  const fees =
-    resource === 'pool'
-      ? {}
-      : {
-          feeCurrency:
-            ((result.feeCurrency as any) === 'BTCE' ? 'WBTC' : result.feeCurrency) || null,
-          feeTotal: result.fee,
-        };
-
   return ({
-    ...fees,
     addressReceiving: result.addressOut,
     addressDeposit: result.addressDeposit,
     amountDeposit: result.amountIn,
@@ -127,5 +119,7 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
     txDepositId: result.txIdIn || null,
     txReceivingId: result.txIdOut || null,
     timestamp: new Date(result.timestamp * 1000),
+    feeCurrency: ((result.feeCurrency as any) === 'BTCE' ? 'WBTC' : result.feeCurrency) || null,
+    feeTotal: result.fee,
   } as unknown) as ReturnType<R, M>;
 };
