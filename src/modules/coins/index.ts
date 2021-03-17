@@ -6,32 +6,68 @@ import type { SkybridgeDirection } from '../directions';
 const COINS = {
   swap: {
     btc_erc: {
-      test: { in: ['BTC', 'WBTC', 'sbBTC'], out: ['BTC', 'WBTC'] },
-      production: { in: ['BTC', 'WBTC', 'sbBTC'], out: ['BTC', 'WBTC'] },
+      test: {
+        in: ['BTC', 'WBTC', 'sbBTC'],
+        out: ['BTC', 'WBTC'],
+      },
+      production: {
+        in: ['BTC', 'WBTC', 'sbBTC'],
+        out: ['BTC', 'WBTC'],
+      },
     },
-    btc_bep: {
-      test: { in: ['BTC', 'BTCB'], out: ['BTC', 'BTCB'] },
-      production: { in: [], out: [] },
+    btc_bep20: {
+      test: {
+        in: ['BTC', 'BTCB.BEP20', 'sbBTC.BEP20'],
+        out: ['BTC', 'BTCB.BEP20', 'sbBTC.BEP20'],
+      },
+      production: {
+        in: [],
+        out: [],
+      },
     },
   },
   pool: {
     btc_erc: {
-      test: { in: ['BTC', 'WBTC'], out: ['sbBTC'] },
-      production: { in: ['BTC', 'WBTC'], out: ['sbBTC'] },
+      test: {
+        in: ['BTC', 'WBTC'],
+        out: ['sbBTC'],
+      },
+      production: {
+        in: ['BTC', 'WBTC'],
+        out: ['sbBTC'],
+      },
     },
-    btc_bep: {
-      test: { in: [], out: [] },
-      production: { in: [], out: [] },
+    btc_bep20: {
+      test: {
+        in: ['BTC', 'BTCB.BEP20'],
+        out: ['sbBTC.BEP20'],
+      },
+      production: {
+        in: [],
+        out: [],
+      },
     },
   },
   withdrawal: {
     btc_erc: {
-      test: { in: ['sbBTC'], out: ['BTC', 'WBTC'] },
-      production: { in: ['sbBTC'], out: ['BTC', 'WBTC'] },
+      test: {
+        in: ['sbBTC'],
+        out: ['BTC', 'WBTC'],
+      },
+      production: {
+        in: ['sbBTC'],
+        out: ['BTC', 'WBTC'],
+      },
     },
-    btc_bep: {
-      test: { in: [], out: [] },
-      production: { in: [], out: [] },
+    btc_bep20: {
+      test: {
+        in: ['sbBTC.BEP20'],
+        out: ['BTC', 'BTCB.BEP20'],
+      },
+      production: {
+        in: [],
+        out: [],
+      },
     },
   },
 } as const;
@@ -156,4 +192,19 @@ export const getSwapableWith = <
   set.delete(coin as any);
 
   return Array.from(set);
+};
+
+export const getDisplayNameForCoin = ({ coin }: { coin: SkybridgeCoin }): string => {
+  switch (coin) {
+    case 'BTC':
+      return 'BTC';
+    case 'BTCB.BEP20':
+      return 'BTCB (BEP20)';
+    case 'sbBTC.BEP20':
+      return 'sbBTC (BEP20)';
+    case 'WBTC':
+      return 'WBTC (ERC20)';
+    case 'sbBTC':
+      return 'sbBTC (ERC20)';
+  }
 };

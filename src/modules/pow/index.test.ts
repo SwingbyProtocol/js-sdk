@@ -20,7 +20,7 @@ it.each<
     {
       amountDesired: '1',
       currencyDeposit: 'BTC',
-      currencyReceiving: 'BTCB',
+      currencyReceiving: 'BTCB.BEP20',
       addressReceiving: 'tbnb1k3cp6jl7z757hewt30nfvr97uywlxeap69glam',
     },
     { amountDeposit: '0.99998995', nonce: 2646 },

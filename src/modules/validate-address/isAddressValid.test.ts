@@ -29,7 +29,7 @@ it.each<TestData>([
   },
   {
     address: 'tb1q0fzppaflhcju7emf9sh5n5st3c47mwuczwxmt7',
-    chain: 'binance',
+    chain: 'binance-smart',
     expected: false,
     mode: 'test',
   },
@@ -47,6 +47,12 @@ it.each<TestData>([
   },
   {
     address: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    chain: 'binance-smart',
+    expected: true,
+    mode: 'test',
+  },
+  {
+    address: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     chain: 'bitcoin',
     expected: false,
     mode: 'test',
@@ -59,8 +65,8 @@ it.each<TestData>([
   },
   {
     address: 'tbnb18y6ak4nvd7u89dsyu205jhwaguluxt9l7fklsz',
-    chain: 'binance',
-    expected: true,
+    chain: 'binance-smart',
+    expected: false,
     mode: 'test',
   },
   {

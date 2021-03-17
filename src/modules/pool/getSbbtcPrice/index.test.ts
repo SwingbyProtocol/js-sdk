@@ -10,5 +10,5 @@ it('gets sbBTC price', async () => {
   const context = await buildContext({ mode: 'test' });
   const result = await getSbbtcPrice({ context });
 
-  return expect(result).toMatch(/^(1|0)\.[0-9]+/);
+  return expect(result).toMatch(/^(1|0)(\.[0-9]+)?/);
 });
