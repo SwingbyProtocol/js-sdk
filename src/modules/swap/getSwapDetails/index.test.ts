@@ -40,7 +40,7 @@ it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
 
   return expect(result).toMatchObject({
     addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc',
-    addressDeposit: '0x6c3F42F943022B4746Fb6522760F62ae758b8826',
+    addressDeposit: '0x09C3D20ceC6180F1eD9bF2e41a31702429638089',
     amountDeposit: '0.00199223',
     amountReceiving: '0.00201809',
     currencyDeposit: 'sbBTC',
