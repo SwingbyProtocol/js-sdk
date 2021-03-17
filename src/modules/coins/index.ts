@@ -18,7 +18,7 @@ const COINS = {
     btc_bep20: {
       test: {
         in: ['BTC', 'BTCB.BEP20', 'sbBTC.BEP20'],
-        out: ['BTC', 'BTCB.BEP20', 'sbBTC.BEP20'],
+        out: ['BTC', 'BTCB.BEP20'],
       },
       production: {
         in: [],
