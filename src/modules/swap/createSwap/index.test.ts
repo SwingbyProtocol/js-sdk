@@ -25,12 +25,6 @@ it.each<
     currencyReceiving: 'WBTC',
     expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
   },
-  // {
-  //   amountDesired: '0.1',
-  //   addressReceiving: 'tbnb16ke3clwqmduvzv6awlprjw3ecw7g52qw7c6hdm',
-  //   currencyDeposit: 'BTC',
-  //   currencyReceiving: 'BTCB',
-  // },
 ])(
   '"/swaps/create" succeeds with %O',
   async ({ addressReceiving, currencyDeposit, currencyReceiving, amountDesired, expected }) => {
