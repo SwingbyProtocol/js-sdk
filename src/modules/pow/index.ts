@@ -8,6 +8,7 @@ import type { SkybridgeResource } from '../resources';
 import type { SkybridgeBridge } from '../bridges';
 import { getBridgeFor } from '../context';
 import { getChainFor } from '../chains';
+import { toApiCoin } from '../coins';
 
 import { getBlockHeight } from './getBlockHeight';
 
@@ -34,11 +35,7 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
 }: Params<M>): Promise<Result<M>> => {
   let nonce = 0;
   let hash: any;
-  const bridge = getBridgeFor({
-    context,
-    currencyDeposit: currencyDeposit,
-    currencyReceiving: currencyReceiving,
-  });
+  const bridge = getBridgeFor({ context, currencyDeposit, currencyReceiving });
   const blockHeight = await getBlockHeight({ context, bridge });
   const latestRound = await getPowEpoch({ bridge, blockHeight });
   let strHashArg = '';
@@ -58,7 +55,7 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
       ';' +
       addressReceiving +
       ';' +
-      currencyDeposit +
+      toApiCoin({ coin: currencyDeposit }) +
       ';' +
       flooredAmount +
       ';';

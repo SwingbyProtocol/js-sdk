@@ -8,7 +8,7 @@ import { SkybridgeParams } from '../common-params';
 import { runProofOfWork } from '../pow';
 import { SkybridgeResource } from '../resources';
 import { getChainFor } from '../chains';
-import { SkybridgeCoin } from '../coins';
+import { toApiCoin, fromApiCoin } from '../coins';
 
 const logger = baseLogger.extend('generic-create');
 
@@ -91,8 +91,8 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
   type ApiResponse = Pick<SkybridgeParams<R, M>, 'addressDeposit' | 'nonce' | 'hash'> & {
     amountIn: string;
     amountOut: string;
-    currencyIn: SkybridgeCoin<R, M, 'in'>;
-    currencyOut: SkybridgeCoin<R, M, 'out'>;
+    currencyIn: string;
+    currencyOut: string;
     timestamp: number;
     addressOut: string;
   };
@@ -107,8 +107,8 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
             ? params.addressReceiving.toLowerCase()
             : params.addressReceiving,
         amount: amountDeposit,
-        currency_from: params.currencyDeposit,
-        currency_to: params.currencyReceiving,
+        currency_from: toApiCoin({ coin: params.currencyDeposit }),
+        currency_to: toApiCoin({ coin: params.currencyReceiving }),
         nonce,
       }),
     },
@@ -120,8 +120,8 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
     return {
       amountDeposit: result.response.amountIn,
       amountReceiving: result.response.amountOut,
-      currencyDeposit: result.response.currencyIn,
-      currencyReceiving: result.response.currencyOut,
+      currencyDeposit: fromApiCoin({ bridge, coin: result.response.currencyIn }),
+      currencyReceiving: fromApiCoin({ bridge, coin: result.response.currencyOut }),
       hash: result.response.hash,
       nonce: result.response.nonce,
       addressDeposit: result.response.addressDeposit,

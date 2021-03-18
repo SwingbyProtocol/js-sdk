@@ -208,3 +208,43 @@ export const getDisplayNameForCoin = ({ coin }: { coin: SkybridgeCoin }): string
       return 'sbBTC (ERC20)';
   }
 };
+
+export const toApiCoin = ({ coin }: { coin: SkybridgeCoin }): string => {
+  switch (coin) {
+    case 'BTC':
+      return 'BTC';
+    case 'BTCB.BEP20':
+      return 'BTCB';
+    case 'WBTC':
+      return 'WBTC';
+    case 'sbBTC.BEP20':
+    case 'sbBTC':
+      return 'sbBTC';
+  }
+};
+
+export const fromApiCoin = ({
+  coin,
+  bridge,
+}: {
+  coin: string;
+  bridge: SkybridgeBridge;
+}): SkybridgeCoin => {
+  if (bridge === 'btc_erc') {
+    if (coin === 'BTCE') return 'WBTC';
+    return coin as SkybridgeCoin;
+  }
+
+  if (bridge === 'btc_bep20') {
+    switch (coin) {
+      case 'BTC':
+        return 'BTC';
+      case 'BTCB':
+        return 'BTCB.BEP20';
+      case 'sbBTC':
+        return 'sbBTC.BEP20';
+    }
+  }
+
+  throw new Error(`Could not find SDK coin ID for "${coin}" in bridge "${bridge}"`);
+};
