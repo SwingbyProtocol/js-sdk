@@ -6,7 +6,7 @@ import { getSwapDetails } from './';
 jest.mock('../../context/buildContext');
 
 it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
-  { hash: 'asG3GufNCz2AisFAFlMPHK6AuSFieRrArheTmqyDvuc=' },
+  { hash: 'e-0WXydIr6vpjQwJ3NneXvPPTNoJ_N-Qw_bZwYUu8eU=' },
 ])('gets swaps details for %O', async ({ hash }) => {
   expect.assertions(1);
 
@@ -14,24 +14,24 @@ it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
   const result = await getSwapDetails({ context, hash });
 
   return expect(result).toMatchObject({
-    addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc',
-    addressDeposit: 'mhRbY32nWLQRZFSapEdxYgkKsb7pCgQxfT',
-    amountDeposit: '0.00399921',
-    amountReceiving: '0.00384121',
+    addressReceiving: '0x8d977a2c4736b42c89af5cff05e14dd8c1ca1d30',
+    addressDeposit: '1jkxfyP5Ds5MQzQrWv81mPBEGuYGyWWzb',
+    amountDeposit: '0.23499648',
+    amountReceiving: '0.23437648',
     currencyDeposit: 'BTC',
     currencyReceiving: 'WBTC',
     feeCurrency: 'WBTC',
-    feeTotal: '0.000158',
+    feeTotal: '0.00062',
     hash,
     status: 'COMPLETED',
-    txDepositId: '43b6980d019ec432dc5d8c4c3c3b0fa26c07cf8bfb8be58b42a8ccf20f561b4d',
-    txReceivingId: '0x981dd197ca647e83bafc5f46829b47543fd3d74b785ba86f21dae07920dcfb73',
-    timestamp: new Date('2021-01-04T10:48:28.000Z'),
+    txDepositId: 'da58a782dd6cbb91954482a59371c31e780f33db6da3c51bc8f8b8a514df4038',
+    txReceivingId: '0xdf7164bda6e549c8aef81f642d8f7e01d35cdb6c5e21ddb0eaf35896bba15ad2',
+    timestamp: new Date('2021-03-17T11:03:09.000Z'),
   });
 });
 
 it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
-  { hash: 'HKIPyyDX2oAgplGThTFdCt50a5YsfPe506BQMQnJHOU=' },
+  { hash: 'xB2z_jUEKAvD7Qt-nnw8S2AUh2SPLtxXAYypm5oX1LI=' },
 ])('works for withdrawal %O', async ({ hash }) => {
   expect.assertions(1);
 
@@ -39,18 +39,18 @@ it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
   const result = await getSwapDetails({ context, hash });
 
   return expect(result).toMatchObject({
-    addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc',
-    addressDeposit: '0x09C3D20ceC6180F1eD9bF2e41a31702429638089',
-    amountDeposit: '0.00199223',
-    amountReceiving: '0.00201809',
+    addressReceiving: 'bc1qfj26f06v44qdye40y4dxdkyx8gl3h802hdlxyp',
+    addressDeposit: '0xbe83f11d3900f3a13d8d12fb62f5e85646cda45e',
+    amountDeposit: '0.18089368',
+    amountReceiving: '0.18239044',
     currencyDeposit: 'sbBTC',
-    currencyReceiving: 'WBTC',
+    currencyReceiving: 'BTC',
     feeCurrency: 'sbBTC',
-    feeTotal: '0.00015404',
+    feeTotal: '0.00066612',
     hash,
     status: 'COMPLETED',
-    txDepositId: '0x0770915d082b11f76678c01d3161089730c66449960abe874f053cf20061d919',
+    txDepositId: '0x19336671ed090339010696aee44584654fd8815f0eaee881d84faf44f2479350',
     txReceivingId: null,
-    timestamp: new Date('2021-01-04T10:59:11.000Z'),
+    timestamp: new Date('2021-03-15T05:53:54.000Z'),
   });
 });
