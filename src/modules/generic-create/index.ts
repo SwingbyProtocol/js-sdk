@@ -72,7 +72,9 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
       throw new Error(`${result.status}: ${result.response}`);
     }
 
-    const item = result.response.find((it) => it.currency === params.currencyReceiving);
+    const item = result.response.find(
+      (it) => fromApiCoin({ coin: it.currency, bridge }) === params.currencyReceiving,
+    );
     if (!item) {
       logger('Could not find balance for "%s"', params.currencyReceiving);
       return;
@@ -80,7 +82,7 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
 
     if (new Big(params.amountDesired).gte(item.amount)) {
       throw new Error(
-        `There is not enough ${params.currencyReceiving} in float to perform your swap.`,
+        `There is not enough ${params.currencyReceiving} liquidity to perform your swap.`,
       );
     }
   })();

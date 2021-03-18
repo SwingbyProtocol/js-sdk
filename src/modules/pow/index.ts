@@ -9,10 +9,13 @@ import type { SkybridgeBridge } from '../bridges';
 import { getBridgeFor } from '../context';
 import { getChainFor } from '../chains';
 import { toApiCoin } from '../coins';
+import { baseLogger } from '../logger';
 
 import { getBlockHeight } from './getBlockHeight';
 
 export { getBlockHeight };
+
+const logger = baseLogger.extend('pow');
 
 const difficultyZeroBits = 10;
 
@@ -40,8 +43,9 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
   const latestRound = await getPowEpoch({ bridge, blockHeight });
   let strHashArg = '';
   const flooredAmount = floorAmount(amountDesired);
+  const receivingChain = getChainFor({ coin: currencyReceiving });
   const addressReceiving =
-    getChainFor({ coin: currencyReceiving }) === 'ethereum'
+    receivingChain === 'ethereum' || receivingChain === 'binance-smart'
       ? addressReceivingParam.toLowerCase()
       : addressReceivingParam;
 
@@ -63,6 +67,7 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
     hash = await generateHash(strHashArg);
   } while (!verifyHashPrefix(hash));
 
+  logger('PoW finished with "%s"', strHashArg);
   const rejectionSample = new Big(BigInt(`0x${hash}`).toString()).mod(1024);
   const BigNumberFloorAmount = toSatoshi(flooredAmount);
   const toSendBI = BigNumberFloorAmount.minus(rejectionSample);
@@ -80,7 +85,7 @@ export const getPowEpoch = ({
   blockHeight: number;
 }): number => {
   const round: number = (() => {
-    if (bridge === 'btc_erc') {
+    if (bridge === 'btc_erc' || bridge === 'btc_bep20') {
       return Math.floor(blockHeight / 3);
     }
 

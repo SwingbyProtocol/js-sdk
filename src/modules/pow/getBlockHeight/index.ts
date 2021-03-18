@@ -13,9 +13,9 @@ const INTERVAL = 2000;
 export const getBlockHeight = async <M extends SkybridgeMode>({
   context,
   bridge,
-}: Pick<SkybridgeParams<SkybridgeResource, M>, 'context'> & { bridge: SkybridgeBridge }): Promise<
-  number
-> => {
+}: Pick<SkybridgeParams<SkybridgeResource, M>, 'context'> & {
+  bridge: SkybridgeBridge;
+}): Promise<number> => {
   return getBlockHeightRec({ context, bridge, startedAt: Date.now() });
 };
 
