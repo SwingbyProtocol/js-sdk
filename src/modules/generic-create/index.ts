@@ -8,7 +8,7 @@ import { SkybridgeParams } from '../common-params';
 import { runProofOfWork } from '../pow';
 import { SkybridgeResource } from '../resources';
 import { getChainFor } from '../chains';
-import { toApiCoin, fromApiCoin } from '../coins';
+import { toApiCoin, fromApiCoin, SkybridgeApiCoin } from '../coins';
 
 const logger = baseLogger.extend('generic-create');
 
@@ -64,7 +64,7 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
   const bridge = getBridgeFor(params);
 
   await (async () => {
-    const result = await fetch<Array<{ amount: string; currency: string }>>(
+    const result = await fetch<Array<{ amount: string; currency: SkybridgeApiCoin }>>(
       `${params.context.servers.swapNode[bridge]}/api/v1/floats/balances`,
     );
 
@@ -93,8 +93,8 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
   type ApiResponse = Pick<SkybridgeParams<R, M>, 'addressDeposit' | 'nonce' | 'hash'> & {
     amountIn: string;
     amountOut: string;
-    currencyIn: string;
-    currencyOut: string;
+    currencyIn: SkybridgeApiCoin;
+    currencyOut: SkybridgeApiCoin;
     timestamp: number;
     addressOut: string;
   };

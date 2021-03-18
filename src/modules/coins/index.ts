@@ -3,6 +3,8 @@ import type { SkybridgeBridge } from '../bridges';
 import type { SkybridgeResource } from '../resources';
 import type { SkybridgeDirection } from '../directions';
 
+export type SkybridgeApiCoin = 'BTC' | 'WBTC' | 'sbBTC' | 'BTCB';
+
 const COINS = {
   swap: {
     btc_erc: {
@@ -209,7 +211,7 @@ export const getDisplayNameForCoin = ({ coin }: { coin: SkybridgeCoin }): string
   }
 };
 
-export const toApiCoin = ({ coin }: { coin: SkybridgeCoin }): string => {
+export const toApiCoin = ({ coin }: { coin: SkybridgeCoin }): SkybridgeApiCoin => {
   switch (coin) {
     case 'BTC':
       return 'BTC';
@@ -227,11 +229,11 @@ export const fromApiCoin = ({
   coin,
   bridge,
 }: {
-  coin: string;
+  coin: SkybridgeApiCoin;
   bridge: SkybridgeBridge;
 }): SkybridgeCoin => {
   if (bridge === 'btc_erc') {
-    if (coin === 'BTCE') return 'WBTC';
+    if ((coin as any) === 'BTCE') return 'WBTC';
     return coin as SkybridgeCoin;
   }
 
