@@ -22,6 +22,13 @@ it.each<
     expected: { amountDeposit: '0.99999446', nonce: 801 },
   },
   {
+    amountDesired: '0.02950426',
+    currencyDeposit: 'BTCB.BEP20',
+    currencyReceiving: 'BTC',
+    addressReceiving: 'msEKP7ZSma3rQtWSQBBZCiJAvjAaowf2c6',
+    expected: { amountDeposit: '0.02949633', nonce: 1055 },
+  },
+  {
     amountDesired: '1',
     currencyDeposit: 'BTC',
     currencyReceiving: 'WBTC',
