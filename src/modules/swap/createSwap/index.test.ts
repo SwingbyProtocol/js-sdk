@@ -27,6 +27,13 @@ it.each<
   },
   {
     amountDesired: '0.1',
+    addressReceiving: 'msEKP7ZSma3rQtWSQBBZCiJAvjAaowf2c6',
+    currencyDeposit: 'BTCB.BEP20',
+    currencyReceiving: 'BTC',
+    expected: { addressReceiving: 'msEKP7ZSma3rQtWSQBBZCiJAvjAaowf2c6' },
+  },
+  {
+    amountDesired: '0.1',
     addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     currencyDeposit: 'BTC',
     currencyReceiving: 'BTCB.BEP20',
@@ -76,6 +83,6 @@ it('crashes if there is not enough balance of the receiving currency', async () 
       amountDesired: '100',
     });
   } catch (e) {
-    expect(e.message).toMatch(/There is not enough WBTC in float to perform your swap/);
+    expect(e.message).toMatch(/There is not enough WBTC liquidity to perform your swap/);
   }
 });
