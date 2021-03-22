@@ -5,7 +5,8 @@ import type { SkybridgeResource } from '../resources';
 import { runProofOfWork } from './runProofOfWork';
 
 jest.mock('../context/buildContext');
-jest.mock('./getBlockHeight', () => ({ getBlockHeight: () => 100 }));
+jest.mock('./getBlockHeight', () => ({ getBlockHeight: () => NaN }));
+jest.mock('./getPowEpoch', () => ({ getPowEpoch: () => 100 }));
 
 it.each<
   [
@@ -23,7 +24,7 @@ it.each<
       currencyReceiving: 'BTCB.BEP20',
       addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     },
-    { amountDeposit: '0.99998995', nonce: 2646 },
+    { amountDeposit: '0.99999446', nonce: 801 },
   ],
   [
     {
@@ -32,7 +33,7 @@ it.each<
       currencyReceiving: 'WBTC',
       addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     },
-    { amountDeposit: '0.99999948', nonce: 743 },
+    { amountDeposit: '0.99999446', nonce: 801 },
   ],
   [
     {
@@ -41,7 +42,7 @@ it.each<
       currencyReceiving: 'WBTC',
       addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     },
-    { amountDeposit: '1.11999981', nonce: 1826 },
+    { amountDeposit: '1.11999802', nonce: 1947 },
   ],
   [
     {
@@ -50,7 +51,7 @@ it.each<
       currencyReceiving: 'WBTC',
       addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     },
-    { amountDeposit: '1.12339495', nonce: 595 },
+    { amountDeposit: '1.12339563', nonce: 69 },
   ],
   [
     {
@@ -59,7 +60,7 @@ it.each<
       currencyReceiving: 'WBTC',
       addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     },
-    { amountDeposit: '1.12344858', nonce: 207 },
+    { amountDeposit: '1.12344929', nonce: 1408 },
   ],
   [
     {
@@ -68,7 +69,7 @@ it.each<
       currencyReceiving: 'WBTC',
       addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     },
-    { amountDeposit: '1.12344858', nonce: 207 },
+    { amountDeposit: '1.12344929', nonce: 1408 },
   ],
   [
     {
@@ -77,7 +78,7 @@ it.each<
       currencyReceiving: 'WBTC',
       addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     },
-    { amountDeposit: '1.12344858', nonce: 207 },
+    { amountDeposit: '1.12344929', nonce: 1408 },
   ],
   [
     {
@@ -86,7 +87,7 @@ it.each<
       currencyReceiving: 'WBTC',
       addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     },
-    { amountDeposit: '0.0294928', nonce: 1818 },
+    { amountDeposit: '0.02949382', nonce: 83 },
   ],
   [
     {
@@ -95,7 +96,7 @@ it.each<
       currencyReceiving: 'BTC',
       addressReceiving: 'tb1q0fzppaflhcju7emf9sh5n5st3c47mwuczwxmt7',
     },
-    { amountDeposit: '0.9999927', nonce: 257 },
+    { amountDeposit: '0.99999116', nonce: 1079 },
   ],
   [
     {
@@ -104,7 +105,7 @@ it.each<
       currencyReceiving: 'BTC',
       addressReceiving: 'msEKP7ZSma3rQtWSQBBZCiJAvjAaowf2c6',
     },
-    { amountDeposit: '0.99999817', nonce: 4221 },
+    { amountDeposit: '0.99999202', nonce: 1114 },
   ],
   [
     {
@@ -113,7 +114,7 @@ it.each<
       currencyReceiving: 'sbBTC',
       addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     },
-    { amountDeposit: '0.9999961', nonce: 1722 },
+    { amountDeposit: '0.99999233', nonce: 1066 },
   ],
 ])('works for %s', async (params, expected) => {
   expect.assertions(1);
