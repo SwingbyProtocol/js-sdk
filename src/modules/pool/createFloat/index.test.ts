@@ -8,7 +8,7 @@ jest.mock('../../context/buildContext');
 it.each<
   Pick<
     SkybridgeParams<'pool', 'test'>,
-    'addressReceiving' | 'currencyDeposit' | 'amountDesired'
+    'addressReceiving' | 'currencyDeposit' | 'amountDesired' | 'currencyReceiving'
   > & {
     expected: { addressReceiving: string };
   }
@@ -17,17 +17,33 @@ it.each<
     amountDesired: '1',
     addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     currencyDeposit: 'BTC',
+    currencyReceiving: 'sbBTC',
     expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
   },
   {
     amountDesired: '1',
     addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     currencyDeposit: 'BTC',
+    currencyReceiving: 'sbBTC',
+    expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
+  },
+  {
+    amountDesired: '1',
+    addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    currencyDeposit: 'BTC',
+    currencyReceiving: 'sbBTC.BEP20',
+    expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
+  },
+  {
+    amountDesired: '1',
+    addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    currencyDeposit: 'BTCB.BEP20',
+    currencyReceiving: 'sbBTC.BEP20',
     expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
   },
 ])(
   '"/floats/create" succeeds with %O',
-  async ({ addressReceiving, currencyDeposit, amountDesired, expected }) => {
+  async ({ addressReceiving, currencyDeposit, amountDesired, currencyReceiving, expected }) => {
     jest.setTimeout(180000);
     expect.assertions(1);
 
@@ -37,6 +53,7 @@ it.each<
         context,
         addressReceiving,
         currencyDeposit,
+        currencyReceiving,
         amountDesired,
       });
       return expect(result).toMatchObject({
@@ -44,7 +61,7 @@ it.each<
         addressReceiving: expected.addressReceiving,
         amountDeposit: expect.stringContaining('0.99'),
         currencyDeposit,
-        currencyReceiving: 'sbBTC',
+        currencyReceiving,
         timestamp: expect.any(Date),
       });
     } catch (e) {
