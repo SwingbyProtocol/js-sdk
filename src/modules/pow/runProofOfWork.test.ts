@@ -21,7 +21,7 @@ it.each<
       amountDesired: '1',
       currencyDeposit: 'BTC',
       currencyReceiving: 'BTCB.BEP20',
-      addressReceiving: 'tbnb1k3cp6jl7z757hewt30nfvr97uywlxeap69glam',
+      addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     },
     { amountDeposit: '0.99998995', nonce: 2646 },
   ],
