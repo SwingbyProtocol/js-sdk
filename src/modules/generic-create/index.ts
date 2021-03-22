@@ -72,9 +72,13 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
       throw new Error(`${result.status}: ${result.response}`);
     }
 
-    const item = result.response.find(
-      (it) => fromApiCoin({ coin: it.currency, bridge }) === params.currencyReceiving,
-    );
+    const item = result.response.find((it) => {
+      try {
+        return fromApiCoin({ coin: it.currency, bridge }) === params.currencyReceiving;
+      } catch (e) {
+        return false;
+      }
+    });
     if (!item) {
       logger('Could not find balance for "%s"', params.currencyReceiving);
       return;
