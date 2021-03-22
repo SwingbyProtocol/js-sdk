@@ -1,9 +1,9 @@
-import type { SkybridgeBridge } from '../../bridges';
-import { fetch } from '../../fetch';
-import { baseLogger } from '../../logger';
-import type { SkybridgeMode } from '../../modes';
-import type { SkybridgeParams } from '../../common-params';
-import type { SkybridgeResource } from '../../resources';
+import type { SkybridgeBridge } from '../bridges';
+import { fetch } from '../fetch';
+import { baseLogger } from '../logger';
+import type { SkybridgeMode } from '../modes';
+import type { SkybridgeParams } from '../common-params';
+import type { SkybridgeResource } from '../resources';
 
 const logger = baseLogger.extend('block-height');
 

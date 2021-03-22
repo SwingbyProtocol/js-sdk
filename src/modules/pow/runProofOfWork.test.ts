@@ -2,7 +2,7 @@ import { buildContext } from '../context';
 import type { SkybridgeParams } from '../common-params';
 import type { SkybridgeResource } from '../resources';
 
-import { runProofOfWork } from './';
+import { runProofOfWork } from './runProofOfWork';
 
 jest.mock('../context/buildContext');
 jest.mock('./getBlockHeight', () => ({ getBlockHeight: () => 100 }));
