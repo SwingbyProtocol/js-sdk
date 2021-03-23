@@ -42,6 +42,7 @@ export const buildContext = async <M extends SkybridgeMode>({
       swapNode: {
         btc_erc: getRandomNode({ mode, bridge: 'btc_erc', from: 'swapNodes' }),
         btc_bep20: getRandomNode({ mode, bridge: 'btc_bep20', from: 'swapNodes' }),
+        ...servers?.swapNode,
       },
       indexer: {
         btc_erc: getRandomNode({ mode, bridge: 'btc_erc', from: 'indexerNodes' }),
