@@ -1,8 +1,8 @@
 import type { SkybridgeMode } from '../../modes';
 import type { SkybridgeParams } from '../../common-params';
-import { SkybridgeResource } from '../../resources';
+import type { SkybridgeResource } from '../../resources';
+import type { SkybridgeCoin } from '../../coins';
 import { fetch } from '../../fetch';
-import { SkybridgeCoin } from '../../coins';
 
 export const estimateAmountReceiving = async <M extends SkybridgeMode>({
   context,

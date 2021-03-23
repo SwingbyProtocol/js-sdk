@@ -1,3 +1,5 @@
+import type { PromiseValue } from 'type-fest';
+
 import type { SkybridgeCoin } from '../../coins';
 import { buildContext } from '../../context';
 import type { SkybridgeMode } from '../../modes';
@@ -14,48 +16,28 @@ it.each<
       currencyDeposit: SkybridgeCoin<SkybridgeResource, 'test', 'in'>;
       currencyReceiving: SkybridgeCoin<SkybridgeResource, 'test', 'out'>;
     },
-    any,
+    Pick<PromiseValue<ReturnType<typeof estimateAmountReceiving>>, 'feeCurrency'>,
   ]
 >([
   [
     { amountDesired: '3', currencyDeposit: 'BTC', currencyReceiving: 'WBTC' },
-    {
-      amountReceiving: '2.99385',
-      feeBridgeFraction: '0.002',
-      feeMiner: '0.00015',
-      feeCurrency: 'WBTC',
-      feeTotal: '0.00615',
-    },
+    { feeCurrency: 'WBTC' },
   ],
   [
     { amountDesired: '156', currencyDeposit: 'WBTC', currencyReceiving: 'BTC' },
-    {
-      amountReceiving: '155.6877',
-      feeBridgeFraction: '0.002',
-      feeMiner: '0.0003',
-      feeCurrency: 'BTC',
-      feeTotal: '0.3123',
-    },
+    { feeCurrency: 'BTC' },
   ],
   [
     { amountDesired: '156', currencyDeposit: 'sbBTC', currencyReceiving: 'WBTC' },
-    {
-      amountReceiving: '156',
-      feeBridgeFraction: '0.002',
-      feeMiner: '0.00015',
-      feeCurrency: 'WBTC',
-      feeTotal: '0.31215',
-    },
+    { feeCurrency: 'WBTC' },
   ],
   [
     { amountDesired: '156', currencyDeposit: 'BTC', currencyReceiving: 'sbBTC' },
-    {
-      amountReceiving: '155.68785',
-      feeBridgeFraction: '0.005',
-      feeMiner: '0',
-      feeCurrency: 'sbBTC',
-      feeTotal: '0.31215',
-    },
+    { feeCurrency: 'sbBTC' },
+  ],
+  [
+    { amountDesired: '156', currencyDeposit: 'BTCB.BEP20', currencyReceiving: 'sbBTC.BEP20' },
+    { feeCurrency: 'sbBTC.BEP20' },
   ],
 ])('works for %O', async ({ amountDesired, currencyDeposit, currencyReceiving }, expected) => {
   expect.assertions(1);
@@ -68,7 +50,13 @@ it.each<
     amountDesired,
   });
 
-  expect(result).toMatchObject(expected);
+  expect(result).toMatchObject({
+    ...expected,
+    amountReceiving: expect.stringMatching(/\d+(\.\d+)?/),
+    feeBridgeFraction: expect.stringMatching(/\d+(\.\d+)?/),
+    feeMiner: expect.stringMatching(/\d+(\.\d+)?/),
+    feeTotal: expect.stringMatching(/\d+(\.\d+)?/),
+  });
 });
 
 it.each<{ currencyDeposit: any; mode: SkybridgeMode; currencyReceiving: any }>([
@@ -87,6 +75,6 @@ it.each<{ currencyDeposit: any; mode: SkybridgeMode; currencyReceiving: any }>([
       amountDesired: '1',
     });
   } catch (e) {
-    expect(e.message).toMatch(/must be one of/);
+    expect(e.message).toMatch(/(Could not find (test|production) bridge)|(must be one of)/);
   }
 });
