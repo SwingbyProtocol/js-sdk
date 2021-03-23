@@ -1,9 +1,9 @@
-import type { SkybridgeBridge } from '../../bridges';
-import { fetch } from '../../fetch';
-import { baseLogger } from '../../logger';
-import type { SkybridgeMode } from '../../modes';
-import type { SkybridgeParams } from '../../common-params';
-import type { SkybridgeResource } from '../../resources';
+import type { SkybridgeBridge } from '../bridges';
+import { fetch } from '../fetch';
+import { baseLogger } from '../logger';
+import type { SkybridgeMode } from '../modes';
+import type { SkybridgeParams } from '../common-params';
+import type { SkybridgeResource } from '../resources';
 
 const logger = baseLogger.extend('block-height');
 
@@ -13,9 +13,9 @@ const INTERVAL = 2000;
 export const getBlockHeight = async <M extends SkybridgeMode>({
   context,
   bridge,
-}: Pick<SkybridgeParams<SkybridgeResource, M>, 'context'> & { bridge: SkybridgeBridge }): Promise<
-  number
-> => {
+}: Pick<SkybridgeParams<SkybridgeResource, M>, 'context'> & {
+  bridge: SkybridgeBridge;
+}): Promise<number> => {
   return getBlockHeightRec({ context, bridge, startedAt: Date.now() });
 };
 

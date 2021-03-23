@@ -8,7 +8,7 @@ import { SkybridgeParams } from '../common-params';
 import { runProofOfWork } from '../pow';
 import { SkybridgeResource } from '../resources';
 import { getChainFor } from '../chains';
-import { SkybridgeCoin } from '../coins';
+import { toApiCoin, fromApiCoin, SkybridgeApiCoin } from '../coins';
 
 const logger = baseLogger.extend('generic-create');
 
@@ -64,7 +64,7 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
   const bridge = getBridgeFor(params);
 
   await (async () => {
-    const result = await fetch<Array<{ amount: string; currency: string }>>(
+    const result = await fetch<Array<{ amount: string; currency: SkybridgeApiCoin }>>(
       `${params.context.servers.swapNode[bridge]}/api/v1/floats/balances`,
     );
 
@@ -72,7 +72,13 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
       throw new Error(`${result.status}: ${result.response}`);
     }
 
-    const item = result.response.find((it) => it.currency === params.currencyReceiving);
+    const item = result.response.find((it) => {
+      try {
+        return fromApiCoin({ coin: it.currency, bridge }) === params.currencyReceiving;
+      } catch (e) {
+        return false;
+      }
+    });
     if (!item) {
       logger('Could not find balance for "%s"', params.currencyReceiving);
       return;
@@ -80,7 +86,7 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
 
     if (new Big(params.amountDesired).gte(item.amount)) {
       throw new Error(
-        `There is not enough ${params.currencyReceiving} in float to perform your swap.`,
+        `There is not enough ${params.currencyReceiving} liquidity to perform your swap.`,
       );
     }
   })();
@@ -91,8 +97,8 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
   type ApiResponse = Pick<SkybridgeParams<R, M>, 'addressDeposit' | 'nonce' | 'hash'> & {
     amountIn: string;
     amountOut: string;
-    currencyIn: SkybridgeCoin<R, M, 'in'>;
-    currencyOut: SkybridgeCoin<R, M, 'out'>;
+    currencyIn: SkybridgeApiCoin;
+    currencyOut: SkybridgeApiCoin;
     timestamp: number;
     addressOut: string;
   };
@@ -107,8 +113,8 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
             ? params.addressReceiving.toLowerCase()
             : params.addressReceiving,
         amount: amountDeposit,
-        currency_from: params.currencyDeposit,
-        currency_to: params.currencyReceiving,
+        currency_from: toApiCoin({ coin: params.currencyDeposit }),
+        currency_to: toApiCoin({ coin: params.currencyReceiving }),
         nonce,
       }),
     },
@@ -120,8 +126,8 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
     return {
       amountDeposit: result.response.amountIn,
       amountReceiving: result.response.amountOut,
-      currencyDeposit: result.response.currencyIn,
-      currencyReceiving: result.response.currencyOut,
+      currencyDeposit: fromApiCoin({ bridge, coin: result.response.currencyIn }),
+      currencyReceiving: fromApiCoin({ bridge, coin: result.response.currencyOut }),
       hash: result.response.hash,
       nonce: result.response.nonce,
       addressDeposit: result.response.addressDeposit,

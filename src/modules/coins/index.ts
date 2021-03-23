@@ -3,35 +3,73 @@ import type { SkybridgeBridge } from '../bridges';
 import type { SkybridgeResource } from '../resources';
 import type { SkybridgeDirection } from '../directions';
 
+export type SkybridgeApiCoin = 'BTC' | 'WBTC' | 'sbBTC' | 'BTCB';
+
 const COINS = {
   swap: {
     btc_erc: {
-      test: { in: ['BTC', 'WBTC', 'sbBTC'], out: ['BTC', 'WBTC'] },
-      production: { in: ['BTC', 'WBTC', 'sbBTC'], out: ['BTC', 'WBTC'] },
+      test: {
+        in: ['BTC', 'WBTC', 'sbBTC'],
+        out: ['BTC', 'WBTC'],
+      },
+      production: {
+        in: ['BTC', 'WBTC', 'sbBTC'],
+        out: ['BTC', 'WBTC'],
+      },
     },
-    btc_bep: {
-      test: { in: ['BTC', 'BTCB'], out: ['BTC', 'BTCB'] },
-      production: { in: [], out: [] },
+    btc_bep20: {
+      test: {
+        in: ['BTC', 'BTCB.BEP20', 'sbBTC.BEP20'],
+        out: ['BTC', 'BTCB.BEP20'],
+      },
+      production: {
+        in: [],
+        out: [],
+      },
     },
   },
   pool: {
     btc_erc: {
-      test: { in: ['BTC', 'WBTC'], out: ['sbBTC'] },
-      production: { in: ['BTC', 'WBTC'], out: ['sbBTC'] },
+      test: {
+        in: ['BTC', 'WBTC'],
+        out: ['sbBTC'],
+      },
+      production: {
+        in: ['BTC', 'WBTC'],
+        out: ['sbBTC'],
+      },
     },
-    btc_bep: {
-      test: { in: [], out: [] },
-      production: { in: [], out: [] },
+    btc_bep20: {
+      test: {
+        in: ['BTC', 'BTCB.BEP20'],
+        out: ['sbBTC.BEP20'],
+      },
+      production: {
+        in: [],
+        out: [],
+      },
     },
   },
   withdrawal: {
     btc_erc: {
-      test: { in: ['sbBTC'], out: ['BTC', 'WBTC'] },
-      production: { in: ['sbBTC'], out: ['BTC', 'WBTC'] },
+      test: {
+        in: ['sbBTC'],
+        out: ['BTC', 'WBTC'],
+      },
+      production: {
+        in: ['sbBTC'],
+        out: ['BTC', 'WBTC'],
+      },
     },
-    btc_bep: {
-      test: { in: [], out: [] },
-      production: { in: [], out: [] },
+    btc_bep20: {
+      test: {
+        in: ['sbBTC.BEP20'],
+        out: ['BTC', 'BTCB.BEP20'],
+      },
+      production: {
+        in: [],
+        out: [],
+      },
     },
   },
 } as const;
@@ -156,4 +194,59 @@ export const getSwapableWith = <
   set.delete(coin as any);
 
   return Array.from(set);
+};
+
+export const getDisplayNameForCoin = ({ coin }: { coin: SkybridgeCoin }): string => {
+  switch (coin) {
+    case 'BTC':
+      return 'BTC';
+    case 'BTCB.BEP20':
+      return 'BTCB (BEP20)';
+    case 'sbBTC.BEP20':
+      return 'sbBTC (BEP20)';
+    case 'WBTC':
+      return 'WBTC (ERC20)';
+    case 'sbBTC':
+      return 'sbBTC (ERC20)';
+  }
+};
+
+export const toApiCoin = ({ coin }: { coin: SkybridgeCoin }): SkybridgeApiCoin => {
+  switch (coin) {
+    case 'BTC':
+      return 'BTC';
+    case 'BTCB.BEP20':
+      return 'BTCB';
+    case 'WBTC':
+      return 'WBTC';
+    case 'sbBTC.BEP20':
+    case 'sbBTC':
+      return 'sbBTC';
+  }
+};
+
+export const fromApiCoin = ({
+  coin,
+  bridge,
+}: {
+  coin: SkybridgeApiCoin;
+  bridge: SkybridgeBridge;
+}): SkybridgeCoin => {
+  if (bridge === 'btc_erc') {
+    if ((coin as any) === 'BTCE') return 'WBTC';
+    return coin as SkybridgeCoin;
+  }
+
+  if (bridge === 'btc_bep20') {
+    switch (coin) {
+      case 'BTC':
+        return 'BTC';
+      case 'BTCB':
+        return 'BTCB.BEP20';
+      case 'sbBTC':
+        return 'sbBTC.BEP20';
+    }
+  }
+
+  throw new Error(`Could not find SDK coin ID for "${coin}" in bridge "${bridge}"`);
 };

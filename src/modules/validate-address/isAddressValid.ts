@@ -1,7 +1,6 @@
 import type { SkybridgeContext } from '../context';
 import type { SkybridgeChain } from '../chains';
 
-import { isBinanceAddress } from './isBinanceAddress';
 import { isBitcoinAddress } from './isBitcoinAddress';
 import { isEthereumAddress } from './isEthereumAddress';
 
@@ -19,16 +18,12 @@ export const isAddressValid = ({
   chain?: SkybridgeChain;
 }): boolean => {
   if (typeof chain === 'undefined') {
-    return (
-      isEthereumAddress({ context, address }) ||
-      isBitcoinAddress({ context, address }) ||
-      isBinanceAddress({ context, address })
-    );
+    return isEthereumAddress({ context, address }) || isBitcoinAddress({ context, address });
   }
 
   switch (chain) {
-    case 'binance':
-      return isBinanceAddress({ context, address });
+    case 'binance-smart':
+      return isEthereumAddress({ context, address });
     case 'bitcoin':
       return isBitcoinAddress({ context, address });
     case 'ethereum':
