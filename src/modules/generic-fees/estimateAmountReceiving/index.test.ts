@@ -40,7 +40,7 @@ it.each<
   [
     { amountDesired: '156', currencyDeposit: 'sbBTC', currencyReceiving: 'WBTC' },
     {
-      amountReceiving: '155.68785',
+      amountReceiving: '156',
       feeBridgeFraction: '0.002',
       feeMiner: '0.00015',
       feeCurrency: 'WBTC',
@@ -50,11 +50,11 @@ it.each<
   [
     { amountDesired: '156', currencyDeposit: 'BTC', currencyReceiving: 'sbBTC' },
     {
-      amountReceiving: '155.22',
+      amountReceiving: '155.68785',
       feeBridgeFraction: '0.005',
       feeMiner: '0',
       feeCurrency: 'sbBTC',
-      feeTotal: '0.78',
+      feeTotal: '0.31215',
     },
   ],
 ])('works for %O', async ({ amountDesired, currencyDeposit, currencyReceiving }, expected) => {
