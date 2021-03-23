@@ -1,5 +1,6 @@
 import type { PartialDeep } from 'type-fest';
 
+import type { SkybridgeBridge } from '../bridges';
 import type { SkybridgeMode } from '../modes';
 
 import { getNetworkDetails } from './getNetworkDetails';
@@ -15,30 +16,36 @@ export const buildContext = async <M extends SkybridgeMode>({
   mode: M;
 } & PartialDeep<Omit<SkybridgeContext<M>, 'mode'>>): Promise<SkybridgeContext<M>> => {
   const result = await getNetworkDetails();
+  const getRandomNode = ({
+    mode,
+    bridge,
+    from,
+  }: {
+    mode: M;
+    bridge: SkybridgeBridge;
+    from: 'swapNodes' | 'indexerNodes';
+  }) => {
+    try {
+      return (
+        result[mode][from][bridge][randomInt(0, result[mode][from][bridge].length - 1)] || null
+      );
+    } catch (e) {
+      return null;
+    }
+  };
+
   return {
     mode,
     affiliateApi: affiliateApi ?? 'https://affiliate.swingby.network',
     servers: {
       ...servers,
       swapNode: {
-        btc_erc:
-          result[mode].swapNodes.btc_erc[randomInt(0, result[mode].swapNodes.btc_erc.length - 1)] ||
-          null,
-        btc_bep20:
-          result[mode].swapNodes.btc_bep20[
-            randomInt(0, result[mode].swapNodes.btc_bep20.length - 1)
-          ] || null,
-        ...servers?.swapNode,
+        btc_erc: getRandomNode({ mode, bridge: 'btc_erc', from: 'swapNodes' }),
+        btc_bep20: getRandomNode({ mode, bridge: 'btc_bep20', from: 'swapNodes' }),
       },
       indexer: {
-        btc_erc:
-          result[mode].indexerNodes.btc_erc[
-            randomInt(0, result[mode].indexerNodes.btc_erc.length - 1)
-          ] || null,
-        btc_bep20:
-          result[mode].indexerNodes.btc_bep20[
-            randomInt(0, result[mode].indexerNodes.btc_bep20.length - 1)
-          ] || null,
+        btc_erc: getRandomNode({ mode, bridge: 'btc_erc', from: 'indexerNodes' }),
+        btc_bep20: getRandomNode({ mode, bridge: 'btc_bep20', from: 'indexerNodes' }),
         ...servers?.indexer,
       },
     },
