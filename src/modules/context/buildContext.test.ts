@@ -1,19 +1,17 @@
+import type { SkybridgeBridge } from '../bridges';
+import type { SkybridgeMode } from '../modes';
+
 import { buildContext } from './buildContext';
 
 jest.mock('./getNetworkDetails', () => ({
-  getNetworkDetails: () => ({
-    test: {
-      explorers: ['explorer-a'],
-      swapNodes: {
-        btc_erc: ['swap-erc-a'],
-        btc_bep20: ['swap-bep-a'],
-      },
-      indexerNodes: {
-        btc_erc: ['indexer-erc-a'],
-        btc_bep20: ['indexer-bep-a'],
-      },
-    },
-  }),
+  getNetworkDetails: ({ mode, bridge }: { mode: SkybridgeMode; bridge: SkybridgeBridge }) => {
+    const prefix = `${mode}__${bridge}__`;
+    return {
+      explorers: [`${prefix}explorer`],
+      swapNodes: [`${prefix}swap-node`],
+      indexerNodes: [`${prefix}indexer-node`],
+    };
+  },
 }));
 
 const mode = 'test';
@@ -23,8 +21,11 @@ it('returns default according to result of getNetworkDetails()', () => {
     affiliateApi: 'https://affiliate.swingby.network',
     mode,
     servers: {
-      indexer: { btc_bep20: 'indexer-bep-a', btc_erc: 'indexer-erc-a' },
-      swapNode: { btc_bep20: 'swap-bep-a', btc_erc: 'swap-erc-a' },
+      indexer: {
+        btc_bep20: 'test__btc_bep20__indexer-node',
+        btc_erc: 'test__btc_erc__indexer-node',
+      },
+      swapNode: { btc_bep20: 'test__btc_bep20__swap-node', btc_erc: 'test__btc_erc__swap-node' },
     },
   });
 });
@@ -34,8 +35,11 @@ it('allows overwriting affiliateApi', () => {
     affiliateApi: 'my-value',
     mode,
     servers: {
-      indexer: { btc_bep20: 'indexer-bep-a', btc_erc: 'indexer-erc-a' },
-      swapNode: { btc_bep20: 'swap-bep-a', btc_erc: 'swap-erc-a' },
+      indexer: {
+        btc_bep20: 'test__btc_bep20__indexer-node',
+        btc_erc: 'test__btc_erc__indexer-node',
+      },
+      swapNode: { btc_bep20: 'test__btc_bep20__swap-node', btc_erc: 'test__btc_erc__swap-node' },
     },
   });
 });
@@ -45,8 +49,11 @@ it('allows overwriting affiliateApi with empty string', () => {
     affiliateApi: '',
     mode,
     servers: {
-      indexer: { btc_bep20: 'indexer-bep-a', btc_erc: 'indexer-erc-a' },
-      swapNode: { btc_bep20: 'swap-bep-a', btc_erc: 'swap-erc-a' },
+      indexer: {
+        btc_bep20: 'test__btc_bep20__indexer-node',
+        btc_erc: 'test__btc_erc__indexer-node',
+      },
+      swapNode: { btc_bep20: 'test__btc_bep20__swap-node', btc_erc: 'test__btc_erc__swap-node' },
     },
   });
 });
@@ -58,8 +65,8 @@ it('allows overwriting one server', () => {
     affiliateApi: 'https://affiliate.swingby.network',
     mode,
     servers: {
-      indexer: { btc_bep20: 'my-bep-a', btc_erc: 'indexer-erc-a' },
-      swapNode: { btc_bep20: 'swap-bep-a', btc_erc: 'swap-erc-a' },
+      indexer: { btc_bep20: 'my-bep-a', btc_erc: 'test__btc_erc__indexer-node' },
+      swapNode: { btc_bep20: 'test__btc_bep20__swap-node', btc_erc: 'test__btc_erc__swap-node' },
     },
   });
 });
@@ -78,7 +85,7 @@ it('allows overwriting several servers', () => {
     mode,
     servers: {
       indexer: { btc_bep20: 'my-i-bep-a', btc_erc: 'my-i-erc-a' },
-      swapNode: { btc_bep20: 'swap-bep-a', btc_erc: 'my-s-erc-a' },
+      swapNode: { btc_bep20: 'test__btc_bep20__swap-node', btc_erc: 'my-s-erc-a' },
     },
   });
 });

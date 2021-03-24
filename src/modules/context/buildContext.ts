@@ -1,6 +1,6 @@
 import type { PartialDeep } from 'type-fest';
 
-import type { SkybridgeBridge } from '../bridges';
+import { SkybridgeBridge, SKYBRIDGE_BRIDGES } from '../bridges';
 import type { SkybridgeMode } from '../modes';
 
 import { getNetworkDetails } from './getNetworkDetails';
@@ -15,21 +15,22 @@ export const buildContext = async <M extends SkybridgeMode>({
 }: {
   mode: M;
 } & PartialDeep<Omit<SkybridgeContext<M>, 'mode'>>): Promise<SkybridgeContext<M>> => {
-  const result = await getNetworkDetails();
+  const results = await Promise.all(
+    SKYBRIDGE_BRIDGES.map((bridge) => getNetworkDetails({ mode, bridge })),
+  );
+
   const getRandomNode = ({
-    mode,
     bridge,
     from,
   }: {
-    mode: M;
     bridge: SkybridgeBridge;
     from: 'swapNodes' | 'indexerNodes';
   }) => {
+    const index = SKYBRIDGE_BRIDGES.findIndex((it) => it === bridge);
     try {
-      return (
-        result[mode][from][bridge][randomInt(0, result[mode][from][bridge].length - 1)] || null
-      );
+      return results[index][from][randomInt(0, results[index][from].length - 1)] || null;
     } catch (e) {
+      console.error('wat', e, JSON.stringify(results));
       return null;
     }
   };
@@ -40,13 +41,13 @@ export const buildContext = async <M extends SkybridgeMode>({
     servers: {
       ...servers,
       swapNode: {
-        btc_erc: getRandomNode({ mode, bridge: 'btc_erc', from: 'swapNodes' }),
-        btc_bep20: getRandomNode({ mode, bridge: 'btc_bep20', from: 'swapNodes' }),
+        btc_erc: getRandomNode({ bridge: 'btc_erc', from: 'swapNodes' }),
+        btc_bep20: getRandomNode({ bridge: 'btc_bep20', from: 'swapNodes' }),
         ...servers?.swapNode,
       },
       indexer: {
-        btc_erc: getRandomNode({ mode, bridge: 'btc_erc', from: 'indexerNodes' }),
-        btc_bep20: getRandomNode({ mode, bridge: 'btc_bep20', from: 'indexerNodes' }),
+        btc_erc: getRandomNode({ bridge: 'btc_erc', from: 'indexerNodes' }),
+        btc_bep20: getRandomNode({ bridge: 'btc_bep20', from: 'indexerNodes' }),
         ...servers?.indexer,
       },
     },

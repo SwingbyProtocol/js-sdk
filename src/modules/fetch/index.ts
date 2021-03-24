@@ -4,12 +4,15 @@ import { baseLogger } from '../logger';
 
 const logger = baseLogger.extend('fetch');
 
-export const fetch = async <SuccessResponse extends unknown>(
+export const fetch = async <
+  SuccessResponse extends unknown,
+  ErrorResponse extends unknown = string
+>(
   url: Parameters<typeof originalFetch>[0],
   optionsParam?: Parameters<typeof originalFetch>[1],
 ): Promise<
   | { ok: true; status: number; response: SuccessResponse }
-  | { ok: false; status: number; response: string }
+  | { ok: false; status: number; response: ErrorResponse }
 > => {
   const options: typeof optionsParam = {
     ...optionsParam,
@@ -36,4 +39,15 @@ export const fetch = async <SuccessResponse extends unknown>(
   }
 
   return { ok: true, status: result.status, response };
+};
+
+export const fetcher = async <Data extends unknown = unknown>(
+  ...args: Parameters<typeof fetch>
+) => {
+  const result = await fetch<Data>(...args);
+  if (!result.ok) {
+    throw new Error(`${result.status}: ${result.response}`);
+  }
+
+  return result.response;
 };
