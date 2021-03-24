@@ -2,7 +2,7 @@ import { fetch } from '../fetch';
 import type { SkybridgeMode } from '../modes';
 import type { SkybridgeParams, SkybridgeStatus } from '../common-params';
 import type { SkybridgeResource } from '../resources';
-import { SkybridgeCoin } from '../coins';
+import { fromApiCoin, SkybridgeCoin } from '../coins';
 import { SkybridgeBridge } from '../bridges';
 
 type ServerReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = {
@@ -64,7 +64,7 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
 
         if (result.ok && result.response.items.length > 0) {
           bridgeCache.set(hash, bridge);
-          return result.response.items[0];
+          return { bridge, data: result.response.items[0] };
         }
 
         throw new Error();
@@ -84,7 +84,7 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
 
           if (result.ok && result.response.items.length > 0) {
             bridgeCache.set(hash, bridge);
-            return result.response.items[0];
+            return { bridge, data: result.response.items[0] };
           }
 
           return null;
@@ -102,24 +102,27 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
     return result;
   })();
 
-  if (resource === 'withdrawal' && result.currencyIn !== 'sbBTC') {
+  if (resource === 'withdrawal' && !/^sbBTC/.test(result.data.currencyIn)) {
     throw new Error(`"${hash}" is not a withdrawal, it is a swap.`);
   }
 
   return ({
-    addressReceiving: result.addressOut,
-    addressDeposit: result.addressDeposit,
-    amountDeposit: result.amountIn,
-    amountReceiving: result.amountOut || null,
+    addressReceiving: result.data.addressOut,
+    addressDeposit: result.data.addressDeposit,
+    amountDeposit: result.data.amountIn,
+    amountReceiving: result.data.amountOut || null,
     // Temporarily fixes API bug where it retuns `BTCE` instead of `WBTC`
-    currencyDeposit: (result.currencyIn as any) === 'BTCE' ? 'WBTC' : result.currencyIn,
-    currencyReceiving: (result.currencyOut as any) === 'BTCE' ? 'WBTC' : result.currencyOut,
-    hash: result.hash || undefined,
-    status: result.status,
-    txDepositId: result.txIdIn || null,
-    txReceivingId: result.txIdOut || null,
-    timestamp: new Date(result.timestamp * 1000),
-    feeCurrency: ((result.feeCurrency as any) === 'BTCE' ? 'WBTC' : result.feeCurrency) || null,
-    feeTotal: result.fee,
+    currencyDeposit: fromApiCoin({ bridge: result.bridge, coin: result.data.currencyIn as any }),
+    currencyReceiving: fromApiCoin({ bridge: result.bridge, coin: result.data.currencyOut as any }),
+    hash: result.data.hash || undefined,
+    status: result.data.status,
+    txDepositId: result.data.txIdIn || null,
+    txReceivingId: result.data.txIdOut || null,
+    timestamp: new Date(result.data.timestamp * 1000),
+    feeCurrency: fromApiCoin({
+      bridge: result.bridge,
+      coin: (result.data.feeCurrency as any) || null,
+    }),
+    feeTotal: result.data.fee,
   } as unknown) as ReturnType<R, M>;
 };
