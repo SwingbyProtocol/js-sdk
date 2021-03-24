@@ -1,17 +1,17 @@
 import type { SkybridgeMode } from '../../modes';
 import type { SkybridgeParams } from '../../common-params';
-import { fetch } from '../../fetch';
+import { fetcher } from '../../fetch';
+import { SkybridgeBridge } from '../../bridges';
 
 export const getSbbtcPrice = async <M extends SkybridgeMode>({
   context,
-}: Pick<SkybridgeParams<'withdrawal', M>, 'context'>): Promise<string> => {
-  const result = await fetch<{
+  bridge,
+}: Pick<SkybridgeParams<'withdrawal', M>, 'context'> & {
+  bridge: SkybridgeBridge;
+}): Promise<string> => {
+  const result = await fetcher<{
     price: string;
-  }>(`https://network.skybridge.exchange/api/v1/${context.mode}/sbBTC/price`);
+  }>(`https://network.skybridge.exchange/api/v2/${context.mode}/${bridge}/sbBTC/price`);
 
-  if (!result.ok) {
-    throw new Error(`${result.status}: ${result.response}`);
-  }
-
-  return result.response.price;
+  return result.price;
 };

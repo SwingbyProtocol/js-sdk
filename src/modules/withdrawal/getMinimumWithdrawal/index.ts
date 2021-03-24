@@ -1,27 +1,26 @@
 import type { SkybridgeMode } from '../../modes';
+import type { SkybridgeBridge } from '../../bridges';
 import type { SkybridgeParams } from '../../common-params';
-import { fetch } from '../../fetch';
+import { fetcher } from '../../fetch';
 import { SkybridgeCoin } from '../../coins';
 
 export const getMinimumWithdrawal = async <M extends SkybridgeMode>({
   context,
+  bridge,
   currencyReceiving,
   amountDesired = '0',
-}: Pick<SkybridgeParams<'withdrawal', M>, 'context' | 'currencyReceiving'> &
+}: { bridge: SkybridgeBridge } & Pick<
+  SkybridgeParams<'withdrawal', M>,
+  'context' | 'currencyReceiving'
+> &
   Partial<Pick<SkybridgeParams<'withdrawal', M>, 'amountDesired'>>): Promise<{
   minimumWithdrawal: string;
   minimumWithdrawalCurrency: SkybridgeCoin<'withdrawal', M, 'out'>;
 }> => {
-  const result = await fetch<{
+  return await fetcher<{
     minimumWithdrawalCurrency: SkybridgeCoin<'withdrawal', M, 'out'>;
     minimumWithdrawal: string;
   }>(
-    `https://network.skybridge.exchange/api/v1/${context.mode}/sbBTC/withdrawal?currencyReceiving=${currencyReceiving}&amountDeposit=${amountDesired}`,
+    `https://network.skybridge.exchange/api/v2/${context.mode}/${bridge}/sbBTC/withdrawal?currencyReceiving=${currencyReceiving}&amountDeposit=${amountDesired}`,
   );
-
-  if (!result.ok) {
-    throw new Error(`${result.status}: ${result.response}`);
-  }
-
-  return result.response;
 };
