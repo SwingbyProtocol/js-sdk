@@ -6,7 +6,8 @@ import { SkybridgeBridge } from '../../bridges';
 export const getSbbtcPrice = async <M extends SkybridgeMode>({
   context,
   bridge,
-}: Pick<SkybridgeParams<'withdrawal', M>, 'context'> & {
+}: {
+  context: Pick<SkybridgeParams<'withdrawal', M>['context'], 'mode'>;
   bridge: SkybridgeBridge;
 }): Promise<string> => {
   const result = await fetcher<{
