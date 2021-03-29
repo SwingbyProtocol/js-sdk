@@ -12,28 +12,28 @@ it.each<
     Pick<SkybridgeParams<'withdrawal', 'test'>, 'amountDesired' | 'currencyReceiving'> & {
       bridge: SkybridgeBridge;
     },
-    { minimumWithdrawal: string; minimumWithdrawalCurrency: SkybridgeCoin },
+    { minimumWithdrawalCurrency: SkybridgeCoin },
   ]
 >([
   [
     { bridge: 'btc_erc', amountDesired: '0', currencyReceiving: 'BTC' },
-    { minimumWithdrawal: '0.0003006', minimumWithdrawalCurrency: 'BTC' },
+    { minimumWithdrawalCurrency: 'BTC' },
   ],
   [
     { bridge: 'btc_erc', amountDesired: '0', currencyReceiving: 'WBTC' },
-    { minimumWithdrawal: '0.0001503', minimumWithdrawalCurrency: 'WBTC' },
+    { minimumWithdrawalCurrency: 'WBTC' },
   ],
   [
     { bridge: 'btc_erc', amountDesired: '200', currencyReceiving: 'WBTC' },
-    { minimumWithdrawal: '0.0001503', minimumWithdrawalCurrency: 'WBTC' },
+    { minimumWithdrawalCurrency: 'WBTC' },
   ],
   [
     { bridge: 'btc_bep20', amountDesired: '200', currencyReceiving: 'BTCB.BEP20' },
-    { minimumWithdrawal: '0.00001503', minimumWithdrawalCurrency: 'BTCB.BEP20' },
+    { minimumWithdrawalCurrency: 'BTCB.BEP20' },
   ],
   [
     { bridge: 'btc_bep20', amountDesired: '200', currencyReceiving: 'BTC' },
-    { minimumWithdrawal: '0.0002004', minimumWithdrawalCurrency: 'BTC' },
+    { minimumWithdrawalCurrency: 'BTC' },
   ],
 ])(
   'gets minimum withdrawal for %O',
@@ -48,6 +48,9 @@ it.each<
       currencyReceiving,
     });
 
-    return expect(result).toMatchObject(expected);
+    return expect(result).toMatchObject({
+      ...expected,
+      minimumWithdrawal: expect.stringMatching(/\d+(\.\d+)?/),
+    });
   },
 );

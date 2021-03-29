@@ -38,6 +38,7 @@ type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = Pick<
   | 'timestamp'
   | 'feeTotal'
   | 'feeCurrency'
+  | 'addressSending'
 > & {
   txDepositId: SkybridgeParams<R, M>['txDepositId'] | null;
   txReceivingId: SkybridgeParams<R, M>['txReceivingId'] | null;
@@ -109,6 +110,7 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
   return ({
     addressReceiving: result.data.addressOut,
     addressDeposit: result.data.addressDeposit,
+    addressSending: result.data.addressIn || null,
     amountDeposit: result.data.amountIn,
     amountReceiving: result.data.amountOut || null,
     // Temporarily fixes API bug where it retuns `BTCE` instead of `WBTC`
