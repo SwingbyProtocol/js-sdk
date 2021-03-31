@@ -23,8 +23,8 @@ const COINS = {
         out: ['BTC', 'BTCB.BEP20'],
       },
       production: {
-        in: [],
-        out: [],
+        in: ['BTC', 'BTCB.BEP20', 'sbBTC.BEP20'],
+        out: ['BTC', 'BTCB.BEP20'],
       },
     },
   },
@@ -45,8 +45,8 @@ const COINS = {
         out: ['sbBTC.BEP20'],
       },
       production: {
-        in: [],
-        out: [],
+        in: ['BTC', 'BTCB.BEP20'],
+        out: ['sbBTC.BEP20'],
       },
     },
   },
@@ -67,8 +67,8 @@ const COINS = {
         out: ['BTC', 'BTCB.BEP20'],
       },
       production: {
-        in: [],
-        out: [],
+        in: ['sbBTC.BEP20'],
+        out: ['BTC', 'BTCB.BEP20'],
       },
     },
   },
