@@ -159,7 +159,7 @@ export const getBridgesForCoin = <
   return Array.from(result);
 };
 
-export const getSwapableWith = <
+export const getSwapableFrom = <
   A extends SkybridgeResource,
   M extends SkybridgeMode,
   B extends SkybridgeBridge
@@ -185,6 +185,43 @@ export const getSwapableWith = <
 
         if (((COINS[resourceIt][bridgeIt][modeIt].in as unknown) as string[]).includes(coin)) {
           result.push(...COINS[resourceIt][bridgeIt][modeIt].out);
+        }
+      });
+    });
+  });
+
+  const set = new Set(result);
+  set.delete(coin as any);
+
+  return Array.from(set);
+};
+
+export const getSwapableTo = <
+  A extends SkybridgeResource,
+  M extends SkybridgeMode,
+  B extends SkybridgeBridge
+>({
+  context: { mode },
+  coin,
+  bridge,
+  resource,
+}: {
+  context: { mode: M };
+  coin: SkybridgeCoin;
+  bridge?: B;
+  resource: A;
+}): SkybridgeCoin<A, M, 'in', B>[] => {
+  const result: SkybridgeCoin<A, M, 'in', B>[] = [];
+
+  typedKeys(COINS).forEach((resourceIt) => {
+    typedKeys(COINS[resourceIt]).forEach((bridgeIt) => {
+      typedKeys(COINS[resourceIt][bridgeIt]).forEach((modeIt) => {
+        if (resource && resource !== resourceIt) return;
+        if (bridge && bridge !== bridgeIt) return;
+        if (mode && mode !== modeIt) return;
+
+        if (((COINS[resourceIt][bridgeIt][modeIt].out as unknown) as string[]).includes(coin)) {
+          result.push(...COINS[resourceIt][bridgeIt][modeIt].in);
         }
       });
     });
