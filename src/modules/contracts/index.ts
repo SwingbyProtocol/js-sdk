@@ -14,7 +14,7 @@ export const CONTRACTS = {
     },
     sbBTC: {
       test: {
-        address: '0x9f8ff0acc3a9aded2a06d80aa12c34941268da87',
+        address: '0x8d9c3577b20c52ceb51a943ec58db3a7f2a73e29',
         abi: ABI_TOKEN,
       },
       production: {
@@ -56,7 +56,7 @@ export const CONTRACTS = {
   bridges: {
     btc_erc: {
       test: {
-        address: '0x898b357381a2a6f56e21218763d12eee92cb69ed',
+        address: '0x44cFD0A2B9dd896f86b6e332C195E9879dF93686',
         abi: ABI_SKYBRIDGE,
       },
       production: {
