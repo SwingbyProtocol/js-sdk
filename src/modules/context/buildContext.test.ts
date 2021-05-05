@@ -7,7 +7,9 @@ jest.mock('./getNetworkDetails', () => ({
   getNetworkDetails: ({ mode, bridge }: { mode: SkybridgeMode; bridge: SkybridgeBridge }) => {
     const prefix = `${mode}__${bridge}__`;
     return {
-      swapNodes: [{ restUri: `${prefix}swap-node`, lastSeenAt: '2021-05-05T00:00:00.000Z' }],
+      swapNodes: [
+        { restUri: `https://${prefix}swap-node`, lastSeenAt: '2021-05-05T00:00:00.000Z' },
+      ],
       indexerNodes: [`${prefix}indexer-node`],
     };
   },
@@ -24,7 +26,10 @@ it('returns default according to result of getNetworkDetails()', () => {
         btc_bep20: 'test__btc_bep20__indexer-node',
         btc_erc: 'test__btc_erc__indexer-node',
       },
-      swapNode: { btc_bep20: 'test__btc_bep20__swap-node', btc_erc: 'test__btc_erc__swap-node' },
+      swapNode: {
+        btc_bep20: 'https://test__btc_bep20__swap-node',
+        btc_erc: 'https://test__btc_erc__swap-node',
+      },
     },
   });
 });
@@ -38,7 +43,10 @@ it('allows overwriting affiliateApi', () => {
         btc_bep20: 'test__btc_bep20__indexer-node',
         btc_erc: 'test__btc_erc__indexer-node',
       },
-      swapNode: { btc_bep20: 'test__btc_bep20__swap-node', btc_erc: 'test__btc_erc__swap-node' },
+      swapNode: {
+        btc_bep20: 'https://test__btc_bep20__swap-node',
+        btc_erc: 'https://test__btc_erc__swap-node',
+      },
     },
   });
 });
@@ -52,7 +60,10 @@ it('allows overwriting affiliateApi with empty string', () => {
         btc_bep20: 'test__btc_bep20__indexer-node',
         btc_erc: 'test__btc_erc__indexer-node',
       },
-      swapNode: { btc_bep20: 'test__btc_bep20__swap-node', btc_erc: 'test__btc_erc__swap-node' },
+      swapNode: {
+        btc_bep20: 'https://test__btc_bep20__swap-node',
+        btc_erc: 'https://test__btc_erc__swap-node',
+      },
     },
   });
 });
@@ -65,7 +76,10 @@ it('allows overwriting one server', () => {
     mode,
     servers: {
       indexer: { btc_bep20: 'my-bep-a', btc_erc: 'test__btc_erc__indexer-node' },
-      swapNode: { btc_bep20: 'test__btc_bep20__swap-node', btc_erc: 'test__btc_erc__swap-node' },
+      swapNode: {
+        btc_bep20: 'https://test__btc_bep20__swap-node',
+        btc_erc: 'https://test__btc_erc__swap-node',
+      },
     },
   });
 });
@@ -84,7 +98,7 @@ it('allows overwriting several servers', () => {
     mode,
     servers: {
       indexer: { btc_bep20: 'my-i-bep-a', btc_erc: 'my-i-erc-a' },
-      swapNode: { btc_bep20: 'test__btc_bep20__swap-node', btc_erc: 'my-s-erc-a' },
+      swapNode: { btc_bep20: 'https://test__btc_bep20__swap-node', btc_erc: 'my-s-erc-a' },
     },
   });
 });

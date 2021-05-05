@@ -35,11 +35,19 @@ export const buildContext = async <M extends SkybridgeMode>({
     const index = SKYBRIDGE_BRIDGES.findIndex((it) => it === bridge);
     try {
       const swapNodes = (() => {
-        const sorted = [...results[index].swapNodes].sort(
-          (a, b) =>
-            DateTime.fromJSDate(b.lastSeenAt).toMillis() -
-            DateTime.fromJSDate(a.lastSeenAt).toMillis(),
-        );
+        const sorted = [...results[index].swapNodes]
+          .filter((it) => {
+            try {
+              return new URL(it.restUri).protocol === 'https:';
+            } catch (e) {
+              return false;
+            }
+          })
+          .sort(
+            (a, b) =>
+              DateTime.fromJSDate(b.lastSeenAt).toMillis() -
+              DateTime.fromJSDate(a.lastSeenAt).toMillis(),
+          );
 
         if (sorted.length <= 1) return sorted;
         const latestDate = DateTime.fromJSDate(sorted[0].lastSeenAt);
