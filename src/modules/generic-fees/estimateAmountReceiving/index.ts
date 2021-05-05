@@ -25,7 +25,7 @@ export const estimateAmountReceiving = async <M extends SkybridgeMode>({
     feeTotal: string;
     estimatedAmountReceiving: string;
   }>(
-    `https://network.skybridge.exchange/api/v1/${context.mode}/fees?currencyDeposit=${currencyDeposit}&currencyReceiving=${currencyReceiving}&amountDeposit=${amountDesired}`,
+    `https://network.skybridge.exchange/api/v3/${context.mode}/fees?currencyDeposit=${currencyDeposit}&currencyReceiving=${currencyReceiving}&amountDeposit=${amountDesired}`,
   );
 
   if (!result.ok) {

@@ -39,7 +39,7 @@ export const getNetworkNodes = async ({
         bondAmount: string;
         bondExpiresAt: string;
       }>
-    >(`https://skybridge-network-api.vercel.app/api/v3/${mode}/${bridge}/nodes`)
+    >(`https://network.skybridge.exchange/api/v3/${mode}/${bridge}/nodes`)
   ).map((it) => ({
     ...it,
     lastSeenAt: DateTime.fromISO(it.lastSeenAt).toJSDate(),
