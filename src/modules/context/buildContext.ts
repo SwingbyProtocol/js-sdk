@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import type { PartialDeep } from 'type-fest';
 
 import { SkybridgeBridge, SKYBRIDGE_BRIDGES } from '../bridges';
@@ -19,18 +20,37 @@ export const buildContext = async <M extends SkybridgeMode>({
     SKYBRIDGE_BRIDGES.map((bridge) => getNetworkDetails({ mode, bridge })),
   );
 
-  const getRandomNode = ({
-    bridge,
-    from,
-  }: {
-    bridge: SkybridgeBridge;
-    from: 'swapNodes' | 'indexerNodes';
-  }) => {
+  const getRandomIndexer = ({ bridge }: { bridge: SkybridgeBridge }) => {
     const index = SKYBRIDGE_BRIDGES.findIndex((it) => it === bridge);
     try {
-      return results[index][from][randomInt(0, results[index][from].length - 1)] || null;
+      return (
+        results[index].indexerNodes[randomInt(0, results[index].indexerNodes.length - 1)] || null
+      );
     } catch (e) {
-      console.error('wat', e, JSON.stringify(results));
+      return null;
+    }
+  };
+
+  const getRandomSwapNode = ({ bridge }: { bridge: SkybridgeBridge }) => {
+    const index = SKYBRIDGE_BRIDGES.findIndex((it) => it === bridge);
+    try {
+      const swapNodes = (() => {
+        const sorted = [...results[index].swapNodes].sort(
+          (a, b) =>
+            DateTime.fromJSDate(b.lastSeenAt).toMillis() -
+            DateTime.fromJSDate(a.lastSeenAt).toMillis(),
+        );
+
+        if (sorted.length <= 1) return sorted;
+        const latestDate = DateTime.fromJSDate(sorted[0].lastSeenAt);
+
+        return sorted.filter(
+          (it) => latestDate.diff(DateTime.fromJSDate(it.lastSeenAt)).as('minutes') < 15,
+        );
+      })();
+
+      return (swapNodes[randomInt(0, swapNodes.length - 1)] || null)?.restUri;
+    } catch (e) {
       return null;
     }
   };
@@ -39,16 +59,13 @@ export const buildContext = async <M extends SkybridgeMode>({
     mode,
     affiliateApi: affiliateApi ?? 'https://affiliate.swingby.network',
     servers: {
-      ...servers,
       swapNode: {
-        btc_erc: getRandomNode({ bridge: 'btc_erc', from: 'swapNodes' }),
-        btc_bep20: getRandomNode({ bridge: 'btc_bep20', from: 'swapNodes' }),
-        ...servers?.swapNode,
+        btc_erc: servers?.swapNode?.btc_erc ?? getRandomSwapNode({ bridge: 'btc_erc' }),
+        btc_bep20: servers?.swapNode?.btc_bep20 ?? getRandomSwapNode({ bridge: 'btc_bep20' }),
       },
       indexer: {
-        btc_erc: getRandomNode({ bridge: 'btc_erc', from: 'indexerNodes' }),
-        btc_bep20: getRandomNode({ bridge: 'btc_bep20', from: 'indexerNodes' }),
-        ...servers?.indexer,
+        btc_erc: servers?.indexer?.btc_erc ?? getRandomIndexer({ bridge: 'btc_erc' }),
+        btc_bep20: servers?.indexer?.btc_bep20 ?? getRandomIndexer({ bridge: 'btc_bep20' }),
       },
     },
   };

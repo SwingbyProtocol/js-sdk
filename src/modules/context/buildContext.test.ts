@@ -7,8 +7,7 @@ jest.mock('./getNetworkDetails', () => ({
   getNetworkDetails: ({ mode, bridge }: { mode: SkybridgeMode; bridge: SkybridgeBridge }) => {
     const prefix = `${mode}__${bridge}__`;
     return {
-      explorers: [`${prefix}explorer`],
-      swapNodes: [`${prefix}swap-node`],
+      swapNodes: [{ restUri: `${prefix}swap-node`, lastSeenAt: '2021-05-05T00:00:00.000Z' }],
       indexerNodes: [`${prefix}indexer-node`],
     };
   },

@@ -1,6 +1,31 @@
 import type { SkybridgeBridge } from '../bridges';
 import type { SkybridgeMode } from '../modes';
-import { fetcher } from '../fetch';
+
+import { getNetworkNodes } from './getNetworkNodes';
+
+const NODE_STATUSES = [
+  'churned-in',
+  'may-churn-in',
+  'may-churn-out--bond-too-low',
+  'may-churn-out--bond-expiring',
+  'inactive--bond-too-low',
+  'inactive--bond-expired',
+  'unreachable',
+] as const;
+export type NodeStatus = typeof NODE_STATUSES[number];
+
+const NETWORK_INFO: {
+  [k in SkybridgeMode]: { [k in SkybridgeBridge]: { indexerNodes: string[] } };
+} = {
+  production: {
+    btc_erc: { indexerNodes: ['https://btc-eth-indexer.swingby.network/bb-eth'] },
+    btc_bep20: { indexerNodes: ['https://btc-bsc-indexer.swingby.network/bb-bsc'] },
+  },
+  test: {
+    btc_erc: { indexerNodes: ['https://tbtc-goerli-node-1.swingby.network/bb-eth'] },
+    btc_bep20: { indexerNodes: ['https://tbtc-bsc-1.swingby.network/bb-bsc'] },
+  },
+};
 
 export const getNetworkDetails = async ({
   mode,
@@ -9,11 +34,8 @@ export const getNetworkDetails = async ({
   mode: SkybridgeMode;
   bridge: SkybridgeBridge;
 }) => {
-  const result = await fetcher<{
-    explorers: string[];
-    swapNodes: string[];
-    indexerNodes: string[];
-  }>(`https://network.skybridge.exchange/api/v2/${mode}/${bridge}/network`);
-
-  return result;
+  return {
+    indexerNodes: NETWORK_INFO[mode][bridge].indexerNodes,
+    swapNodes: await getNetworkNodes({ mode, bridge }),
+  };
 };

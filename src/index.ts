@@ -3,7 +3,7 @@ export type { SkybridgeBridge } from './modules/bridges';
 export type { SkybridgeResource } from './modules/resources';
 export type { SkybridgeDirection } from './modules/directions';
 export type { SkybridgeStatus } from './modules/common-params';
-export type { SkybridgeContext } from './modules/context';
+export type { SkybridgeContext, NodeStatus } from './modules/context';
 export type { SkybridgeCoin } from './modules/coins';
 export type { SkybridgeChain } from './modules/chains';
 
@@ -14,7 +14,7 @@ export {
   getDisplayNameForCoin,
 } from './modules/coins';
 export { createSwap, getSwapDetails } from './modules/swap';
-export { buildContext, getNetworkDetails, getBridgeFor } from './modules/context';
+export { buildContext, getNetworkNodes, getNetworkDetails, getBridgeFor } from './modules/context';
 export { isAddressValid } from './modules/validate-address';
 export { buildExplorerLink } from './modules/explorer-link';
 export { getChainFor, isSkybridgeChain } from './modules/chains';
