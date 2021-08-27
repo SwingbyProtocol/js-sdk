@@ -15,7 +15,7 @@ import { getPowEpoch } from './getPowEpoch';
 
 const logger = baseLogger.extend('pow');
 
-const difficultyZeroBits = 10;
+const difficultyZeroBits = 13;
 
 type Params<M extends SkybridgeMode> = Pick<
   SkybridgeParams<SkybridgeResource, M>,
