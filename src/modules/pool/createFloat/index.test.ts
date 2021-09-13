@@ -64,7 +64,7 @@ it.each<
         currencyReceiving,
         timestamp: expect.any(Date),
       });
-    } catch (e) {
+    } catch (e: any) {
       expect(e.message).toMatch(/The KVStore key \d+ already exists in epoch bucket \d+/);
     }
   },

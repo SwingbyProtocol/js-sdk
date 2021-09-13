@@ -26,7 +26,7 @@ export const getNetworkNodes = async ({
       Array<{
         id: string;
         moniker: string;
-        restUri: string;
+        restUri: string | null;
         lastSeenAt: string;
         status: NodeStatus;
         version: string;

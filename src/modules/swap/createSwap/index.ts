@@ -35,7 +35,7 @@ export const createSwap = async <M extends SkybridgeMode>(
       }
 
       logger('Swap linked to affiliate code: %j', linkResult.response);
-    } catch (e) {
+    } catch (e: any) {
       logger('Failed calling the affiliate program API: %s', e.message);
     }
   })();

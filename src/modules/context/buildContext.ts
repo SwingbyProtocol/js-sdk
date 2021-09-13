@@ -47,7 +47,18 @@ export const buildContext = async <M extends SkybridgeMode>({
         const sorted = [...results[index].swapNodes]
           .filter((it) => {
             try {
-              return new URL(it.restUri).protocol === 'https:';
+              return (
+                it.status !== 'unreachable' &&
+                typeof it.restUri === 'string' &&
+                new URL(it.restUri).protocol === 'https:'
+              );
+            } catch (e) {
+              return false;
+            }
+          })
+          .filter((it) => {
+            try {
+              return typeof it.restUri === 'string' && new URL(it.restUri).protocol === 'https:';
             } catch (e) {
               return false;
             }

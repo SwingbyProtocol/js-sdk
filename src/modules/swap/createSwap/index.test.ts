@@ -71,7 +71,7 @@ it.each<
         currencyReceiving,
         timestamp: expect.any(Date),
       });
-    } catch (e) {
+    } catch (e: any) {
       expect(e.message).toMatch(/The KVStore key \d+ already exists in epoch bucket \d+/);
     }
   },
@@ -89,7 +89,7 @@ it('crashes if there is not enough balance of the receiving currency', async () 
       currencyReceiving: 'WBTC',
       amountDesired: '100',
     });
-  } catch (e) {
+  } catch (e: any) {
     expect(e.message).toMatch(/There is not enough WBTC liquidity to perform your swap/);
   }
 });

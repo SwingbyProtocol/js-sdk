@@ -46,7 +46,7 @@ it.each<{
   const context = await buildContext({ mode });
   try {
     getBridgeFor({ context, currencyReceiving, currencyDeposit });
-  } catch (e) {
+  } catch (e: any) {
     expect(e.message).toMatch(/Could not find (test|production) bridge for/);
   }
 });

@@ -74,7 +74,7 @@ it.each<{ currencyDeposit: any; mode: SkybridgeMode; currencyReceiving: any }>([
       currencyReceiving,
       amountDesired: '1',
     });
-  } catch (e) {
+  } catch (e: any) {
     expect(e.message).toMatch(/(Could not find (test|production) bridge)|(must be one of)/);
   }
 });

@@ -38,7 +38,7 @@ it.each<Pick<SkybridgeParams<'swap', 'test'>, 'hash'>>([
   try {
     const context = await buildContext({ mode: 'test' });
     await getWithdrawalDetails({ context, hash });
-  } catch (e) {
+  } catch (e: any) {
     expect(e.message).toMatch(/is not a withdrawal, it is a swap/);
   }
 });
