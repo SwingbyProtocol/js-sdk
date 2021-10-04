@@ -21,6 +21,7 @@ type ServerReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = {
       timestamp: number;
       addressIn?: string;
       addressOut: string;
+      skypools?: boolean;
     }
   >;
 };
@@ -126,5 +127,6 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
       coin: (result.data.feeCurrency as any) || null,
     }),
     feeTotal: result.data.fee,
+    isSkypoolsSwap: resource === 'swap' && result.data.skypools === true,
   } as unknown) as ReturnType<R, M>;
 };
