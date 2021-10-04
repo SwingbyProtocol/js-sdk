@@ -40,6 +40,7 @@ type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = Pick<
   | 'feeTotal'
   | 'feeCurrency'
   | 'addressSending'
+  | 'isSkypoolsSwap'
 > & {
   txDepositId: SkybridgeParams<R, M>['txDepositId'] | null;
   txReceivingId: SkybridgeParams<R, M>['txReceivingId'] | null;

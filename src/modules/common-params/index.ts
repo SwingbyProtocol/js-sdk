@@ -48,5 +48,5 @@ export type SkybridgeParams<
   status: SkybridgeStatus;
   txDepositId: string;
   txReceivingId: string;
-  isSkypoolsSwap: boolean;
+  isSkypoolsSwap: R extends 'swap' ? boolean : false;
 };
