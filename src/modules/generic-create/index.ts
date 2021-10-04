@@ -19,7 +19,9 @@ export type CreateParams<R extends SkybridgeResource, M extends SkybridgeMode> =
 } & Pick<
   SkybridgeParams<R, M>,
   'context' | 'addressReceiving' | 'currencyDeposit' | 'currencyReceiving' | 'amountDesired'
->;
+> & {
+    isSkypoolsSwap?: SkybridgeParams<R, M>['isSkypoolsSwap'] | undefined;
+  };
 
 export type CreateResult<R extends SkybridgeResource, M extends SkybridgeMode> = R extends 'pool'
   ? Pick<
@@ -32,6 +34,7 @@ export type CreateResult<R extends SkybridgeResource, M extends SkybridgeMode> =
       | 'nonce'
       | 'timestamp'
       | 'hash'
+      | 'isSkypoolsSwap'
     >
   : Pick<
       SkybridgeParams<R, M>,
@@ -44,6 +47,7 @@ export type CreateResult<R extends SkybridgeResource, M extends SkybridgeMode> =
       | 'timestamp'
       | 'hash'
       | 'amountReceiving'
+      | 'isSkypoolsSwap'
     >;
 
 const INTERVAL = 2000;
@@ -58,6 +62,7 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
   resource,
   startedAt,
   timeout,
+  isSkypoolsSwap,
   ...params
 }: CreateParams<R, M> & { startedAt: number; timeout: number }): Promise<CreateResult<R, M>> => {
   logger('Will execute create(%j).', { ...params, resource, startedAt, timeout });
@@ -101,6 +106,7 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
     currencyOut: SkybridgeApiCoin;
     timestamp: number;
     addressOut: string;
+    skypools?: boolean;
   };
 
   const result = await fetch<ApiResponse>(
@@ -116,6 +122,7 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
         currency_from: toApiCoin({ coin: params.currencyDeposit }),
         currency_to: toApiCoin({ coin: params.currencyReceiving }),
         nonce,
+        skypools: isSkypoolsSwap === true,
       }),
     },
   );
@@ -133,6 +140,7 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
       addressDeposit: result.response.addressDeposit,
       addressReceiving: result.response.addressOut,
       timestamp: new Date(result.response.timestamp * 1000),
+      isSkypoolsSwap: resource === 'swap' && result.response.skypools === true,
     } as CreateResult<R, M>;
   }
 
