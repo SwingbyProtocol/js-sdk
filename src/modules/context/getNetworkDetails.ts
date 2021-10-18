@@ -23,7 +23,6 @@ const NETWORK_INFO: {
         'https://btc-eth-indexer.swingby.network/bb-eth',
         'https://btc-eth-indexer-2.swingby.network/bb-eth',
       ],
-      ropsten,
     },
     btc_bep20: {
       indexerNodes: [
@@ -33,7 +32,7 @@ const NETWORK_INFO: {
     },
   },
   test: {
-    btc_erc: { indexerNodes: ['https://tbtc-goerli-node-1.swingby.network/bb-eth'] },
+    btc_erc: { indexerNodes: ['https://tbtc-ropsten-node-1.swingby.network/bb-eth'] },
     btc_bep20: { indexerNodes: ['https://tbtc-bsc-1.swingby.network/bb-bsc'] },
   },
 };
