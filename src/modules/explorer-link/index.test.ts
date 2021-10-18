@@ -45,7 +45,7 @@ it.each<[{ mode: SkybridgeMode; coin: SkybridgeCoin; transactionId: string }, st
       coin: 'WBTC',
       transactionId: 'my-id',
     },
-    'https://goerli.etherscan.io/tx/my-id',
+    'https://ropsten.etherscan.io/tx/my-id',
   ],
   [
     {

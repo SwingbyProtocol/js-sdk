@@ -23,6 +23,7 @@ const NETWORK_INFO: {
         'https://btc-eth-indexer.swingby.network/bb-eth',
         'https://btc-eth-indexer-2.swingby.network/bb-eth',
       ],
+      ropsten,
     },
     btc_bep20: {
       indexerNodes: [

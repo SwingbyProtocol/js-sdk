@@ -6,7 +6,7 @@ import type { SkybridgeResource } from '../resources';
 
 const explorers: { [k in SkybridgeChain]: { [k in SkybridgeMode]: string } } = {
   ethereum: {
-    test: 'https://goerli.etherscan.io/tx/:transactionId',
+    test: 'https://ropsten.etherscan.io/tx/:transactionId',
     production: 'https://etherscan.io/tx/:transactionId',
   },
   bitcoin: {
