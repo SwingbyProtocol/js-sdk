@@ -19,16 +19,10 @@ const NETWORK_INFO: {
 } = {
   production: {
     btc_erc: {
-      indexerNodes: [
-        'https://btc-eth-indexer.swingby.network/bb-eth',
-        'https://btc-eth-indexer-2.swingby.network/bb-eth',
-      ],
+      indexerNodes: ['https://indexer.swingby.network/bb-eth'],
     },
     btc_bep20: {
-      indexerNodes: [
-        'https://btc-bsc-indexer.swingby.network/bb-bsc',
-        'https://btc-bsc-indexer-2.swingby.network/bb-bsc',
-      ],
+      indexerNodes: ['https://indexer.swingby.network/bb-bsc'],
     },
   },
   test: {
