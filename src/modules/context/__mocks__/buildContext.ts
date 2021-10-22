@@ -15,8 +15,8 @@ export const buildContext = async <M extends SkybridgeMode>({
         btc_bep20: 'https://tbtc-bsc-1.swingby.network',
       },
       indexer: {
-        btc_erc: 'https://btc-eth-indexer.swingby.network/bb-eth',
-        btc_bep20: 'https://tbtc-bsc-1.swingby.network/bb-bsc',
+        btc_erc: 'https://indexer.swingby.network/bb-bsc',
+        btc_bep20: 'https://indexer.swingby.network/bb-bsc',
       },
     },
   };
