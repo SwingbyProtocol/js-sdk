@@ -15,15 +15,25 @@ const NODE_STATUSES = [
 export type NodeStatus = typeof NODE_STATUSES[number];
 
 const NETWORK_INFO: {
-  [k in SkybridgeMode]: { [k in SkybridgeBridge]: string };
+  [k in SkybridgeMode]: { [k in SkybridgeBridge]: { indexerNodes: string[] } };
 } = {
   production: {
-    btc_erc: 'https://indexer.swingby.network/bb-eth',
-    btc_bep20: 'https://indexer.swingby.network/bb-bsc',
+    btc_erc: {
+      indexerNodes: [
+        'https://btc-eth-indexer.swingby.network/bb-eth',
+        'https://btc-eth-indexer-2.swingby.network/bb-eth',
+      ],
+    },
+    btc_bep20: {
+      indexerNodes: [
+        'https://btc-bsc-indexer.swingby.network/bb-bsc',
+        'https://btc-bsc-indexer-2.swingby.network/bb-bsc',
+      ],
+    },
   },
   test: {
-    btc_erc: 'https://tbtc-ropsten-node-1.swingby.network/bb-eth',
-    btc_bep20: 'https://tbtc-bsc-1.swingby.network/bb-bsc',
+    btc_erc: { indexerNodes: ['https://tbtc-ropsten-node-1.swingby.network/bb-eth'] },
+    btc_bep20: { indexerNodes: ['https://tbtc-bsc-1.swingby.network/bb-bsc'] },
   },
 };
 
@@ -35,7 +45,7 @@ export const getNetworkDetails = async ({
   bridge: SkybridgeBridge;
 }) => {
   return {
-    indexerNode: NETWORK_INFO[mode][bridge],
+    indexerNodes: NETWORK_INFO[mode][bridge].indexerNodes,
     swapNodes: await getNetworkNodes({ mode, bridge }),
   };
 };

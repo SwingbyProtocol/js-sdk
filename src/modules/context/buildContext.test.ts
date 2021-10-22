@@ -10,7 +10,7 @@ jest.mock('./getNetworkDetails', () => ({
       swapNodes: [
         { restUri: `https://${prefix}swap-node`, lastSeenAt: '2021-05-05T00:00:00.000Z' },
       ],
-      indexerNode: `${prefix}indexer-node`,
+      indexerNodes: [`${prefix}indexer-node`],
     };
   },
 }));

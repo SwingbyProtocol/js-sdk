@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import type { PartialDeep } from 'type-fest';
 
 import { SkybridgeBridge, SKYBRIDGE_BRIDGES } from '../bridges';
+import { fetcher } from '../fetch';
 import type { SkybridgeMode } from '../modes';
 
 import { getNetworkDetails } from './getNetworkDetails';
@@ -20,9 +21,23 @@ export const buildContext = async <M extends SkybridgeMode>({
     SKYBRIDGE_BRIDGES.map((bridge) => getNetworkDetails({ mode, bridge })),
   );
 
-  const getIndexer = ({ bridge }: { bridge: SkybridgeBridge }) => {
+  const getRandomIndexer = async ({ bridge }: { bridge: SkybridgeBridge }) => {
     const index = SKYBRIDGE_BRIDGES.findIndex((it) => it === bridge);
-    return results[index].indexerNode ?? null;
+
+    if (results[index].indexerNodes.length <= 1) {
+      return results[index].indexerNodes[0] ?? null;
+    }
+
+    for (const indexer of results[index].indexerNodes) {
+      try {
+        const result = await fetcher<{ blockbook: { inSync: boolean } }>(`${indexer}/api/v2`);
+        if (result.blockbook.inSync) {
+          return indexer;
+        }
+      } catch (e) {}
+    }
+
+    return null;
   };
 
   const getRandomSwapNode = ({ bridge }: { bridge: SkybridgeBridge }) => {
@@ -77,8 +92,8 @@ export const buildContext = async <M extends SkybridgeMode>({
         btc_bep20: servers?.swapNode?.btc_bep20 ?? getRandomSwapNode({ bridge: 'btc_bep20' }),
       },
       indexer: {
-        btc_erc: servers?.indexer?.btc_erc ?? getIndexer({ bridge: 'btc_erc' }),
-        btc_bep20: servers?.indexer?.btc_bep20 ?? getIndexer({ bridge: 'btc_bep20' }),
+        btc_erc: servers?.indexer?.btc_erc ?? (await getRandomIndexer({ bridge: 'btc_erc' })),
+        btc_bep20: servers?.indexer?.btc_bep20 ?? (await getRandomIndexer({ bridge: 'btc_bep20' })),
       },
     },
   };
