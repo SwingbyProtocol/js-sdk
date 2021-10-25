@@ -14,7 +14,7 @@ export const CONTRACTS = {
     },
     sbBTC: {
       test: {
-        address: '0xbd29762224829f9b72b895515663D57F0D33ca69',
+        address: '0xde6bd5afcdcca4dd5da8e3904345ed02dc735374',
         abi: ABI_TOKEN,
       },
       production: {
@@ -24,7 +24,7 @@ export const CONTRACTS = {
     },
     WBTC: {
       test: {
-        address: '0xeb47a21c1fc00d1e863019906df1771b80dbe182',
+        address: '0xaD6D458402F60fD3Bd25163575031ACDce07538D',
         abi: ABI_TOKEN,
       },
       production: {
@@ -56,7 +56,7 @@ export const CONTRACTS = {
   bridges: {
     btc_erc: {
       test: {
-        address: '0x069A9Da3Ad85697ab87d67Dc99d52D12Fa55661D',
+        address: '0xB7D159Ad9Fe300C6FB7384B8F188531071A89a85',
         abi: ABI_SKYBRIDGE,
       },
       production: {
