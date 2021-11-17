@@ -3,7 +3,7 @@ import type { SkybridgeBridge } from '../bridges';
 import type { SkybridgeResource } from '../resources';
 import type { SkybridgeDirection } from '../directions';
 
-export type SkybridgeApiCoin = 'BTC' | 'WBTC' | 'sbBTC' | 'BTCB';
+export type SkybridgeApiCoin = 'BTC' | 'WBTC' | 'sbBTC' | 'BTCB' | 'SKYPOOL';
 
 const COINS = {
   swap: {
@@ -271,6 +271,7 @@ export const fromApiCoin = ({
 }): SkybridgeCoin => {
   if (bridge === 'btc_erc') {
     if ((coin as any) === 'BTCE') return 'WBTC';
+    if (coin === 'SKYPOOL') return 'WBTC';
     return coin as SkybridgeCoin;
   }
 
@@ -282,6 +283,8 @@ export const fromApiCoin = ({
         return 'BTCB.BEP20';
       case 'sbBTC':
         return 'sbBTC.BEP20';
+      case 'SKYPOOL':
+        return 'BTCB.BEP20';
     }
   }
 
