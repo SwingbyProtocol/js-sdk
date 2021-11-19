@@ -156,7 +156,7 @@ const createRec = async <R extends SkybridgeResource, M extends SkybridgeMode>({
   logger('PoW failed. Will try again in %dms.', INTERVAL);
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      createRec({ ...params, startedAt, timeout, resource })
+      createRec({ ...params, startedAt, timeout, resource, isSkypoolsSwap })
         .then(resolve)
         .catch(reject);
     }, INTERVAL);
