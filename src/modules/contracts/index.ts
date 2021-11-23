@@ -1,4 +1,4 @@
-import { ABI_SKYBRIDGE, ABI_SKYPOOLS, ABI_TOKEN } from './abis';
+import { ABI_SKYBRIDGE, ABI_SKYBRIDGE_V2, ABI_TOKEN } from './abis';
 
 export const CONTRACTS = {
   coins: {
@@ -57,7 +57,7 @@ export const CONTRACTS = {
     btc_erc: {
       test: {
         address: '0x42da142C8FAfA8C31701973607990B6d5e92118f',
-        abi: ABI_SKYPOOLS,
+        abi: ABI_SKYBRIDGE_V2,
       },
       production: {
         address: '0xbe83f11d3900F3a13d8D12fB62F5e85646cDA45e',

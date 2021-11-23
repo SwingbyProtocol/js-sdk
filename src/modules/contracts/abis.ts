@@ -496,7 +496,7 @@ export const ABI_SKYBRIDGE: AbiItem[] = [
   },
 ];
 
-export const ABI_SKYPOOLS = [
+export const ABI_SKYBRIDGE_V2 = [
   {
     inputs: [
       { internalType: 'address', name: '_lpToken', type: 'address' },
