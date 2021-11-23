@@ -1,4 +1,4 @@
-import { ABI_SKYBRIDGE, ABI_TOKEN } from './abis';
+import { ABI_SKYBRIDGE, ABI_SKYBRIDGE_V2, ABI_TOKEN } from './abis';
 
 export const CONTRACTS = {
   coins: {
@@ -14,7 +14,7 @@ export const CONTRACTS = {
     },
     sbBTC: {
       test: {
-        address: '0xde6bd5afcdcca4dd5da8e3904345ed02dc735374',
+        address: '0x6ce6ea7D58EB83a270DD05d7383EDF919CEc3101',
         abi: ABI_TOKEN,
       },
       production: {
@@ -24,7 +24,7 @@ export const CONTRACTS = {
     },
     WBTC: {
       test: {
-        address: '0xaD6D458402F60fD3Bd25163575031ACDce07538D',
+        address: '0x442be68395613bdcd19778e761f03261ec46c06d',
         abi: ABI_TOKEN,
       },
       production: {
@@ -56,8 +56,8 @@ export const CONTRACTS = {
   bridges: {
     btc_erc: {
       test: {
-        address: '0xB7D159Ad9Fe300C6FB7384B8F188531071A89a85',
-        abi: ABI_SKYBRIDGE,
+        address: '0x42da142C8FAfA8C31701973607990B6d5e92118f',
+        abi: ABI_SKYBRIDGE_V2,
       },
       production: {
         address: '0xbe83f11d3900F3a13d8D12fB62F5e85646cDA45e',
