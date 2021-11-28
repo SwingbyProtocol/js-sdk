@@ -1044,4 +1044,4 @@ export const ABI_SKYBRIDGE_V2: AbiItem[] = [
     type: 'function',
   },
   { stateMutability: 'payable', type: 'receive' },
-];
+] as any;
