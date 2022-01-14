@@ -1,7 +1,8 @@
+import { FIXED_NODE_ENDPOINT } from '../endpoints';
 import type { SkybridgeBridge } from '../bridges';
-import type { SkybridgeMode } from '../modes';
 import { fetcher } from '../fetch';
-import { DateTime } from 'luxon';
+import type { SkybridgeMode } from '../modes';
+import { SkybridgePeer } from '../common-params';
 
 const NODE_STATUSES = [
   'churned-in',
@@ -12,6 +13,8 @@ const NODE_STATUSES = [
   'inactive--bond-expired',
   'unreachable',
 ] as const;
+
+// Todo: remove from this library
 export type NodeStatus = typeof NODE_STATUSES[number];
 
 export const getNetworkNodes = async ({
@@ -21,28 +24,8 @@ export const getNetworkNodes = async ({
   mode: SkybridgeMode;
   bridge: SkybridgeBridge;
 }) => {
-  return (
-    await fetcher<
-      Array<{
-        id: string;
-        moniker: string;
-        restUri: string | null;
-        lastSeenAt: string;
-        status: NodeStatus;
-        version: string;
-        p2pHost: string;
-        ip: string;
-        regionCode: string | null;
-        regionName: string | null;
-        addresses: [string, string];
-        bondAddress: string;
-        bondAmount: string;
-        bondExpiresAt: string;
-      }>
-    >(`https://network.skybridge.exchange/api/v3/${mode}/${bridge}/nodes`)
-  ).map((it) => ({
-    ...it,
-    lastSeenAt: DateTime.fromISO(it.lastSeenAt).toJSDate(),
-    bondExpiresAt: DateTime.fromISO(it.bondExpiresAt).toJSDate(),
-  }));
+  const base = FIXED_NODE_ENDPOINT[bridge][mode][0];
+  const url = base + '/api/v1/peers';
+  const peers = await fetcher<SkybridgePeer[]>(url);
+  return peers;
 };

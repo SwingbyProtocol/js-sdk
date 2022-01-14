@@ -2,7 +2,7 @@ export type { SkybridgeMode } from './modules/modes';
 export type { SkybridgeBridge } from './modules/bridges';
 export type { SkybridgeResource } from './modules/resources';
 export type { SkybridgeDirection } from './modules/directions';
-export type { SkybridgeStatus } from './modules/common-params';
+export type { SkybridgeStatus, SkybridgePeer, SkybridgeQuery } from './modules/common-params';
 export type { SkybridgeContext, NodeStatus } from './modules/context';
 export type { SkybridgeCoin } from './modules/coins';
 export type { SkybridgeChain } from './modules/chains';
@@ -26,3 +26,5 @@ export { isSkybridgeResource } from './modules/resources';
 export { estimateAmountReceiving } from './modules/generic-fees';
 export { CONTRACTS } from './modules/contracts';
 export { runProofOfWork, getPowEpoch, getBlockHeight } from './modules/pow';
+
+export { FIXED_NODE_ENDPOINT } from './modules/endpoints';
