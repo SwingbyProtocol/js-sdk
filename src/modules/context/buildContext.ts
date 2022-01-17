@@ -1,7 +1,7 @@
-import { DateTime } from 'luxon';
 import type { PartialDeep } from 'type-fest';
 
 import { SkybridgeBridge, SKYBRIDGE_BRIDGES } from '../bridges';
+import { FIXED_NODE_ENDPOINT } from '../endpoints';
 import { fetcher } from '../fetch';
 import type { SkybridgeMode } from '../modes';
 
@@ -40,41 +40,35 @@ export const buildContext = async <M extends SkybridgeMode>({
     return null;
   };
 
-  const getRandomSwapNode = ({ bridge }: { bridge: SkybridgeBridge }) => {
+  const getRandomSwapNode = ({
+    bridge,
+    mode,
+  }: {
+    bridge: SkybridgeBridge;
+    mode: SkybridgeMode;
+  }) => {
+    // Memo: Currently Ropsten endpoint is available for node-1 only
+    if (mode === 'test') {
+      const nodes = FIXED_NODE_ENDPOINT[bridge][mode];
+      const node = nodes[randomInt(0, nodes.length - 1)];
+      return node;
+    }
     const index = SKYBRIDGE_BRIDGES.findIndex((it) => it === bridge);
     try {
       const swapNodes = (() => {
-        const sorted = [...results[index].swapNodes]
-          .filter((it) => {
-            try {
-              return (
-                it.status !== 'unreachable' &&
-                typeof it.restUri === 'string' &&
-                new URL(it.restUri).protocol === 'https:'
-              );
-            } catch (e) {
-              return false;
-            }
-          })
-          .filter((it) => {
-            try {
-              return typeof it.restUri === 'string' && new URL(it.restUri).protocol === 'https:';
-            } catch (e) {
-              return false;
-            }
-          })
-          .sort(
-            (a, b) =>
-              DateTime.fromJSDate(b.lastSeenAt).toMillis() -
-              DateTime.fromJSDate(a.lastSeenAt).toMillis(),
-          );
+        const sorted = [...results[index].swapNodes].filter((it) => {
+          try {
+            return (
+              typeof it.restUri === 'string' &&
+              new URL(it.restUri).protocol === 'https:' &&
+              it.restUri !== 'https://'
+            );
+          } catch (e) {
+            return false;
+          }
+        });
 
-        if (sorted.length <= 1) return sorted;
-        const latestDate = DateTime.fromJSDate(sorted[0].lastSeenAt);
-
-        return sorted.filter(
-          (it) => latestDate.diff(DateTime.fromJSDate(it.lastSeenAt)).as('minutes') < 15,
-        );
+        return sorted;
       })();
 
       return (swapNodes[randomInt(0, swapNodes.length - 1)] || null)?.restUri;
@@ -88,8 +82,8 @@ export const buildContext = async <M extends SkybridgeMode>({
     affiliateApi: affiliateApi ?? 'https://affiliate.swingby.network',
     servers: {
       swapNode: {
-        btc_erc: servers?.swapNode?.btc_erc ?? getRandomSwapNode({ bridge: 'btc_erc' }),
-        btc_bep20: servers?.swapNode?.btc_bep20 ?? getRandomSwapNode({ bridge: 'btc_bep20' }),
+        btc_erc: servers?.swapNode?.btc_erc ?? getRandomSwapNode({ bridge: 'btc_erc', mode }),
+        btc_bep20: servers?.swapNode?.btc_bep20 ?? getRandomSwapNode({ bridge: 'btc_bep20', mode }),
       },
       indexer: {
         btc_erc: servers?.indexer?.btc_erc ?? (await getRandomIndexer({ bridge: 'btc_erc' })),

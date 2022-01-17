@@ -50,3 +50,44 @@ export type SkybridgeParams<
   txReceivingId: string;
   isSkypoolsSwap: R extends 'swap' ? boolean : false;
 };
+
+export type SkybridgePeer = {
+  active: boolean;
+  id: string;
+  moniker: string;
+  p2pListener: string;
+  rank: number;
+  restUri: string;
+  rewardsAddress1?: string;
+  rewardsAddress2?: string;
+  stake: Stake;
+  state: number;
+  state_name: string;
+  version: string;
+  thisNode?: boolean;
+};
+
+export type Stake = {
+  address: string;
+  amount: string;
+  stakeTime: number;
+  stakeValid: boolean;
+};
+
+export type SkybridgeQuery = {
+  addressDeposit: string;
+  addressOut: string;
+  amountIn: string;
+  amountOut: string;
+  currencyIn: string;
+  currencyOut: string;
+  fee: string;
+  feeCurrency: string;
+  hash: string;
+  rewards: any[];
+  skypools: boolean;
+  status: SkybridgeStatus;
+  timestamp: number;
+  txIdIn?: string;
+  txIdOut?: string;
+};
