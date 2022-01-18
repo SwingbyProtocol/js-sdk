@@ -6,6 +6,7 @@ import { getSbbtcPrice } from './';
 jest.mock('../../context/buildContext');
 
 it.each<SkybridgeBridge>(SKYBRIDGE_BRIDGES)('gets sbBTC price for %j', async (bridge) => {
+  jest.setTimeout(180000);
   expect.assertions(1);
 
   const context = await buildContext({ mode: 'test' });

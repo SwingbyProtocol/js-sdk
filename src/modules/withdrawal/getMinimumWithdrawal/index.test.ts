@@ -38,6 +38,7 @@ it.each<
 ])(
   'gets minimum withdrawal for %O',
   async ({ bridge, amountDesired, currencyReceiving }, expected) => {
+    jest.setTimeout(180000);
     expect.assertions(1);
 
     const context = await buildContext({ mode: 'test' });
