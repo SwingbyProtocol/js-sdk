@@ -12,7 +12,7 @@ export const getSbbtcPrice = async <M extends SkybridgeMode>({
 }): Promise<string> => {
   const result = await fetcher<{
     price: string;
-  }>(`https://network.skybridge.exchange/api/v3/${context.mode}/${bridge}/sbBTC/price`);
+  }>(`https://widget.skybridge.exchange/api/${context.mode}/${bridge}/sbBTC/price`);
 
   return result.price;
 };

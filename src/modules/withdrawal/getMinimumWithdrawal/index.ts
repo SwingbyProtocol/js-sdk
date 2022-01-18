@@ -21,6 +21,6 @@ export const getMinimumWithdrawal = async <M extends SkybridgeMode>({
     minimumWithdrawalCurrency: SkybridgeCoin<'withdrawal', M, 'out'>;
     minimumWithdrawal: string;
   }>(
-    `https://network.skybridge.exchange/api/v3/${context.mode}/${bridge}/sbBTC/withdrawal-info?currencyReceiving=${currencyReceiving}&amountDeposit=${amountDesired}`,
+    `https://widget.skybridge.exchange/api/${context.mode}/${bridge}/sbBTC/withdrawal-info?currencyReceiving=${currencyReceiving}&amountDeposit=${amountDesired}`,
   );
 };
