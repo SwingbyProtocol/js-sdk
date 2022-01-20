@@ -1,6 +1,7 @@
 import type { PartialDeep } from 'type-fest';
 
 import { SkybridgeBridge, SKYBRIDGE_BRIDGES } from '../bridges';
+import { SkybridgePeer } from '../common-params';
 import { FIXED_NODE_ENDPOINT } from '../endpoints';
 import { fetcher } from '../fetch';
 import type { SkybridgeMode } from '../modes';
@@ -40,13 +41,15 @@ export const buildContext = async <M extends SkybridgeMode>({
     return null;
   };
 
-  const getRandomSwapNode = ({
+  const getRandomSwapNode = async ({
     bridge,
     mode,
   }: {
     bridge: SkybridgeBridge;
     mode: SkybridgeMode;
   }) => {
+    const fallbackEndpoint = FIXED_NODE_ENDPOINT[bridge][mode][0];
+
     // Memo: Currently Ropsten endpoint is available for node-1 only
     if (mode === 'test') {
       const nodes = FIXED_NODE_ENDPOINT[bridge][mode];
@@ -70,10 +73,21 @@ export const buildContext = async <M extends SkybridgeMode>({
 
         return sorted;
       })();
+      const endpoint = (swapNodes[randomInt(0, swapNodes.length - 1)] || null)?.restUri;
 
-      return (swapNodes[randomInt(0, swapNodes.length - 1)] || null)?.restUri;
+      try {
+        const url = `${endpoint}/api/v1/peers`;
+        const result = await fetcher<SkybridgePeer[]>(url);
+        if (result.length > 0) {
+          return endpoint;
+        } else {
+          return fallbackEndpoint;
+        }
+      } catch (error) {
+        return fallbackEndpoint;
+      }
     } catch (e) {
-      return null;
+      return fallbackEndpoint;
     }
   };
 
@@ -82,8 +96,10 @@ export const buildContext = async <M extends SkybridgeMode>({
     affiliateApi: affiliateApi ?? 'https://affiliate.swingby.network',
     servers: {
       swapNode: {
-        btc_erc: servers?.swapNode?.btc_erc ?? getRandomSwapNode({ bridge: 'btc_erc', mode }),
-        btc_bep20: servers?.swapNode?.btc_bep20 ?? getRandomSwapNode({ bridge: 'btc_bep20', mode }),
+        btc_erc:
+          servers?.swapNode?.btc_erc ?? (await getRandomSwapNode({ bridge: 'btc_erc', mode })),
+        btc_bep20:
+          servers?.swapNode?.btc_bep20 ?? (await getRandomSwapNode({ bridge: 'btc_bep20', mode })),
       },
       indexer: {
         btc_erc: servers?.indexer?.btc_erc ?? (await getRandomIndexer({ bridge: 'btc_erc' })),
