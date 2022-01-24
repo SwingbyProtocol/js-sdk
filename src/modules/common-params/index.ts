@@ -74,13 +74,16 @@ export type Stake = {
   stakeValid: boolean;
 };
 
+export type SkybridgeCurrency = 'BTC' | 'WBTC' | 'sbBTC' | 'BTCB' | 'SKYPOOL';
+
 export type SkybridgeQuery = {
   addressDeposit: string;
+  addressIn: string;
   addressOut: string;
   amountIn: string;
   amountOut: string;
-  currencyIn: string;
-  currencyOut: string;
+  currencyIn: SkybridgeCurrency;
+  currencyOut: SkybridgeCurrency;
   fee: string;
   feeCurrency: string;
   hash: string;
