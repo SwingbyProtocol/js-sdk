@@ -19,8 +19,8 @@ const COINS = {
     },
     btc_bep20: {
       test: {
-        in: ['BTC', 'BTCB.BEP20', 'sbBTC.BEP20'],
-        out: ['BTC', 'BTCB.BEP20'],
+        in: [],
+        out: [],
       },
       production: {
         in: ['BTC', 'BTCB.BEP20', 'sbBTC.BEP20'],
@@ -41,8 +41,8 @@ const COINS = {
     },
     btc_bep20: {
       test: {
-        in: ['BTC', 'BTCB.BEP20'],
-        out: ['sbBTC.BEP20'],
+        in: [],
+        out: [],
       },
       production: {
         in: ['BTC', 'BTCB.BEP20'],
@@ -109,6 +109,7 @@ export const getCoinsFor = <
           if (bridge && bridge !== bridgeIt) return;
           if (mode && mode !== modeIt) return;
           if (direction && direction !== directionIt) return;
+          // if (mode === 'test' && bridge === 'btc_bep20') return;
 
           result.push(...COINS[resourceIt][bridgeIt][modeIt][directionIt]);
         });
