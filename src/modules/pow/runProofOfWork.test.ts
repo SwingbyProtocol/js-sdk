@@ -21,13 +21,13 @@ it.each<
     addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     expected: { amountDeposit: '0.99999437', nonce: 8958 },
   },
-  {
-    amountDesired: '0.02950426',
-    currencyDeposit: 'BTCB.BEP20',
-    currencyReceiving: 'BTC',
-    addressReceiving: 'msEKP7ZSma3rQtWSQBBZCiJAvjAaowf2c6',
-    expected: { amountDeposit: '0.02949422', nonce: 6640 },
-  },
+  // {
+  //   amountDesired: '0.02950426',
+  //   currencyDeposit: 'BTCB.BEP20',
+  //   currencyReceiving: 'BTC',
+  //   addressReceiving: 'msEKP7ZSma3rQtWSQBBZCiJAvjAaowf2c6',
+  //   expected: { amountDeposit: '0.02949422', nonce: 6640 },
+  // },
   {
     amountDesired: '1',
     currencyDeposit: 'BTC',
