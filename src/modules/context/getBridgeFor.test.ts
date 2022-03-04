@@ -27,14 +27,15 @@ it.each<{
   mode: SkybridgeMode;
   currencyReceiving: SkybridgeCoin;
   currencyDeposit: SkybridgeCoin;
-}>([
-  { mode: 'test', currencyDeposit: 'BTC', currencyReceiving: 'fake coin' as any },
-])('throws for %O', async ({ mode, currencyReceiving, currencyDeposit }) => {
-  expect.assertions(1);
-  const context = await buildContext({ mode });
-  try {
-    getBridgeFor({ context, currencyReceiving, currencyDeposit });
-  } catch (e: any) {
-    expect(e.message).toMatch(/Could not find (test|production) bridge for/);
-  }
-});
+}>([{ mode: 'test', currencyDeposit: 'BTC', currencyReceiving: 'fake coin' as any }])(
+  'throws for %O',
+  async ({ mode, currencyReceiving, currencyDeposit }) => {
+    expect.assertions(1);
+    const context = await buildContext({ mode });
+    try {
+      getBridgeFor({ context, currencyReceiving, currencyDeposit });
+    } catch (e: any) {
+      expect(e.message).toMatch(/Could not find (test|production) bridge for/);
+    }
+  },
+);
