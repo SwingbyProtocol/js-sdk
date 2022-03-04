@@ -35,10 +35,6 @@ it.each<
     { amountDesired: '156', currencyDeposit: 'BTC', currencyReceiving: 'sbBTC' },
     { feeCurrency: 'sbBTC' },
   ],
-  // [
-  //   { amountDesired: '156', currencyDeposit: 'BTCB.BEP20', currencyReceiving: 'sbBTC.BEP20' },
-  //   { feeCurrency: 'sbBTC.BEP20' },
-  // ],
 ])('works for %O', async ({ amountDesired, currencyDeposit, currencyReceiving }, expected) => {
   expect.assertions(1);
 

@@ -27,20 +27,6 @@ it.each<
     currencyReceiving: 'BTC',
     expected: { addressReceiving: 'tb1qu9xlvyrkj47t0cgu8e5kyanygec74zd9j2j9hh' },
   },
-  // {
-  //   amountDesired: '1',
-  //   addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
-  //   currencyDeposit: 'sbBTC.BEP20',
-  //   currencyReceiving: 'BTCB.BEP20',
-  //   expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
-  // },
-  // {
-  //   amountDesired: '1',
-  //   addressReceiving: 'tb1qu9xlvyrkj47t0cgu8e5kyanygec74zd9j2j9hh',
-  //   currencyDeposit: 'sbBTC.BEP20',
-  //   currencyReceiving: 'BTC',
-  //   expected: { addressReceiving: 'tb1qu9xlvyrkj47t0cgu8e5kyanygec74zd9j2j9hh' },
-  // },
 ])(
   '"/swaps/create" for withdrawals succeeds with %O',
   async ({ addressReceiving, currencyReceiving, currencyDeposit, amountDesired, expected }) => {

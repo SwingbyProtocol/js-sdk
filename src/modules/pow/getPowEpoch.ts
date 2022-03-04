@@ -12,10 +12,6 @@ export const getPowEpoch = ({
       return Math.floor(blockHeight / 3);
     }
 
-    if (bridge === 'btc_bep20') {
-      return Math.floor(blockHeight / 15);
-    }
-
     return blockHeight;
   })();
 

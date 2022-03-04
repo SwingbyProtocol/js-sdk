@@ -10,22 +10,6 @@ it.each<[{ mode: SkybridgeMode; coin: SkybridgeCoin; transactionId: string }, st
   [
     {
       mode: 'test',
-      coin: 'BTCB.BEP20',
-      transactionId: 'my-id',
-    },
-    'https://testnet.bscscan.com/tx/my-id',
-  ],
-  [
-    {
-      mode: 'production',
-      coin: 'BTCB.BEP20',
-      transactionId: 'my-id',
-    },
-    'https://bscscan.com/tx/my-id',
-  ],
-  [
-    {
-      mode: 'test',
       coin: 'BTC',
       transactionId: 'my-id',
     },

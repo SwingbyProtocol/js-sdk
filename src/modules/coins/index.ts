@@ -17,16 +17,6 @@ const COINS = {
         out: ['BTC', 'WBTC'],
       },
     },
-    btc_bep20: {
-      test: {
-        in: [],
-        out: [],
-      },
-      production: {
-        in: ['BTC', 'BTCB.BEP20', 'sbBTC.BEP20'],
-        out: ['BTC', 'BTCB.BEP20'],
-      },
-    },
   },
   pool: {
     btc_erc: {
@@ -39,16 +29,6 @@ const COINS = {
         out: ['sbBTC'],
       },
     },
-    btc_bep20: {
-      test: {
-        in: [],
-        out: [],
-      },
-      production: {
-        in: ['BTC', 'BTCB.BEP20'],
-        out: ['sbBTC.BEP20'],
-      },
-    },
   },
   withdrawal: {
     btc_erc: {
@@ -59,16 +39,6 @@ const COINS = {
       production: {
         in: ['sbBTC'],
         out: ['BTC', 'WBTC'],
-      },
-    },
-    btc_bep20: {
-      test: {
-        in: ['sbBTC.BEP20'],
-        out: ['BTC', 'BTCB.BEP20'],
-      },
-      production: {
-        in: ['sbBTC.BEP20'],
-        out: ['BTC', 'BTCB.BEP20'],
       },
     },
   },
@@ -109,7 +79,6 @@ export const getCoinsFor = <
           if (bridge && bridge !== bridgeIt) return;
           if (mode && mode !== modeIt) return;
           if (direction && direction !== directionIt) return;
-          // if (mode === 'test' && bridge === 'btc_bep20') return;
 
           result.push(...COINS[resourceIt][bridgeIt][modeIt][directionIt]);
         });
@@ -238,10 +207,6 @@ export const getDisplayNameForCoin = ({ coin }: { coin: SkybridgeCoin }): string
   switch (coin) {
     case 'BTC':
       return 'BTC';
-    case 'BTCB.BEP20':
-      return 'BTCB (BEP20)';
-    case 'sbBTC.BEP20':
-      return 'sbBTC (BEP20)';
     case 'WBTC':
       return 'WBTC (ERC20)';
     case 'sbBTC':
@@ -253,11 +218,8 @@ export const toApiCoin = ({ coin }: { coin: SkybridgeCoin }): SkybridgeApiCoin =
   switch (coin) {
     case 'BTC':
       return 'BTC';
-    case 'BTCB.BEP20':
-      return 'BTCB';
     case 'WBTC':
       return 'WBTC';
-    case 'sbBTC.BEP20':
     case 'sbBTC':
       return 'sbBTC';
   }
@@ -274,19 +236,6 @@ export const fromApiCoin = ({
     if ((coin as any) === 'BTCE') return 'WBTC';
     if (coin === 'SKYPOOL') return 'WBTC';
     return coin as SkybridgeCoin;
-  }
-
-  if (bridge === 'btc_bep20') {
-    switch (coin) {
-      case 'BTC':
-        return 'BTC';
-      case 'BTCB':
-        return 'BTCB.BEP20';
-      case 'sbBTC':
-        return 'sbBTC.BEP20';
-      case 'SKYPOOL':
-        return 'BTCB.BEP20';
-    }
   }
 
   throw new Error(`Could not find SDK coin ID for "${coin}" in bridge "${bridge}"`);

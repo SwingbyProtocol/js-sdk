@@ -7,9 +7,6 @@ export const isSkybridgeChain = (value: any): value is SkybridgeChain => CHAINS.
 
 export const getChainFor = ({ coin }: { coin: SkybridgeCoin | 'sbBTC' }): SkybridgeChain => {
   switch (coin) {
-    case 'sbBTC.BEP20':
-    case 'BTCB.BEP20':
-      return 'binance-smart';
     case 'BTC':
       return 'bitcoin';
     case 'sbBTC':

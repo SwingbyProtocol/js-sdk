@@ -27,14 +27,6 @@ it.each<
     { bridge: 'btc_erc', amountDesired: '200', currencyReceiving: 'WBTC' },
     { minimumWithdrawalCurrency: 'WBTC' },
   ],
-  [
-    { bridge: 'btc_bep20', amountDesired: '200', currencyReceiving: 'BTCB.BEP20' },
-    { minimumWithdrawalCurrency: 'BTCB.BEP20' },
-  ],
-  [
-    { bridge: 'btc_bep20', amountDesired: '200', currencyReceiving: 'BTC' },
-    { minimumWithdrawalCurrency: 'BTC' },
-  ],
 ])(
   'gets minimum withdrawal for %O',
   async ({ bridge, amountDesired, currencyReceiving }, expected) => {
