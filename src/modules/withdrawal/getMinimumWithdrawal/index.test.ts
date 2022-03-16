@@ -33,7 +33,7 @@ it.each<
     jest.setTimeout(180000);
     expect.assertions(1);
 
-    const context = await buildContext({ mode: 'test' });
+    const context = await buildContext({ mode: 'production' });
     const result = await getMinimumWithdrawal({
       context,
       bridge,
