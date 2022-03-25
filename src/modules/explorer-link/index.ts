@@ -14,7 +14,7 @@ const explorers: { [k in SkybridgeChain]: { [k in SkybridgeMode]: string } } = {
     production: 'https://www.blockchain.com/btc/tx/:transactionId',
   },
   'binance-smart': {
-    test: 'https://testnet.bscscan.com/tx/:transactionId',
+    test: 'https://bscscan.com/tx/:transactionId',
     production: 'https://bscscan.com/tx/:transactionId',
   },
 };
