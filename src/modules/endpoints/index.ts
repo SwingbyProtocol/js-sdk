@@ -5,6 +5,6 @@ export const FIXED_NODE_ENDPOINT = {
   },
   btc_bep20: {
     production: ['https://ra-cailum.zoo.farm'],
-    test: ['https://tbtc-bsc-2.swingby.network', 'https://tbtc-bsc-3.swingby.network'],
+    test: ['https://ra-cailum.zoo.farm'],
   },
 };

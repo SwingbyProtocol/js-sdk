@@ -26,8 +26,8 @@ const NETWORK_INFO: {
     },
   },
   test: {
-    btc_erc: { indexerNodes: ['https://tbtc-ropsten-node-1.swingby.network/bb-eth'] },
-    btc_bep20: { indexerNodes: ['https://tbtc-bsc-1.swingby.network/bb-bsc'] },
+    btc_erc: { indexerNodes: ['https://tbtc-bsc-1.swingby.network/bb-bsc'] },
+    btc_bep20: { indexerNodes: ['https://indexer.swingby.network/bb-bsc'] },
   },
 };
 
