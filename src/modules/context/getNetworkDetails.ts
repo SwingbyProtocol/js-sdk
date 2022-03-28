@@ -21,13 +21,13 @@ const NETWORK_INFO: {
     btc_erc: {
       indexerNodes: ['https://indexer.swingby.network/bb-eth'],
     },
-    btc_bep20: {
+    btc_skypool: {
       indexerNodes: ['https://indexer.swingby.network/bb-bsc'],
     },
   },
   test: {
     btc_erc: { indexerNodes: ['https://tbtc-ropsten-node-1.swingby.network/bb-eth'] },
-    btc_bep20: { indexerNodes: ['https://indexer.swingby.network/bb-bsc'] },
+    btc_skypool: { indexerNodes: ['https://indexer.swingby.network/bb-bsc'] },
   },
 };
 

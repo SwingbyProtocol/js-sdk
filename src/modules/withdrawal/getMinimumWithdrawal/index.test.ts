@@ -28,11 +28,11 @@ it.each<
     { minimumWithdrawalCurrency: 'WBTC' },
   ],
   [
-    { bridge: 'btc_bep20', amountDesired: '200', currencyReceiving: 'BTCB.BEP20' },
+    { bridge: 'btc_skypool', amountDesired: '200', currencyReceiving: 'BTCB.BEP20' },
     { minimumWithdrawalCurrency: 'BTCB.BEP20' },
   ],
   [
-    { bridge: 'btc_bep20', amountDesired: '200', currencyReceiving: 'BTC' },
+    { bridge: 'btc_skypool', amountDesired: '200', currencyReceiving: 'BTC' },
     { minimumWithdrawalCurrency: 'BTC' },
   ],
 ])(

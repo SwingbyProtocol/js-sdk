@@ -17,7 +17,7 @@ const COINS = {
         out: ['BTC', 'WBTC'],
       },
     },
-    btc_bep20: {
+    btc_skypool: {
       test: {
         in: [],
         out: [],
@@ -39,7 +39,7 @@ const COINS = {
         out: ['sbBTC'],
       },
     },
-    btc_bep20: {
+    btc_skypool: {
       test: {
         in: [],
         out: [],
@@ -61,7 +61,7 @@ const COINS = {
         out: ['BTC', 'WBTC'],
       },
     },
-    btc_bep20: {
+    btc_skypool: {
       test: {
         in: ['sbBTC.BEP20'],
         out: ['BTC', 'BTCB.BEP20'],
@@ -109,7 +109,7 @@ export const getCoinsFor = <
           if (bridge && bridge !== bridgeIt) return;
           if (mode && mode !== modeIt) return;
           if (direction && direction !== directionIt) return;
-          // if (mode === 'test' && bridge === 'btc_bep20') return;
+          // if (mode === 'test' && bridge === 'btc_skypool') return;
 
           result.push(...COINS[resourceIt][bridgeIt][modeIt][directionIt]);
         });
@@ -276,7 +276,7 @@ export const fromApiCoin = ({
     return coin as SkybridgeCoin;
   }
 
-  if (bridge === 'btc_bep20') {
+  if (bridge === 'btc_skypool') {
     switch (coin) {
       case 'BTC':
         return 'BTC';

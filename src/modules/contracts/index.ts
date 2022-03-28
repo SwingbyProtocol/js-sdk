@@ -64,7 +64,7 @@ export const CONTRACTS = {
         abi: ABI_SKYBRIDGE,
       },
     },
-    btc_bep20: {
+    btc_skypool: {
       test: {
         address: '0xC217994720062d2E8340852c58DfFcDbB66bbfA3',
         abi: ABI_SKYBRIDGE,

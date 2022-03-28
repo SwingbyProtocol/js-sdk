@@ -15,12 +15,12 @@ it.each<{ blockHeight: number; bridge: SkybridgeBridge; expected: number }>([
   },
   {
     blockHeight: 100,
-    bridge: 'btc_bep20',
+    bridge: 'btc_skypool',
     expected: 7,
   },
   {
     blockHeight: 99,
-    bridge: 'btc_bep20',
+    bridge: 'btc_skypool',
     expected: 7,
   },
 ])('works for %s', ({ blockHeight, bridge, expected }) => {
