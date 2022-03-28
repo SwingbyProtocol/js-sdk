@@ -26,6 +26,9 @@ export const getNetworkNodes = async ({
 }) => {
   const base = FIXED_NODE_ENDPOINT[bridge][mode][0];
   const url = base + '/api/v1/peers';
-  const peers = await fetcher<SkybridgePeer[]>(url);
-  return peers;
+  try {
+    return await fetcher<SkybridgePeer[]>(url);
+  } catch (error) {
+    return [];
+  }
 };
