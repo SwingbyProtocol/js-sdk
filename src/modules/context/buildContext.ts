@@ -99,11 +99,13 @@ export const buildContext = async <M extends SkybridgeMode>({
         btc_erc:
           servers?.swapNode?.btc_erc ?? (await getRandomSwapNode({ bridge: 'btc_erc', mode })),
         btc_skypool:
-          servers?.swapNode?.btc_skypool ?? (await getRandomSwapNode({ bridge: 'btc_skypool', mode })),
+          servers?.swapNode?.btc_skypool ??
+          (await getRandomSwapNode({ bridge: 'btc_skypool', mode })),
       },
       indexer: {
         btc_erc: servers?.indexer?.btc_erc ?? (await getRandomIndexer({ bridge: 'btc_erc' })),
-        btc_skypool: servers?.indexer?.btc_skypool ?? (await getRandomIndexer({ bridge: 'btc_skypool' })),
+        btc_skypool:
+          servers?.indexer?.btc_skypool ?? (await getRandomIndexer({ bridge: 'btc_skypool' })),
       },
     },
   };
