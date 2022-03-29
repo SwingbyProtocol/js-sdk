@@ -12,11 +12,11 @@ export const buildContext = async <M extends SkybridgeMode>({
     servers: {
       swapNode: {
         btc_erc: 'https://btc-wbtc-mainnet.quantexe.com',
-        btc_bep20: 'https://tbtc-bsc-1.swingby.network',
+        btc_skypool: 'https://btc-skypool-1.swingby.network',
       },
       indexer: {
         btc_erc: 'https://indexer.swingby.network/bb-eth',
-        btc_bep20: 'https://indexer.swingby.network/bb-bsc',
+        btc_skypool: 'https://indexer.swingby.network/bb-eth',
       },
     },
   };

@@ -3,8 +3,8 @@ export const FIXED_NODE_ENDPOINT = {
     production: ['https://taitan-0083.zoo.farm'],
     test: ['https://tbtc-ropsten-node-1.swingby.network'],
   },
-  btc_bep20: {
+  btc_skypool: {
     production: ['https://ra-cailum.zoo.farm'],
-    test: ['https://ra-cailum.zoo.farm'],
+    test: ['https://tbtc-ropsten-node-1.swingby.network'],
   },
 };

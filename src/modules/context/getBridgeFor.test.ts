@@ -17,13 +17,23 @@ it.each<{
   { mode: 'test', currencyDeposit: 'BTC', currencyReceiving: 'WBTC', expected: 'btc_erc' },
   { mode: 'test', currencyDeposit: 'BTC', currencyReceiving: 'sbBTC', expected: 'btc_erc' },
   { mode: 'test', currencyDeposit: 'sbBTC', currencyReceiving: 'BTC', expected: 'btc_erc' },
-  { mode: 'test', currencyDeposit: 'BTC', currencyReceiving: 'BTCB.BEP20', expected: 'btc_bep20' },
-  { mode: 'test', currencyDeposit: 'BTCB.BEP20', currencyReceiving: 'BTC', expected: 'btc_bep20' },
+  {
+    mode: 'test',
+    currencyDeposit: 'BTC',
+    currencyReceiving: 'BTCB.BEP20',
+    expected: 'btc_skypool',
+  },
+  {
+    mode: 'test',
+    currencyDeposit: 'BTCB.BEP20',
+    currencyReceiving: 'BTC',
+    expected: 'btc_skypool',
+  },
   {
     mode: 'production',
     currencyDeposit: 'BTC',
     currencyReceiving: 'BTCB.BEP20',
-    expected: 'btc_bep20',
+    expected: 'btc_skypool',
   },
 ])('works for %O', async ({ mode, currencyReceiving, currencyDeposit, expected }) => {
   expect.assertions(1);
