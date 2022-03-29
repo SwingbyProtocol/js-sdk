@@ -4,7 +4,7 @@ export const FIXED_NODE_ENDPOINT = {
     test: ['https://tbtc-ropsten-node-1.swingby.network'],
   },
   btc_skypool: {
-    production: ['https://ra-cailum.zoo.farm'],
+    production: ['https://btc-skypool-1.swingby.network'],
     test: ['https://tbtc-ropsten-node-1.swingby.network'],
   },
 };

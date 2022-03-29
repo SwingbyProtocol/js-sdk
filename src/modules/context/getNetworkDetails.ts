@@ -22,12 +22,12 @@ const NETWORK_INFO: {
       indexerNodes: ['https://indexer.swingby.network/bb-eth'],
     },
     btc_skypool: {
-      indexerNodes: ['https://indexer.swingby.network/bb-bsc'],
+      indexerNodes: ['https://indexer.swingby.network/bb-eth'],
     },
   },
   test: {
     btc_erc: { indexerNodes: ['https://tbtc-ropsten-node-1.swingby.network/bb-eth'] },
-    btc_skypool: { indexerNodes: ['https://indexer.swingby.network/bb-bsc'] },
+    btc_skypool: { indexerNodes: ['https://indexer.swingby.network/bb-eth'] },
   },
 };
 
