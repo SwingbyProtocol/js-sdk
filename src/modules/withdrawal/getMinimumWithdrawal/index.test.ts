@@ -9,7 +9,7 @@ jest.mock('../../context/buildContext');
 
 it.each<
   [
-    Pick<SkybridgeParams<'withdrawal', 'test'>, 'amountDesired' | 'currencyReceiving'> & {
+    Pick<SkybridgeParams<'withdrawal', 'production'>, 'amountDesired' | 'currencyReceiving'> & {
       bridge: SkybridgeBridge;
     },
     { minimumWithdrawalCurrency: SkybridgeCoin },
@@ -28,8 +28,8 @@ it.each<
     { minimumWithdrawalCurrency: 'WBTC' },
   ],
   [
-    { bridge: 'btc_skypool', amountDesired: '200', currencyReceiving: 'BTCB.BEP20' },
-    { minimumWithdrawalCurrency: 'BTCB.BEP20' },
+    { bridge: 'btc_skypool', amountDesired: '200', currencyReceiving: 'WBTC.SKYPOOL' },
+    { minimumWithdrawalCurrency: 'WBTC.SKYPOOL' },
   ],
   [
     { bridge: 'btc_skypool', amountDesired: '200', currencyReceiving: 'BTC' },
@@ -38,10 +38,9 @@ it.each<
 ])(
   'gets minimum withdrawal for %O',
   async ({ bridge, amountDesired, currencyReceiving }, expected) => {
-    jest.setTimeout(180000);
     expect.assertions(1);
 
-    const context = await buildContext({ mode: 'test' });
+    const context = await buildContext({ mode: 'production' });
     const result = await getMinimumWithdrawal({
       context,
       bridge,

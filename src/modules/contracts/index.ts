@@ -1,4 +1,18 @@
-import { ABI_SKYBRIDGE, ABI_SKYBRIDGE_V2, ABI_TOKEN } from './abis';
+import WBTC_ABI from './wbtc-abi.json';
+import SBBTC_ABI from './sbbtc-abi.json';
+import BTC_ERC_ABI from './btc_erc-abi.json';
+import BTC_SKYPOOL_ABI from './btc_skypool-abi.json';
+
+const WBTC = {
+  test: {
+    address: '0x7cb2eac36b4bb7c36640f32e806d33e474d1d427',
+    abi: WBTC_ABI,
+  },
+  production: {
+    address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+    abi: WBTC_ABI,
+  },
+};
 
 export const CONTRACTS = {
   coins: {
@@ -15,63 +29,45 @@ export const CONTRACTS = {
     sbBTC: {
       test: {
         address: '0x179d9a39841cf3ad6a69648b6e45b11158fde79d',
-        abi: ABI_TOKEN,
+        abi: SBBTC_ABI,
       },
       production: {
         address: '0x22883a3dB06737eCe21F479A8009B8B9f22b6cC9',
-        abi: ABI_TOKEN,
+        abi: SBBTC_ABI,
       },
     },
-    WBTC: {
+    'sbBTC.SKYPOOLS': {
       test: {
-        address: '0x7cb2eac36b4bb7c36640f32e806d33e474d1d427',
-        abi: ABI_TOKEN,
+        address: '',
+        abi: SBBTC_ABI,
       },
       production: {
-        address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-        abi: ABI_TOKEN,
+        address: '0x44a62c7121a64691b61aef669f21c628258e7d52',
+        abi: SBBTC_ABI,
       },
     },
-    'sbBTC.BEP20': {
-      test: {
-        address: '0x89B16adb7A48a3A7b69f3C741baFCe7D00f98794',
-        abi: ABI_TOKEN,
-      },
-      production: {
-        address: '0xdBa68BeF9b541999Fd9650FF72C19d5E1ceeCd10',
-        abi: ABI_TOKEN,
-      },
-    },
-    'BTCB.BEP20': {
-      test: {
-        address: '0xa88921dc290f888b5ee574cf2cd1599f412f1534',
-        abi: ABI_TOKEN,
-      },
-      production: {
-        address: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c',
-        abi: ABI_TOKEN,
-      },
-    },
+    WBTC,
+    'WBTC.SKYPOOLS': WBTC,
   },
   bridges: {
     btc_erc: {
       test: {
         address: '0x7dfbf7E38F188Da1BD337A128ce7A5D758957621',
-        abi: ABI_SKYBRIDGE_V2,
+        abi: BTC_ERC_ABI,
       },
       production: {
         address: '0xbe83f11d3900F3a13d8D12fB62F5e85646cDA45e',
-        abi: ABI_SKYBRIDGE,
+        abi: BTC_ERC_ABI,
       },
     },
     btc_skypool: {
       test: {
-        address: '0xC217994720062d2E8340852c58DfFcDbB66bbfA3',
-        abi: ABI_SKYBRIDGE,
+        address: '',
+        abi: BTC_SKYPOOL_ABI,
       },
       production: {
-        address: '0xad22900062e4cd766102a1f33e530f5303fe1adf',
-        abi: ABI_SKYBRIDGE,
+        address: '0x4A084C0D1f89793Bb57f49b97c4e3a24cA539aAA',
+        abi: BTC_SKYPOOL_ABI,
       },
     },
   },

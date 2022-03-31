@@ -7,7 +7,7 @@ jest.mock('../../context/buildContext');
 
 it.each<
   Pick<
-    SkybridgeParams<'pool', 'test'>,
+    SkybridgeParams<'pool', 'production'>,
     'addressReceiving' | 'currencyDeposit' | 'amountDesired' | 'currencyReceiving'
   > & {
     expected: { addressReceiving: string };
@@ -27,6 +27,20 @@ it.each<
     currencyReceiving: 'sbBTC',
     expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
   },
+  {
+    amountDesired: '1',
+    addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    currencyDeposit: 'BTC',
+    currencyReceiving: 'sbBTC.SKYPOOL',
+    expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
+  },
+  {
+    amountDesired: '1',
+    addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    currencyDeposit: 'WBTC.SKYPOOL',
+    currencyReceiving: 'sbBTC.SKYPOOL',
+    expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
+  },
 ])(
   '"/floats/create" succeeds with %O',
   async ({ addressReceiving, currencyDeposit, amountDesired, currencyReceiving, expected }) => {
@@ -34,7 +48,7 @@ it.each<
     expect.assertions(1);
 
     try {
-      const context = await buildContext({ mode: 'test' });
+      const context = await buildContext({ mode: 'production' });
       const result = await createFloat({
         context,
         addressReceiving,

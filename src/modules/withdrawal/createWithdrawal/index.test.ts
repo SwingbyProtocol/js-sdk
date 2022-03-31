@@ -7,7 +7,7 @@ jest.mock('../../context/buildContext');
 
 it.each<
   Pick<
-    SkybridgeParams<'withdrawal', 'test'>,
+    SkybridgeParams<'withdrawal', 'production'>,
     'addressReceiving' | 'currencyReceiving' | 'amountDesired' | 'currencyDeposit'
   > & {
     expected: { addressReceiving: string };
@@ -27,20 +27,20 @@ it.each<
     currencyReceiving: 'BTC',
     expected: { addressReceiving: 'tb1qu9xlvyrkj47t0cgu8e5kyanygec74zd9j2j9hh' },
   },
-  // {
-  //   amountDesired: '1',
-  //   addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
-  //   currencyDeposit: 'sbBTC.BEP20',
-  //   currencyReceiving: 'BTCB.BEP20',
-  //   expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
-  // },
-  // {
-  //   amountDesired: '1',
-  //   addressReceiving: 'tb1qu9xlvyrkj47t0cgu8e5kyanygec74zd9j2j9hh',
-  //   currencyDeposit: 'sbBTC.BEP20',
-  //   currencyReceiving: 'BTC',
-  //   expected: { addressReceiving: 'tb1qu9xlvyrkj47t0cgu8e5kyanygec74zd9j2j9hh' },
-  // },
+  {
+    amountDesired: '1',
+    addressReceiving: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    currencyDeposit: 'sbBTC.SKYPOOL',
+    currencyReceiving: 'WBTC.SKYPOOL',
+    expected: { addressReceiving: '0x3f4341a0599f63f444b6f1e0c7c5caf81b5843cc' },
+  },
+  {
+    amountDesired: '1',
+    addressReceiving: 'tb1qu9xlvyrkj47t0cgu8e5kyanygec74zd9j2j9hh',
+    currencyDeposit: 'sbBTC.SKYPOOL',
+    currencyReceiving: 'BTC',
+    expected: { addressReceiving: 'tb1qu9xlvyrkj47t0cgu8e5kyanygec74zd9j2j9hh' },
+  },
 ])(
   '"/swaps/create" for withdrawals succeeds with %O',
   async ({ addressReceiving, currencyReceiving, currencyDeposit, amountDesired, expected }) => {
@@ -48,7 +48,7 @@ it.each<
     expect.assertions(1);
 
     try {
-      const context = await buildContext({ mode: 'test' });
+      const context = await buildContext({ mode: 'production' });
       const result = await createWithdrawal({
         context,
         addressReceiving,
@@ -66,7 +66,7 @@ it.each<
       });
     } catch (e: any) {
       expect(e.message).toMatch(
-        /(The KVStore key \d+ already exists in epoch bucket \d+)|(There is not enough [a-zA-Z0-9.]+ liquidity to perform your swap)/,
+        /(The KVStore key \d+ already exists in epoch bucket \d+)|(There is not enough .+ liquidity to perform your swap)/,
       );
     }
   },

@@ -13,8 +13,8 @@ it.each<
   [
     {
       amountDesired: string;
-      currencyDeposit: SkybridgeCoin<SkybridgeResource, 'test', 'in'>;
-      currencyReceiving: SkybridgeCoin<SkybridgeResource, 'test', 'out'>;
+      currencyDeposit: SkybridgeCoin<SkybridgeResource, 'production', 'in'>;
+      currencyReceiving: SkybridgeCoin<SkybridgeResource, 'production', 'out'>;
     },
     Pick<PromiseValue<ReturnType<typeof estimateAmountReceiving>>, 'feeCurrency'>,
   ]
@@ -35,14 +35,14 @@ it.each<
     { amountDesired: '156', currencyDeposit: 'BTC', currencyReceiving: 'sbBTC' },
     { feeCurrency: 'sbBTC' },
   ],
-  // [
-  //   { amountDesired: '156', currencyDeposit: 'BTCB.BEP20', currencyReceiving: 'sbBTC.BEP20' },
-  //   { feeCurrency: 'sbBTC.BEP20' },
-  // ],
+  [
+    { amountDesired: '156', currencyDeposit: 'WBTC.SKYPOOL', currencyReceiving: 'sbBTC.SKYPOOL' },
+    { feeCurrency: 'sbBTC.SKYPOOL' },
+  ],
 ])('works for %O', async ({ amountDesired, currencyDeposit, currencyReceiving }, expected) => {
   expect.assertions(1);
 
-  const context = await buildContext({ mode: 'test' });
+  const context = await buildContext({ mode: 'production' });
   const result = await estimateAmountReceiving({
     context,
     currencyDeposit,
@@ -60,8 +60,8 @@ it.each<
 });
 
 it.each<{ currencyDeposit: any; mode: SkybridgeMode; currencyReceiving: any }>([
-  { currencyDeposit: 'WBTC', mode: 'test', currencyReceiving: 'BTCB' },
-  { currencyDeposit: 'BTCB', mode: 'test', currencyReceiving: 'WBTC' },
+  { currencyDeposit: 'WBTC', mode: 'production', currencyReceiving: 'BTCB' },
+  { currencyDeposit: 'BTCB', mode: 'production', currencyReceiving: 'WBTC' },
   { currencyDeposit: 'BTC', mode: 'production', currencyReceiving: 'BTCB' },
 ])('throws for %O', async ({ currencyDeposit, mode, currencyReceiving }) => {
   expect.assertions(1);

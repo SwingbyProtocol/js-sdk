@@ -43,9 +43,7 @@ export const runProofOfWork = async <M extends SkybridgeMode>({
   const flooredAmount = floorAmount(amountDesired);
   const receivingChain = getChainFor({ coin: currencyReceiving });
   const addressReceiving =
-    receivingChain === 'ethereum' || receivingChain === 'binance-smart'
-      ? addressReceivingParam.toLowerCase()
-      : addressReceivingParam;
+    receivingChain === 'ethereum' ? addressReceivingParam.toLowerCase() : addressReceivingParam;
 
   do {
     nonce += 1;

@@ -13,10 +13,6 @@ const explorers: { [k in SkybridgeChain]: { [k in SkybridgeMode]: string } } = {
     test: 'https://www.blockchain.com/btc-testnet/tx/:transactionId',
     production: 'https://www.blockchain.com/btc/tx/:transactionId',
   },
-  'binance-smart': {
-    test: 'https://bscscan.com/tx/:transactionId',
-    production: 'https://bscscan.com/tx/:transactionId',
-  },
 };
 
 export const buildExplorerLink = <M extends SkybridgeMode>({
