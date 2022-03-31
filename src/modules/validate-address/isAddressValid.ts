@@ -22,8 +22,6 @@ export const isAddressValid = ({
   }
 
   switch (chain) {
-    case 'binance-smart':
-      return isEthereumAddress({ context, address });
     case 'bitcoin':
       return isBitcoinAddress({ context, address });
     case 'ethereum':
