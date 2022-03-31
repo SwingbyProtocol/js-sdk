@@ -38,7 +38,7 @@ export const CONTRACTS = {
         abi: SBBTC_ABI as AbiItem[],
       },
     },
-    'sbBTC.SKYPOOLS': {
+    'sbBTC.SKYPOOL': {
       test: {
         address: '',
         abi: SBBTC_ABI as AbiItem[],
@@ -49,7 +49,7 @@ export const CONTRACTS = {
       },
     },
     WBTC,
-    'WBTC.SKYPOOLS': WBTC,
+    'WBTC.SKYPOOL': WBTC,
   },
   bridges: {
     btc_erc: {
