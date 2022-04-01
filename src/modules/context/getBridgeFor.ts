@@ -8,10 +8,9 @@ export const getBridgeFor = <M extends SkybridgeMode>({
   context,
   currencyDeposit,
   currencyReceiving,
-}: Pick<
-  SkybridgeParams<SkybridgeResource, M>,
-  'context' | 'currencyDeposit' | 'currencyReceiving'
->): SkybridgeBridge => {
+}: Pick<SkybridgeParams<SkybridgeResource, M>, 'currencyDeposit' | 'currencyReceiving'> & {
+  context: { mode: M };
+}): SkybridgeBridge => {
   const inBridges = getBridgesForCoin({ context, coin: currencyDeposit });
   const outBridges = getBridgesForCoin({ context, coin: currencyReceiving });
 
