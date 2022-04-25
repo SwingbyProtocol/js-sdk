@@ -4,6 +4,7 @@ import WBTC_ABI from './wbtc-abi.json';
 import SBBTC_ABI from './sbbtc-abi.json';
 import BTC_ERC_ABI from './btc_erc-abi.json';
 import BTC_SKYPOOL_ABI from './btc_skypool-abi.json';
+import ABI_SKYBRIDGE from './btc_skybridge-abi.json';
 
 const WBTC = {
   test: {
@@ -70,6 +71,16 @@ export const CONTRACTS = {
       production: {
         address: '0x4A084C0D1f89793Bb57f49b97c4e3a24cA539aAA',
         abi: BTC_SKYPOOL_ABI as AbiItem[],
+      },
+    },
+    btc_bep20: {
+      test: {
+        address: '0xC217994720062d2E8340852c58DfFcDbB66bbfA3',
+        abi: ABI_SKYBRIDGE,
+      },
+      production: {
+        address: '0xad22900062e4cd766102a1f33e530f5303fe1adf',
+        abi: ABI_SKYBRIDGE,
       },
     },
   },
