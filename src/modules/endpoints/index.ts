@@ -4,7 +4,7 @@ export const FIXED_NODE_ENDPOINT = {
     test: ['https://tbtc-ropsten-node-1.swingby.network'],
   },
   btc_bep20: {
-    production: ['https://ra-cailum.zoo.farm'],
+    production: ['https://axis.zoo.farm'],
     test: ['https://tbtc-bsc-2.swingby.network', 'https://tbtc-bsc-3.swingby.network'],
   },
 };
