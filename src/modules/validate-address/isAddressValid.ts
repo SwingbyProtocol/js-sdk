@@ -3,6 +3,7 @@ import type { SkybridgeChain } from '../chains';
 
 import { isBitcoinAddress } from './isBitcoinAddress';
 import { isEthereumAddress } from './isEthereumAddress';
+import { isTaprootAddress } from './isTaprootAddress';
 
 export const isAddressValid = ({
   context,
@@ -12,7 +13,7 @@ export const isAddressValid = ({
   context: Pick<SkybridgeContext, 'mode'>;
   address: string;
   /**
-   * If passed, this function will verify whether the address is valid for this partifular chain.
+   * If passed, this function will verify whether the address is valid for this particular chain.
    *
    * If not passed, this function will verify whether the address is valid for at least one of the supported chains. */
   chain?: SkybridgeChain;
@@ -20,10 +21,9 @@ export const isAddressValid = ({
   if (typeof chain === 'undefined') {
     return isEthereumAddress({ context, address }) || isBitcoinAddress({ context, address });
   }
-
   switch (chain) {
     case 'bitcoin':
-      return isBitcoinAddress({ context, address });
+      return isBitcoinAddress({ context, address }) && !isTaprootAddress(address);
     case 'ethereum':
       return isEthereumAddress({ context, address });
     default:

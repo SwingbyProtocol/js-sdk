@@ -16,7 +16,7 @@ export {
 } from './modules/coins';
 export { createSwap, getSwapDetails } from './modules/swap';
 export { buildContext, getNetworkNodes, getNetworkDetails, getBridgeFor } from './modules/context';
-export { isAddressValid } from './modules/validate-address';
+export { isAddressValid, isTaprootAddress } from './modules/validate-address';
 export { buildExplorerLink } from './modules/explorer-link';
 export { getChainFor, isSkybridgeChain } from './modules/chains';
 export { createFloat, getFloatDetails, getSbbtcPrice } from './modules/pool';
