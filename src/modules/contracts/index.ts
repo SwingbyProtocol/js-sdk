@@ -64,7 +64,7 @@ export const CONTRACTS = {
     },
     btc_skypool: {
       test: {
-        address: '',
+        address: '0x92c95b6227a9f0b4602649bd83f83adc48dae903',
         abi: BTC_SKYPOOL_ABI as AbiItem[],
       },
       production: {
