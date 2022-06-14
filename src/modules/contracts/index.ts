@@ -40,7 +40,7 @@ export const CONTRACTS = {
     },
     'sbBTC.SKYPOOL': {
       test: {
-        address: '',
+        address: '0x679199877e56b8e68fdb1ddae122e843ecaca268',
         abi: SBBTC_ABI as AbiItem[],
       },
       production: {
