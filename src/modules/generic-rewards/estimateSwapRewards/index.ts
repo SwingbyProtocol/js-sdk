@@ -19,7 +19,7 @@ export const estimateSwapRewards = async <M extends SkybridgeMode>({
     rebateRate: string;
     estimatedAmountReceiving: string;
   }>(
-    `https://netword.skybridge.exchange/api/v3/${context.mode}/swap-rewards?currencyDeposit=${currencyDeposit}&currencyReceiving=${currencyReceiving}&amountDeposit=${amountDesired}`,
+    `https://network.skybridge.exchange/api/v3/${context.mode}/swap-rewards?currencyDeposit=${currencyDeposit}&currencyReceiving=${currencyReceiving}&amountDeposit=${amountDesired}`,
   );
 
   if (!result.ok) {
