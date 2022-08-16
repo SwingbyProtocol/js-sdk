@@ -28,3 +28,5 @@ export { estimateAmountReceiving } from './modules/generic-fees';
 export { CONTRACTS } from './modules/contracts';
 export { runProofOfWork, getPowEpoch, getBlockHeight } from './modules/pow';
 export { SkybridgeTermsMessage } from './modules/common-params';
+export { ZERO_ADDRESS } from './modules/constants';
+export { estimateSwapRewards } from './modules/generic-rewards';

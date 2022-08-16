@@ -5,6 +5,7 @@ import SBBTC_ABI from './sbbtc-abi.json';
 import BTC_ERC_ABI from './btc_erc-abi.json';
 import BTC_SKYPOOL_ABI from './btc_skypool-abi.json';
 import SWINGBY_SWAP_REWARDS_ABI from './swingby-swap-rewards-abi.json';
+import SWINGBY_SWAP_INFO_ABI from './swingby-swap-info-abi.json';
 
 const WBTC = {
   test: {
@@ -75,7 +76,7 @@ export const CONTRACTS = {
     },
   },
   swap: {
-    swingby: {
+    rewards: {
       test: {
         address: '', // TODO: need change
         abi: SWINGBY_SWAP_REWARDS_ABI as AbiItem[],
@@ -83,6 +84,16 @@ export const CONTRACTS = {
       production: {
         address: '0x2a3040d8b2a4ea8d3c36c04ae2affb9c5a8e856d',
         abi: SWINGBY_SWAP_REWARDS_ABI as AbiItem[],
+      },
+    },
+    info: {
+      test: {
+        address: '', // TODO: need change
+        abi: SWINGBY_SWAP_INFO_ABI as AbiItem[],
+      },
+      production: {
+        address: '0x4A084C0D1f89793Bb57f49b97c4e3a24cA539aAA',
+        abi: SWINGBY_SWAP_INFO_ABI as AbiItem[],
       },
     },
   },

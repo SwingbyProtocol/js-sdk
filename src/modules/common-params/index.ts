@@ -49,6 +49,9 @@ export type SkybridgeParams<
   txDepositId: string;
   txReceivingId: string;
   isSkypoolsSwap: R extends 'swap' ? boolean : false;
+
+  price: string;
+  rebateRate: string;
 };
 
 export const SkybridgeTermsMessage = {
