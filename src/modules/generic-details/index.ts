@@ -4,6 +4,7 @@ import type { SkybridgeParams, SkybridgeStatus } from '../common-params';
 import type { SkybridgeResource } from '../resources';
 import { fromApiCoin, SkybridgeCoin } from '../coins';
 import { SkybridgeBridge } from '../bridges';
+import { estimateSwapRewards } from '../generic-rewards';
 
 type ServerReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = {
   items: Array<
@@ -41,12 +42,14 @@ type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = Pick<
   | 'feeCurrency'
   | 'addressSending'
   | 'isSkypoolsSwap'
+  | 'rebalanceRewards'
 > & {
   txDepositId: SkybridgeParams<R, M>['txDepositId'] | null;
   txReceivingId: SkybridgeParams<R, M>['txReceivingId'] | null;
 };
 
 const bridgeCache = new Map<string, SkybridgeBridge>();
+const rebalanceRewardsCache = new Map<string, string>();
 
 export const getDetails = async <R extends SkybridgeResource, M extends SkybridgeMode>({
   resource,
@@ -109,6 +112,22 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
     throw new Error(`"${hash}" is not a withdrawal, it is a swap.`);
   }
 
+  const rebalanceRewards: string = await (async () => {
+    const cache = rebalanceRewardsCache.get(hash);
+    if (cache) return cache;
+
+    const swapRewardsResult = await estimateSwapRewards({
+      context,
+      amountDesired: result.data.amountIn,
+      currencyDeposit: fromApiCoin({ bridge: result.bridge, coin: result.data.currencyIn as any }),
+      currencyReceiving: fromApiCoin({ bridge: result.bridge, coin: result.data.currencyOut as any }),
+    });
+
+    rebalanceRewardsCache.set(hash, swapRewardsResult.amountReceiving);
+    return swapRewardsResult.amountReceiving;
+  })();
+
+
   return ({
     addressReceiving: result.data.addressOut,
     addressDeposit: result.data.addressDeposit,
@@ -128,6 +147,7 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
       coin: (result.data.feeCurrency as any) || null,
     }),
     feeTotal: result.data.fee,
+    rebalanceRewards,
     isSkypoolsSwap: resource === 'swap' && result.data.skypools === true,
   } as unknown) as ReturnType<R, M>;
 };

@@ -52,6 +52,7 @@ export type SkybridgeParams<
 
   price: string;
   rebateRate: string;
+  rebalanceRewards: string;
 };
 
 export const SkybridgeTermsMessage = {
