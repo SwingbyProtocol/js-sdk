@@ -49,6 +49,7 @@ type ReturnType<R extends SkybridgeResource, M extends SkybridgeMode> = Pick<
 };
 
 const bridgeCache = new Map<string, SkybridgeBridge>();
+const rebalanceRewardsCache = new Map<string, string>();
 
 export const getDetails = async <R extends SkybridgeResource, M extends SkybridgeMode>({
   resource,
@@ -111,13 +112,21 @@ export const getDetails = async <R extends SkybridgeResource, M extends Skybridg
     throw new Error(`"${hash}" is not a withdrawal, it is a swap.`);
   }
 
-  // TODO: cache swapRewards
-  const { amountReceiving: rebalanceRewards } = await estimateSwapRewards({
-    context,
-    amountDesired: result.data.amountIn,
-    currencyDeposit: fromApiCoin({ bridge: result.bridge, coin: result.data.currencyIn as any }),
-    currencyReceiving: fromApiCoin({ bridge: result.bridge, coin: result.data.currencyOut as any }),
-  });
+  const rebalanceRewards: string = await (async () => {
+    const cache = rebalanceRewardsCache.get(hash);
+    if (cache) return cache;
+
+    const swapRewardsResult = await estimateSwapRewards({
+      context,
+      amountDesired: result.data.amountIn,
+      currencyDeposit: fromApiCoin({ bridge: result.bridge, coin: result.data.currencyIn as any }),
+      currencyReceiving: fromApiCoin({ bridge: result.bridge, coin: result.data.currencyOut as any }),
+    });
+
+    rebalanceRewardsCache.set(hash, swapRewardsResult.amountReceiving);
+    return swapRewardsResult.amountReceiving;
+  })();
+
 
   return ({
     addressReceiving: result.data.addressOut,
