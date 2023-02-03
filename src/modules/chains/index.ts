@@ -5,14 +5,12 @@ export type SkybridgeChain = typeof CHAINS[number];
 
 export const isSkybridgeChain = (value: any): value is SkybridgeChain => CHAINS.includes(value);
 
-export const getChainFor = ({ coin }: { coin: SkybridgeCoin | 'sbBTC' }): SkybridgeChain => {
+export const getChainFor = ({ coin }: { coin: SkybridgeCoin }): SkybridgeChain => {
   switch (coin) {
     case 'BTC':
       return 'bitcoin';
     case 'sbBTC.SKYPOOL':
     case 'WBTC.SKYPOOL':
-    case 'sbBTC':
-    case 'WBTC':
       return 'ethereum';
   }
 };

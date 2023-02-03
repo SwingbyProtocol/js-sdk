@@ -24,11 +24,9 @@ it('returns default according to result of getNetworkDetails()', () => {
     servers: {
       indexer: {
         btc_skypool: 'test__btc_skypool__indexer-node',
-        btc_erc: 'test__btc_erc__indexer-node',
       },
       swapNode: {
         btc_skypool: 'https://test__btc_skypool__swap-node',
-        btc_erc: 'https://test__btc_erc__swap-node',
       },
     },
   });
@@ -41,11 +39,9 @@ it('allows overwriting affiliateApi', () => {
     servers: {
       indexer: {
         btc_skypool: 'test__btc_skypool__indexer-node',
-        btc_erc: 'test__btc_erc__indexer-node',
       },
       swapNode: {
         btc_skypool: 'https://test__btc_skypool__swap-node',
-        btc_erc: 'https://test__btc_erc__swap-node',
       },
     },
   });
@@ -58,11 +54,9 @@ it('allows overwriting affiliateApi with empty string', () => {
     servers: {
       indexer: {
         btc_skypool: 'test__btc_skypool__indexer-node',
-        btc_erc: 'test__btc_erc__indexer-node',
       },
       swapNode: {
         btc_skypool: 'https://test__btc_skypool__swap-node',
-        btc_erc: 'https://test__btc_erc__swap-node',
       },
     },
   });
@@ -75,10 +69,9 @@ it('allows overwriting one server', () => {
     affiliateApi: 'https://affiliate.swingby.network',
     mode,
     servers: {
-      indexer: { btc_skypool: 'my-bep-a', btc_erc: 'test__btc_erc__indexer-node' },
+      indexer: { btc_skypool: 'my-bep-a' },
       swapNode: {
         btc_skypool: 'https://test__btc_skypool__swap-node',
-        btc_erc: 'https://test__btc_erc__swap-node',
       },
     },
   });
@@ -89,16 +82,16 @@ it('allows overwriting several servers', () => {
     buildContext({
       mode,
       servers: {
-        indexer: { btc_skypool: 'my-i-bep-a', btc_erc: 'my-i-erc-a' },
-        swapNode: { btc_erc: 'my-s-erc-a' },
+        indexer: { btc_skypool: 'my-i-bep-a' },
+        swapNode: {},
       },
     }),
   ).resolves.toMatchObject({
     affiliateApi: 'https://affiliate.swingby.network',
     mode,
     servers: {
-      indexer: { btc_skypool: 'my-i-bep-a', btc_erc: 'my-i-erc-a' },
-      swapNode: { btc_skypool: 'https://test__btc_skypool__swap-node', btc_erc: 'my-s-erc-a' },
+      indexer: { btc_skypool: 'my-i-bep-a' },
+      swapNode: { btc_skypool: 'https://test__btc_skypool__swap-node' },
     },
   });
 });

@@ -11,11 +11,9 @@ export const buildContext = async <M extends SkybridgeMode>({
     affiliateApi: 'https://affiliate.swingby.network',
     servers: {
       swapNode: {
-        btc_erc: 'https://swingby-chaos-30.senticator.ai',
         btc_skypool: 'https://btc-skypool-1.swingby.network',
       },
       indexer: {
-        btc_erc: 'https://indexer.swingby.network/bb-eth',
         btc_skypool: 'https://indexer.swingby.network/bb-eth',
       },
     },

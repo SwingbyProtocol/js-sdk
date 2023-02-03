@@ -88,12 +88,9 @@ export const buildContext = async <M extends SkybridgeMode>({
     affiliateApi: affiliateApi ?? 'https://affiliate.swingby.network',
     servers: {
       swapNode: {
-        btc_erc: servers?.swapNode?.btc_erc ?? getRandomSwapNode({ bridge: 'btc_erc' }),
-        btc_skypool:
-          servers?.swapNode?.btc_skypool ?? (await getRandomSwapNode({ bridge: 'btc_skypool' })),
+        btc_skypool: servers?.swapNode?.btc_skypool ?? getRandomSwapNode({ bridge: 'btc_skypool' }),
       },
       indexer: {
-        btc_erc: servers?.indexer?.btc_erc ?? (await getRandomIndexer({ bridge: 'btc_erc' })),
         btc_skypool:
           servers?.indexer?.btc_skypool ?? (await getRandomIndexer({ bridge: 'btc_skypool' })),
       },

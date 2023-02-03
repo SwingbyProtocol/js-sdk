@@ -13,10 +13,6 @@ it.each<{
   currencyDeposit: SkybridgeCoin;
   expected: SkybridgeBridge;
 }>([
-  { mode: 'test', currencyDeposit: 'WBTC', currencyReceiving: 'BTC', expected: 'btc_erc' },
-  { mode: 'test', currencyDeposit: 'BTC', currencyReceiving: 'WBTC', expected: 'btc_erc' },
-  { mode: 'test', currencyDeposit: 'BTC', currencyReceiving: 'sbBTC', expected: 'btc_erc' },
-  { mode: 'test', currencyDeposit: 'sbBTC', currencyReceiving: 'BTC', expected: 'btc_erc' },
   {
     mode: 'test',
     currencyDeposit: 'BTC',
@@ -46,10 +42,10 @@ it.each<{
   currencyReceiving: SkybridgeCoin;
   currencyDeposit: SkybridgeCoin;
 }>([
-  { mode: 'test', currencyDeposit: 'sbBTC', currencyReceiving: 'WBTC.SKYPOOL' },
-  { mode: 'test', currencyDeposit: 'WBTC', currencyReceiving: 'WBTC.SKYPOOL' },
-  { mode: 'test', currencyDeposit: 'WBTC.SKYPOOL', currencyReceiving: 'sbBTC' },
-  { mode: 'test', currencyDeposit: 'WBTC.SKYPOOL', currencyReceiving: 'WBTC' },
+  { mode: 'test', currencyDeposit: 'sbBTC.SKYPOOL', currencyReceiving: 'WBTC.SKYPOOL' },
+  { mode: 'test', currencyDeposit: 'WBTC.SKYPOOL', currencyReceiving: 'WBTC.SKYPOOL' },
+  { mode: 'test', currencyDeposit: 'WBTC.SKYPOOL', currencyReceiving: 'sbBTC.SKYPOOL' },
+  { mode: 'test', currencyDeposit: 'WBTC.SKYPOOL', currencyReceiving: 'WBTC.SKYPOOL' },
   { mode: 'test', currencyDeposit: 'BTC', currencyReceiving: 'fake coin' as any },
 ])('throws for %O', async ({ mode, currencyReceiving, currencyDeposit }) => {
   expect.assertions(1);

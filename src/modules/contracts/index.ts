@@ -2,7 +2,6 @@ import type { AbiItem } from 'web3-utils';
 
 import WBTC_ABI from './wbtc-abi.json';
 import SBBTC_ABI from './sbbtc-abi.json';
-import BTC_ERC_ABI from './btc_erc-abi.json';
 import BTC_SKYPOOL_ABI from './btc_skypool-abi.json';
 import SWINGBY_SWAP_REWARDS_ABI from './swingby-swap-rewards-abi.json';
 import SWINGBY_SWAP_INFO_ABI from './swingby-swap-info-abi.json';
@@ -54,16 +53,6 @@ export const CONTRACTS = {
     'WBTC.SKYPOOL': WBTC,
   },
   bridges: {
-    btc_erc: {
-      test: {
-        address: '0x7dfbf7E38F188Da1BD337A128ce7A5D758957621',
-        abi: BTC_ERC_ABI as AbiItem[],
-      },
-      production: {
-        address: '0xbe83f11d3900F3a13d8D12fB62F5e85646cDA45e',
-        abi: BTC_ERC_ABI as AbiItem[],
-      },
-    },
     btc_skypool: {
       test: {
         address: '0x92c95b6227a9f0b4602649bd83f83adc48dae903',

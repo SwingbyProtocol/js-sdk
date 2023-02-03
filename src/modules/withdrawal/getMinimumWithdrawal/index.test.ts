@@ -16,18 +16,6 @@ it.each<
   ]
 >([
   [
-    { bridge: 'btc_erc', amountDesired: '0', currencyReceiving: 'BTC' },
-    { minimumWithdrawalCurrency: 'BTC' },
-  ],
-  [
-    { bridge: 'btc_erc', amountDesired: '0', currencyReceiving: 'WBTC' },
-    { minimumWithdrawalCurrency: 'WBTC' },
-  ],
-  [
-    { bridge: 'btc_erc', amountDesired: '200', currencyReceiving: 'WBTC' },
-    { minimumWithdrawalCurrency: 'WBTC' },
-  ],
-  [
     { bridge: 'btc_skypool', amountDesired: '200', currencyReceiving: 'WBTC.SKYPOOL' },
     { minimumWithdrawalCurrency: 'WBTC.SKYPOOL' },
   ],

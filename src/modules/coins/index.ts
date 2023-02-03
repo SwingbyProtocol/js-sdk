@@ -7,16 +7,6 @@ export type SkybridgeApiCoin = 'BTC' | 'WBTC' | 'sbBTC' | 'SKYPOOL';
 
 const COINS = {
   swap: {
-    btc_erc: {
-      test: {
-        in: ['BTC', 'WBTC', 'sbBTC'],
-        out: ['BTC', 'WBTC'],
-      },
-      production: {
-        in: ['BTC', 'WBTC', 'sbBTC'],
-        out: ['BTC', 'WBTC'],
-      },
-    },
     btc_skypool: {
       test: {
         in: ['BTC', 'WBTC.SKYPOOL', 'sbBTC.SKYPOOL'],
@@ -29,16 +19,6 @@ const COINS = {
     },
   },
   pool: {
-    btc_erc: {
-      test: {
-        in: ['BTC', 'WBTC'],
-        out: ['sbBTC'],
-      },
-      production: {
-        in: ['BTC', 'WBTC'],
-        out: ['sbBTC'],
-      },
-    },
     btc_skypool: {
       test: {
         in: ['BTC', 'WBTC.SKYPOOL'],
@@ -51,16 +31,6 @@ const COINS = {
     },
   },
   withdrawal: {
-    btc_erc: {
-      test: {
-        in: ['sbBTC'],
-        out: ['BTC', 'WBTC'],
-      },
-      production: {
-        in: ['sbBTC'],
-        out: ['BTC', 'WBTC'],
-      },
-    },
     btc_skypool: {
       test: {
         in: ['sbBTC.SKYPOOL'],
@@ -241,10 +211,6 @@ export const getDisplayNameForCoin = ({ coin }: { coin: SkybridgeCoin }): string
       return 'WBTC (Skypools)';
     case 'sbBTC.SKYPOOL':
       return 'sbBTC (Skypools)';
-    case 'WBTC':
-      return 'WBTC (ERC20)';
-    case 'sbBTC':
-      return 'sbBTC (ERC20)';
   }
 };
 
@@ -253,10 +219,8 @@ export const toApiCoin = ({ coin }: { coin: SkybridgeCoin }): SkybridgeApiCoin =
     case 'BTC':
       return 'BTC';
     case 'WBTC.SKYPOOL':
-    case 'WBTC':
       return 'WBTC';
     case 'sbBTC.SKYPOOL':
-    case 'sbBTC':
       return 'sbBTC';
   }
 };
@@ -268,12 +232,6 @@ export const fromApiCoin = ({
   coin: SkybridgeApiCoin;
   bridge: SkybridgeBridge;
 }): SkybridgeCoin => {
-  if (bridge === 'btc_erc') {
-    if ((coin as any) === 'BTCE') return 'WBTC';
-    if (coin === 'SKYPOOL') return 'WBTC';
-    return coin as SkybridgeCoin;
-  }
-
   if (bridge === 'btc_skypool') {
     switch (coin) {
       case 'BTC':

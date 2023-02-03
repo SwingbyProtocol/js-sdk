@@ -8,7 +8,7 @@ export const getPowEpoch = ({
   blockHeight: number;
 }): number => {
   const round: number = (() => {
-    if (bridge === 'btc_erc' || bridge === 'btc_skypool') {
+    if (bridge === 'btc_skypool') {
       return Math.floor(blockHeight / 3);
     }
 

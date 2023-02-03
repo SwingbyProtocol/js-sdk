@@ -5,16 +5,6 @@ import { getPowEpoch } from './getPowEpoch';
 it.each<{ blockHeight: number; bridge: SkybridgeBridge; expected: number }>([
   {
     blockHeight: 100,
-    bridge: 'btc_erc',
-    expected: 34,
-  },
-  {
-    blockHeight: 99,
-    bridge: 'btc_erc',
-    expected: 34,
-  },
-  {
-    blockHeight: 100,
     bridge: 'btc_skypool',
     expected: 34,
   },

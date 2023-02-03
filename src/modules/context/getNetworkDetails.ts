@@ -18,15 +18,11 @@ const NETWORK_INFO: {
   [k in SkybridgeMode]: { [k in SkybridgeBridge]: { indexerNodes: string[] } };
 } = {
   production: {
-    btc_erc: {
-      indexerNodes: ['https://indexer.swingby.network/bb-eth'],
-    },
     btc_skypool: {
       indexerNodes: ['https://indexer.swingby.network/bb-eth'],
     },
   },
   test: {
-    btc_erc: { indexerNodes: ['https://tbtc-ropsten-node-1.swingby.network/bb-eth'] },
     btc_skypool: { indexerNodes: ['https://tbtc-ropsten-node-1.swingby.network/bb-eth'] },
   },
 };
