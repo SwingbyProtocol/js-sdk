@@ -5,7 +5,6 @@ import SBBTC_ABI from './sbbtc-abi.json';
 import BTC_ERC_ABI from './btc_erc-abi.json';
 import BTC_SKYPOOL_ABI from './btc_skypool-abi.json';
 import SWINGBY_SWAP_REWARDS_ABI from './swingby-swap-rewards-abi.json';
-import SWINGBY_SWAP_INFO_ABI from './swingby-swap-info-abi.json';
 
 const WBTC = {
   test: {
@@ -42,11 +41,11 @@ export const CONTRACTS = {
     },
     'sbBTC.SKYPOOL': {
       test: {
-        address: '0x679199877e56b8e68fdb1ddae122e843ecaca268',
+        address: '',
         abi: SBBTC_ABI as AbiItem[],
       },
       production: {
-        address: '0x44a62c7121a64691b61aef669f21c628258e7d52',
+        address: '0x679199877E56b8E68Fdb1dDaE122E843EcAcA268',
         abi: SBBTC_ABI as AbiItem[],
       },
     },
@@ -66,11 +65,11 @@ export const CONTRACTS = {
     },
     btc_skypool: {
       test: {
-        address: '0x92c95b6227a9f0b4602649bd83f83adc48dae903',
+        address: '',
         abi: BTC_SKYPOOL_ABI as AbiItem[],
       },
       production: {
-        address: '0x4A084C0D1f89793Bb57f49b97c4e3a24cA539aAA',
+        address: '0x92c95b6227a9f0B4602649BD83F83aDC48dae903',
         abi: BTC_SKYPOOL_ABI as AbiItem[],
       },
     },
@@ -84,16 +83,6 @@ export const CONTRACTS = {
       production: {
         address: '0x2a3040d8b2a4ea8d3c36c04ae2affb9c5a8e856d',
         abi: SWINGBY_SWAP_REWARDS_ABI as AbiItem[],
-      },
-    },
-    info: {
-      test: {
-        address: '', // TODO: need change
-        abi: SWINGBY_SWAP_INFO_ABI as AbiItem[],
-      },
-      production: {
-        address: '0x4A084C0D1f89793Bb57f49b97c4e3a24cA539aAA',
-        abi: SWINGBY_SWAP_INFO_ABI as AbiItem[],
       },
     },
   },
